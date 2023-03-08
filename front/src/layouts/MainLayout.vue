@@ -117,7 +117,7 @@ export default defineComponent({
         return 'Cafe italia'
       } else if (this.$route.path === '/categories/3') {
         setCssVar('primary', '#00538F')
-        return 'Cafe italia'
+        return 'Vaca fria'
       } else {
         return ''
       }
