@@ -32,7 +32,7 @@ class CategorySeeder extends Seeder
             [ "id"=>14,"name"=> "MAQUINAS PARA CAFE","imagen"=> "1628645988.png","color"=>"#d66c00","shop_id"=>2],
             [ "id"=>15,"name"=> "PARA PICAR","imagen"=> "1631483893.jpg","color"=>"#d66c00","shop_id"=>2],
             [ "id"=>16,"name"=> "YOGURT","imagen"=> "1635627523.jpg","color"=>"#f2e85e","shop_id"=>2],
-            [ "id"=>17,"name"=> "VENTAS AL CLIENTE","imagen"=> "1638053074.jfif', 'CAFES","shop_id"=>2],
+            [ "id"=>17,"name"=> "VENTAS AL CLIENTE","imagen"=> "1638053074.jfif","color"=>"#f2e85e","shop_id"=>2],
             [ "id"=>18,"name"=> "ESPECIALES","imagen"=> "1644860112.jpeg","color"=>"#060fbd","shop_id"=>2],
             [ "id"=>19,"name"=> "GRANIZADO","imagen"=> "1648933479.png","color"=>"#18f0ec","shop_id"=>2],
             [ "id"=>20,"name"=> "GELATINAS","imagen"=> "1649886904.webp","color"=>"#cf3d15","shop_id"=>2],
