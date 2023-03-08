@@ -13,6 +13,11 @@ return new class extends Migration
     {
         Schema::create('categories', function (Blueprint $table) {
             $table->id();
+            $table->string('name');
+            $table->string('imagen')->nullable()->default('logo.png');
+            $table->string('color')->nullable();
+            $table->unsignedBigInteger('shop_id');
+            $table->foreign('shop_id')->references('id')->on('shops');
             $table->timestamps();
         });
     }

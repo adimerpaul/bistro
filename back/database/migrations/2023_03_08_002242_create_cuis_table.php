@@ -11,12 +11,13 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('shops', function (Blueprint $table) {
+        Schema::create('cuis', function (Blueprint $table) {
             $table->id();
-            $table->string('avatar')->nullable()->default('logo.png');
-            $table->string('nombre')->nullable();
-            $table->string('sucursal')->nullable();
-            $table->string('color')->nullable();
+            $table->string("codigo")->nullable();
+            $table->dateTime("fechaVigencia")->nullable();
+            $table->dateTime("fechaCreacion")->nullable();
+            $table->integer("codigoPuntoVenta")->nullable()->default(0);
+            $table->integer("codigoSucursal")->nullable()->default(0);
             $table->timestamps();
         });
     }
@@ -26,6 +27,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('shops');
+        Schema::dropIfExists('cuis');
     }
 };

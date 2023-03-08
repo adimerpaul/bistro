@@ -11,12 +11,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('shops', function (Blueprint $table) {
+        Schema::create('tokens', function (Blueprint $table) {
             $table->id();
-            $table->string('avatar')->nullable()->default('logo.png');
-            $table->string('nombre')->nullable();
-            $table->string('sucursal')->nullable();
-            $table->string('color')->nullable();
+            $table->string("codigo")->nullable();
+            $table->dateTime("fechaVigencia")->nullable();
+            $table->dateTime("fechaCreacion")->nullable();
             $table->timestamps();
         });
     }
@@ -26,6 +25,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('shops');
+        Schema::dropIfExists('tokens');
     }
 };
