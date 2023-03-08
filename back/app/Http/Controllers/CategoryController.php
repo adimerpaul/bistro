@@ -6,61 +6,10 @@ use App\Models\category;
 use App\Http\Requests\StorecategoryRequest;
 use App\Http\Requests\UpdatecategoryRequest;
 
-class CategoryController extends Controller
-{
-    /**
-     * Display a listing of the resource.
-     */
-    public function index()
-    {
-        //
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(StorecategoryRequest $request)
-    {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     */
-    public function show(category $category)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(category $category)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(UpdatecategoryRequest $request, category $category)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(category $category)
-    {
-        //
-    }
+class CategoryController extends Controller{
+    public function index(){return category::all();}
+    public function show($shop_id){return category::where('shop_id', $shop_id)->get();}
+    public function store(StorecategoryRequest $request){return category::create($request->all());}
+    public function update(UpdatecategoryRequest $request, category $category){$category->update($request->all());return $category;}
+    public function destroy(category $category){$category->delete();return $category;}
 }

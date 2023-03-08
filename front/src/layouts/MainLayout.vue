@@ -1,6 +1,6 @@
 <template>
   <q-layout view="lHh Lpr lFf">
-    <q-header elevated>
+    <q-header>
       <q-toolbar>
         <q-btn
           flat
@@ -8,14 +8,23 @@
           round
           icon="menu"
           aria-label="Menu"
-          @click="toggleLeftDrawer"
+          @click="leftDrawerOpen=!leftDrawerOpen"
         />
-
         <q-toolbar-title>
-          Quasar App
+          Bilstro
+          <span class="text-grey text-subtitle2">Usuario</span>
+          {{title}}
         </q-toolbar-title>
-
-        <div>Quasar v{{ $q.version }}</div>
+        <div>
+          <q-btn
+            flat
+            dense
+            round
+            icon="logout"
+            aria-label="Logout"
+            @click="logout"
+          />
+        </div>
       </q-toolbar>
     </q-header>
 
@@ -25,10 +34,8 @@
       bordered
     >
       <q-list>
-        <q-item-label
-          header
-        >
-          Essential Links
+        <q-item-label header class="text-center text-bold">
+          Opciones
         </q-item-label>
 
         <EssentialLink
@@ -48,67 +55,71 @@
 <script lang="ts">
 import { defineComponent, ref } from 'vue'
 import EssentialLink from 'components/EssentialLink.vue'
+import { setCssVar } from 'quasar'
 
 const linksList = [
   {
-    title: 'Docs',
-    caption: 'quasar.dev',
-    icon: 'school',
-    link: 'https://quasar.dev'
+    title: 'Principal',
+    caption: 'Página principal',
+    icon: 'o_home',
+    to: '/'
   },
   {
-    title: 'Github',
-    caption: 'github.com/quasarframework',
-    icon: 'code',
-    link: 'https://github.com/quasarframework'
+    title: 'Categorías sabor peru',
+    caption: 'Categorías de productos',
+    icon: 'o_category',
+    to: '/categories/1'
   },
   {
-    title: 'Discord Chat Channel',
-    caption: 'chat.quasar.dev',
-    icon: 'chat',
-    link: 'https://chat.quasar.dev'
+    title: 'Categorías cafe italia',
+    caption: 'Categorías de productos',
+    icon: 'o_category',
+    to: '/categories/2'
   },
   {
-    title: 'Forum',
-    caption: 'forum.quasar.dev',
-    icon: 'record_voice_over',
-    link: 'https://forum.quasar.dev'
-  },
-  {
-    title: 'Twitter',
-    caption: '@quasarframework',
-    icon: 'rss_feed',
-    link: 'https://twitter.quasar.dev'
-  },
-  {
-    title: 'Facebook',
-    caption: '@QuasarFramework',
-    icon: 'public',
-    link: 'https://facebook.quasar.dev'
-  },
-  {
-    title: 'Quasar Awesome',
-    caption: 'Community Quasar projects',
-    icon: 'favorite',
-    link: 'https://awesome.quasar.dev'
+    title: 'Categorías vaca fria',
+    caption: 'Categorías de productos',
+    icon: 'o_category',
+    to: '/categories/3'
   }
 ]
 
 export default defineComponent({
   name: 'MainLayout',
-
   components: {
     EssentialLink
   },
-
-  setup () {
-    const leftDrawerOpen = ref(false)
-
+  data () {
     return {
       essentialLinks: linksList,
-      leftDrawerOpen,
-      toggleLeftDrawer () {
-        leftDrawerOpen.value = !leftDrawerOpen.value
+      leftDrawerOpen: ref(false)
+    }
+  },
+  mounted () {
+    console.log(this.$route.path)
+  },
+  methods: {
+    logout () {
+      console.log('logout')
+      setCssVar('primary', '#1976d2')
+    }
+  },
+  computed: {
+    title () {
+      if (this.$route.path === '/') {
+        setCssVar('primary', '#1976d2')
+        return ''
+      } else if (this.$route.path === '/categories/1') {
+        setCssVar('primary', '#8C131A')
+        return 'Sabor peru'
+      } else if (this.$route.path === '/categories/2') {
+        setCssVar('primary', '#009203')
+        return 'Cafe italia'
+      } else if (this.$route.path === '/categories/3') {
+        setCssVar('primary', '#00538F')
+        return 'Cafe italia'
+      } else {
+        return ''
       }
     }
   }
