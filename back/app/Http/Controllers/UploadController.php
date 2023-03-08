@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\category;
 use App\Models\Shop;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -24,13 +25,20 @@ class UploadController extends Controller
                 ->save($ruta,72);
             return $name;
         }
-        if ($type=='fileCreate'){
+        if ($type=='create'){
             error_log($name);
-            $ruta=public_path('/files/');
+            $ruta=public_path('/images/');
             $file->move($ruta,$name);
             return $name;
         }
-
+        if ($type=='editCategory'){
+            $ruta=public_path('/images/');
+            $file->move($ruta,$name);
+            $category = Category::find($id);
+            $category->imagen = $name;
+            $category->save();
+            return $name;
+        }
     }
     public function base64($photo){
         $path = public_path('/images/'.$photo);

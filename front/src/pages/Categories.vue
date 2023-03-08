@@ -2,7 +2,7 @@
   <q-page>
     <div class="row">
       <div class="col-12">
-        <q-table title="Categorias" :loading="loading" :rows-per-page-options="[0]" :columns="inventaryColumns" :rows="categories" flat bordered dense :search="categoryFiltar">
+        <q-table title="Categorias" :loading="loading" :rows-per-page-options="[0]" :columns="inventaryColumns" :rows="categories" flat bordered dense :filter="categoryFiltar">
           <template v-slot:header-cell="props">
             <q-th :props="props" class="bg-primary text-white text-center">
               {{ props.col.label }}
@@ -20,21 +20,26 @@
           </template>
           <template v-slot:body-cell-actions="props">
             <q-td :props="props" auto-width>
-              <q-btn-dropdown round dense color="primary" dropdown-icon="more_vert">
+              <q-btn-dropdown round dense color="primary" dropdown-icon="more_vert" label="Acciones" no-caps>
                 <q-list>
                   <q-item clickable v-close-popup>
-                    <q-item-section @click="inventarieEdit(props.row)">Editar</q-item-section>
+                    <q-item-section @click="categoryEdit(props.row)">Editar</q-item-section>
                   </q-item>
                   <q-item clickable v-close-popup>
-                    <q-item-section @click="inventarieDelete(props.row)">Eliminar</q-item-section>
+                    <q-item-section @click="categoryEditPhoto(props.row)">Editar Foto</q-item-section>
+                  </q-item>
+                  <q-item clickable v-close-popup>
+                    <q-item-section @click="categoryDelete(props.row)">Eliminar</q-item-section>
                   </q-item>
                 </q-list>
               </q-btn-dropdown>
             </q-td>
           </template>
           <template v-slot:body-cell-imagen="props">
-            <q-td :props="props" auto-width @click="showImage(`${$url}../images/${props.row.image}`)">
-              <q-img :src="`${$url}../images/${props.row.image}`" style="width: 50px; height: 50px;" />
+            <q-td :props="props" auto-width @click="showImage(`${$url}../images/${props.row.imagen}`)">
+              <div :style="`width: 50px; height: 50px; background-color: ${props.row.color};`">
+                <q-img :src="`${$url}../images/${props.row.imagen}`" style="border-radius: 50%" :style="`width: 50px; height: 50px;`" />
+              </div>
             </q-td>
           </template>
         </q-table>
@@ -43,7 +48,7 @@
     <q-dialog v-model="categoryShow">
       <q-card>
         <q-card-section class="row items-center q-pb-none">
-          <div class="text-h6">Control Categorias</div>
+          <div class="text-h6">{{ categoryStatus== 'create' ? 'Crear Categoria' : 'Editar Categoria' }}</div>
           <q-space />
           <q-btn flat icon="close" v-close-popup />
         </q-card-section>
@@ -51,13 +56,14 @@
           <q-form @submit.prevent="categorySubmit" ref="myForm">
             <div class="row">
               <div class="col-12 col-md-12">
-                <q-input outlined dense v-model="category.name" label="Nombre" hint="" :rules="[val => val.length > 0 || 'El nombre es requerido']" />
+                <q-input v-if="categoryStatus == 'edit' || categoryStatus == 'create'" outlined dense v-model="category.name" label="Nombre" hint="" :rules="[val => val.length > 0 || 'El nombre es requerido']" />
               </div>
-              <div class="col-12 col-md-6 flex flex-center">
-                <q-color v-model="category.color" default-view="palette" style="max-width: 150px" />
+              <div class="col-12 col-md-12 flex flex-center">
+                <q-color v-if="categoryStatus == 'edit' || categoryStatus == 'create'" v-model="category.color" default-view="palette" style="max-width: 150px" />
               </div>
-              <div class="col-12 col-md-6">
+              <div class="col-12 col-md-12 flex flex-center">
                 <q-uploader
+                  v-if="categoryStatus == 'create' || categoryStatus == 'editPhoto'"
                   accept=".jpg, .png"
                   multiple
                   auto-upload
@@ -67,9 +73,8 @@
                   @failed="errorFn"
                   max-files="1"
                   auto-expand
-                  :url="`${$url}upload/fileCreate/1`"
+                  :url="categoryStatus=='create'?`${$url}upload/create/1`:`${$url}upload/editCategory/${category.id}`"
                   stack-label="upload image"
-                  class="full-width"
                 />
               </div>
               <div class="col-12 col-md-12 text-center q-pt-xs">
@@ -105,10 +110,10 @@ export default {
       categoryFiltar: '',
       inventaryColumns: [
         { name: 'actions', label: 'Acciones', field: 'actions', align: 'left', sortable: false },
-        { name: 'code', label: 'Codigo', field: 'code', align: 'left', sortable: true },
+        // { name: 'code', label: 'Codigo', field: 'code', align: 'left', sortable: true },
         { name: 'imagen', label: 'Imagen', field: 'image', align: 'left', sortable: true },
-        { name: 'name', label: 'Nombre', field: 'name', align: 'left', sortable: true },
-        { name: 'description', label: 'Descripcion', field: 'description', align: 'left', sortable: true }
+        { name: 'name', label: 'Nombre', field: 'name', align: 'left', sortable: true }
+        // { name: 'description', label: 'Descripcion', field: 'description', align: 'left', sortable: true }
         // { name: 'price', label: 'Precio', field: 'price', align: 'left', sortable: true },
         // { name: 'quantity', label: 'Cantidad', field: 'quantity', align: 'left', sortable: true },
         // { name: 'category', label: 'Categoria', field: (row) => row.category.name, align: 'left', sortable: true }
@@ -124,13 +129,62 @@ export default {
   },
   created () {
     this.categoriesGet()
+    this.$watch(
+      () => this.$route.params,
+      (toParams) => {
+        // console.log(previousParams)
+        this.shop_id = toParams.id
+        this.categoriesGet()
+      }
+    )
   },
   methods: {
+    categoryEditPhoto (category) {
+      this.categoryStatus = 'editPhoto'
+      this.categoryShow = true
+      this.category = category
+    },
+    categoryEdit (category) {
+      this.categoryStatus = 'edit'
+      this.categoryShow = true
+      this.category = category
+    },
+    categoryDelete (category) {
+      this.$q.dialog({
+        title: 'Eliminar Categoria',
+        message: '¿Estas seguro de eliminar esta categoria?',
+        cancel: true,
+        persistent: true
+      }).onOk(() => {
+        this.loading = true
+        this.$api.delete(`categories/${category.id}`)
+          .then(() => {
+            this.categoriesGet()
+            this.$q.notify({
+              color: 'green-4',
+              textColor: 'white',
+              icon: 'cloud_done',
+              position: 'top',
+              message: 'Categoria eliminada correctamente'
+            })
+          })
+          .catch(err => {
+            this.loading = false
+            this.$q.notify({
+              color: 'red-4',
+              textColor: 'white',
+              icon: 'cloud_done',
+              position: 'top',
+              message: err.response.data.message
+            })
+          })
+      })
+    },
     showImage (image) {
       this.$q.dialog({
         title: 'Imagen',
         html: true,
-        message: `<img src="${image}" />`,
+        message: `<img src="${image}" style="width: 100%; height: 100%; object-fit: contain" />`,
         cancel: true,
         persistent: true
       })
@@ -198,14 +252,19 @@ export default {
       } else {
         this.$api.put('categories/' + this.category.id, this.category).then(() => {
           this.categoriesGet()
+          this.categoryShow = false
         }).finally(() => {
           this.$q.loading.hide()
         })
       }
     },
     categoriesGet () {
+      this.categories = []
+      this.loading = true
       this.$api.get('categories/' + this.shop_id).then((response) => {
         this.categories = response.data
+      }).finally(() => {
+        this.loading = false
       })
     },
     exportSales () {
