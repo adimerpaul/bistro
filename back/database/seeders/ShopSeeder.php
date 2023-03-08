@@ -13,11 +13,10 @@ class ShopSeeder extends Seeder
      */
     public function run(): void
     {
-        DB::table('shops')->insert([
-            'avatar' => 'logo.png',
-            'nombre' => 'Tienda 1',
-            'sucursal' => 'Sucursal 1',
-            'color' => '#000000',
-        ]);
+        DB::table('shops')->insert(
+            ['avatar' => 'logo.png','nombre' => 'SABOR PERU','sucursal' => 'BistroFood SRL','color' => '#000000',],
+            ['avatar' => 'logo2.png','nombre' => 'CAFE ITALIA','sucursal' => 'Casa Matriz','color' => '#000000',],
+            ['avatar' => 'logo3.png','nombre' => 'VACA FRIA','sucursal' => 'Sucursal 2','color' => '#000000',],
+        );
     }
 }
