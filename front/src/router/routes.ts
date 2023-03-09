@@ -2,6 +2,7 @@ import { RouteRecordRaw } from 'vue-router'
 import MainLayout from 'layouts/MainLayout.vue'
 import IndexPage from 'pages/IndexPage.vue'
 import Categories from 'pages/Categories.vue'
+import Products from 'pages/Products.vue'
 
 const routes: RouteRecordRaw[] = [
   {
@@ -9,7 +10,8 @@ const routes: RouteRecordRaw[] = [
     component: MainLayout,
     children: [
       { path: '', component: IndexPage },
-      { path: 'categories/:id', component: Categories }
+      { path: 'categories/:id', component: Categories },
+      { path: 'products/:id', component: Products }
     ]
   },
 
