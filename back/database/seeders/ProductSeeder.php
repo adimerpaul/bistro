@@ -133,7 +133,7 @@ class ProductSeeder extends Seeder
             [ "name"=> "YOGURT FRUTAL","price"=>5.00,"imagen"=> "1635627588.jpg","color"=>"#ffffcc","cantidad"=>0,"estado"=>"ACTIVO","category_id"=>16],
             [ "name"=> "YOGURT EN VASO","price"=>3.00,"imagen"=> "1635627614.jpg","color"=>"#ffffcc","cantidad"=>0,"estado"=>"ACTIVO","category_id"=>16],
             [ "name"=> "COPA DE LECHE","price"=>6.00,"imagen"=> "1635984174.png","color"=>"#ccffff","cantidad"=>0,"estado"=>"ACTIVO","category_id"=>16],
-
+//
             [ "name"=> "CAFE EN GRANO DE 250 GR","price"=>115.00,"imagen"=> "1638053146.jfif","color"=>"#cf1f1f","cantidad"=>0,"estado"=>"ACTIVO","category_id"=>17],
 
             [ "name"=> "COMBO DESAYUNO BUFFET","price"=>150.00,"imagen"=> "1653581817.jpeg","color"=>"#eda840","cantidad"=>0,"estado"=>"ACTIVO","category_id"=>18],
@@ -148,7 +148,7 @@ class ProductSeeder extends Seeder
 
             [ "name"=> "COPA MOO BERRY MEDIANO","price"=>27.00,"imagen"=> "1673394898.jpg","color"=>"#47449c","cantidad"=>0,"estado"=>"ACTIVO","category_id"=>22],
             [ "name"=> "COPA XOXOXO MEDIANO","price"=>27.00, "imagen"=> '1673407577.jpg', "color"=>'#eb8181', "cantidad"=>0,"estado"=>"ACTIVO","category_id"=>22],
-            [ "name"=> "COPA PIE DE LIMON MEDIANO","price"=>27.00, "imagen"=>'1673408140.png', 'rgb(115,222,209)', "cantidad"=>0,"estado"=>"ACTIVO","category_id"=>22],
+            [ "name"=> "COPA PIE DE LIMON MEDIANO","price"=>27.00, "imagen"=>'1673408140.png', "color"=> 'rgb(115,222,209)', "cantidad"=>0,"estado"=>"ACTIVO","category_id"=>22],
             [ "name"=> "COPA CHOCOLATE IN RIO MEDIANO","price"=>27.00,"imagen"=>"1673408210.jpg","color"=> 'rgb(234,180,237)',"cantidad"=>0,"estado"=>"ACTIVO","category_id"=>22],
             [ "name"=> "COPA VACAFRIA MEDIANO","price"=>27.00,"imagen"=>"1673408262.jpg","color"=> 'rgb(247,231,139)', "cantidad"=>0,"estado"=>"ACTIVO","category_id"=>22],
             [ "name"=> "COPA MOO BERRY GRANDE","price"=>35.00,"imagen"=>"1673409635.webp","color"=> '#47449c', "cantidad"=>0,"estado"=>"ACTIVO","category_id"=>22],

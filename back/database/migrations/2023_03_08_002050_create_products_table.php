@@ -17,8 +17,8 @@ return new class extends Migration
             $table->double('price')->default(0);
             $table->string('imagen')->default('logo.png');
             $table->string('color')->default('');
-            $table->integer('cantidad')->default(0);
-            $table->string('estado')->default('ACTIVO'); 
+            $table->integer('cantidad')->default(0)->nullable();
+            $table->string('estado')->default('ACTIVO');
             $table->unsignedBigInteger('category_id');
             $table->foreign('category_id')->references('id')->on('categories');
             $table->timestamps();
