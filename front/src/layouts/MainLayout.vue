@@ -81,6 +81,24 @@ const linksList = [
     caption: 'Categorías de productos',
     icon: 'o_category',
     to: '/categories/3'
+  },
+  {
+    title: 'Productos sabor peru',
+    caption: 'productos',
+    icon: 'storefront',
+    to: '/products/1'
+  },
+  {
+    title: 'Productos cafe italia',
+    caption: 'productos',
+    icon: 'storefront',
+    to: '/products/2'
+  },
+  {
+    title: 'Productos vaca fria',
+    caption: 'productos',
+    icon: 'storefront',
+    to: '/products/3'
   }
 ]
 
