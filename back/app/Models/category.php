@@ -15,7 +15,5 @@ class category extends Model
         'shop_id',
     ];
     
-    public function category(){
-        return $this->belongsTo(Category::class);
-    }
+
 }

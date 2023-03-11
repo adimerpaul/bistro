@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Product;
+use App\Models\Category;
 use App\Http\Requests\StoreProductRequest;
 use App\Http\Requests\UpdateProductRequest;
 
@@ -36,10 +37,10 @@ class ProductController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Product $product)
+    public function show($shop_id)
     {
         //
-        return Product::with('category')->where()->get();
+        return Product::with('category')->where('category.shop_id',$shop_id)->get();
     }
 
     /**

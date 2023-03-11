@@ -2,7 +2,7 @@
   <q-page>
     <div class="row">
       <div class="col-12">
-        <q-table title="Categorias" :loading="loading" :rows-per-page-options="[0]" :columns="inventaryColumns" :rows="categories" flat bordered dense :filter="categoryFiltar">
+        <q-table title="Productos" :loading="loading" :rows-per-page-options="[0]" :columns="inventaryColumns" :rows="products" flat bordered dense :filter="categoryFiltar">
           <template v-slot:header-cell="props">
             <q-th :props="props" class="bg-primary text-white text-center">
               {{ props.col.label }}
@@ -10,7 +10,7 @@
           </template>
           <template v-slot:top-right>
             <q-btn label="Crear Categoria" color="primary" no-caps icon="add_circle_outline" @click="categoryCreate" dense />
-            <q-btn flat round icon="refresh" @click="categoriesGet" dense />
+            <q-btn flat round icon="refresh" @click="productsGet" dense />
             <q-btn flat round icon="o_download" @click="exportSales" dense />
             <q-input outlined dense v-model="categoryFiltar" label="Buscar" class="q-ml-md" clearable>
               <template v-slot:append>
@@ -91,7 +91,7 @@
 <script>
 import xlsx from 'json-as-xlsx'
 export default {
-  name: 'CategoriesPage',
+  name: 'ProductsPage',
   data () {
     return {
       inventarieDialog: false,
@@ -100,7 +100,7 @@ export default {
       inventaries: [],
       categoryShow: false,
       shop_id: this.$route.params.id,
-      categories: [],
+      products: [],
       category: {
         name: '',
         color: '',
@@ -128,13 +128,13 @@ export default {
     }
   },
   created () {
-    this.categoriesGet()
+    this.productsGet()
     this.$watch(
       () => this.$route.params,
       (toParams) => {
         // console.log(previousParams)
         this.shop_id = toParams.id
-        this.categoriesGet()
+        this.productsGet()
       }
     )
   },
@@ -157,9 +157,9 @@ export default {
         persistent: true
       }).onOk(() => {
         this.loading = true
-        this.$api.delete(`categories/${category.id}`)
+        this.$api.delete(`products/${category.id}`)
           .then(() => {
-            this.categoriesGet()
+            this.productsGet()
             this.$q.notify({
               color: 'green-4',
               textColor: 'white',
@@ -216,8 +216,8 @@ export default {
         persistent: true
       }).onOk(() => {
         this.$q.loading.show()
-        this.$api.delete('categories/' + category.id).then(() => {
-          this.categoriesGet()
+        this.$api.delete('products/' + category.id).then(() => {
+          this.productsGet()
         }).finally(() => {
           this.$q.loading.hide()
         }).catch(() => {
@@ -243,26 +243,26 @@ export default {
       this.$q.loading.show()
       this.category.shop_id = this.shop_id
       if (this.categoryStatus === 'create') {
-        this.$api.post('categories', this.category).then(() => {
-          this.categoriesGet()
+        this.$api.post('products', this.category).then(() => {
+          this.productsGet()
           this.categoryShow = false
         }).finally(() => {
           this.$q.loading.hide()
         })
       } else {
-        this.$api.put('categories/' + this.category.id, this.category).then(() => {
-          this.categoriesGet()
+        this.$api.put('products/' + this.category.id, this.category).then(() => {
+          this.productsGet()
           this.categoryShow = false
         }).finally(() => {
           this.$q.loading.hide()
         })
       }
     },
-    categoriesGet () {
-      this.categories = []
+    productsGet () {
+      this.products = []
       this.loading = true
-      this.$api.get('categories/' + this.shop_id).then((response) => {
-        this.categories = response.data
+      this.$api.get('products/' + this.shop_id).then((response) => {
+        this.products = response.data
       }).finally(() => {
         this.loading = false
       })
@@ -296,7 +296,7 @@ export default {
       this.$api.post('inventories', this.inventary).then((response) => {
         console.log(response)
         this.inventarieDialog = false
-        this.categoriesGet()
+        this.productsGet()
       }).catch((error) => {
         console.log(error)
       }).finally(() => {
