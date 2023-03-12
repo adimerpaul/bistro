@@ -2,17 +2,17 @@
   <q-page>
     <div class="row">
       <div class="col-12">
-        <q-table title="Productos" :loading="loading" :rows-per-page-options="[0]" :columns="inventaryColumns" :rows="products" flat bordered dense :filter="categoryFiltar">
+        <q-table title="Productos" :loading="loading" :rows-per-page-options="[0]" :columns="inventaryColumns" :rows="products" flat bordered dense :filter="productFiltar">
           <template v-slot:header-cell="props">
             <q-th :props="props" class="bg-primary text-white text-center">
               {{ props.col.label }}
             </q-th>
           </template>
           <template v-slot:top-right>
-            <q-btn label="Crear Categoria" color="primary" no-caps icon="add_circle_outline" @click="categoryCreate" dense />
+            <q-btn label="Crear Producto" color="primary" no-caps icon="add_circle_outline" @click="productCreate" dense />
             <q-btn flat round icon="refresh" @click="productsGet" dense />
             <q-btn flat round icon="o_download" @click="exportSales" dense />
-            <q-input outlined dense v-model="categoryFiltar" label="Buscar" class="q-ml-md" clearable>
+            <q-input outlined dense v-model="productFiltar" label="Buscar" class="q-ml-md" clearable>
               <template v-slot:append>
                 <q-icon name="search" />
               </template>
@@ -23,13 +23,13 @@
               <q-btn-dropdown round dense color="primary" dropdown-icon="more_vert" label="Acciones" no-caps>
                 <q-list>
                   <q-item clickable v-close-popup>
-                    <q-item-section @click="categoryEdit(props.row)">Editar</q-item-section>
+                    <q-item-section @click="productEdit(props.row)">Editar</q-item-section>
                   </q-item>
                   <q-item clickable v-close-popup>
-                    <q-item-section @click="categoryEditPhoto(props.row)">Editar Foto</q-item-section>
+                    <q-item-section @click="productEditPhoto(props.row)">Editar Foto</q-item-section>
                   </q-item>
                   <q-item clickable v-close-popup>
-                    <q-item-section @click="categoryDelete(props.row)">Eliminar</q-item-section>
+                    <q-item-section @click="productDelete(props.row)">Eliminar</q-item-section>
                   </q-item>
                 </q-list>
               </q-btn-dropdown>
@@ -45,25 +45,31 @@
         </q-table>
       </div>
     </div>
-    <q-dialog v-model="categoryShow">
+    <q-dialog v-model="productShow">
       <q-card>
         <q-card-section class="row items-center q-pb-none">
-          <div class="text-h6">{{ categoryStatus== 'create' ? 'Crear Categoria' : 'Editar Categoria' }}</div>
+          <div class="text-h6">{{ productStatus== 'create' ? 'Crear Categoria' : 'Editar Categoria' }}</div>
           <q-space />
           <q-btn flat icon="close" v-close-popup />
         </q-card-section>
         <q-card-section>
-          <q-form @submit.prevent="categorySubmit" ref="myForm">
+          <q-form @submit.prevent="productSubmit" ref="myForm">
             <div class="row">
               <div class="col-12 col-md-12">
-                <q-input v-if="categoryStatus == 'edit' || categoryStatus == 'create'" outlined dense v-model="category.name" label="Nombre" hint="" :rules="[val => val.length > 0 || 'El nombre es requerido']" />
+                <q-input v-if="productStatus == 'edit' || productStatus == 'create'" outlined dense v-model="product.name" label="Nombre" hint="" :rules="[val => val.length > 0 || 'El nombre es requerido']" />
+              </div>
+              <div class="col-12 col-md-12">
+                <q-input v-if="productStatus == 'edit' || productStatus == 'create'" outlined dense v-model="product.price" label="Precio" hint="" :rules="[val => val > 0 || 'El precio es requerido']" />
+              </div>
+              <div class="col-12 col-md-12">
+                <q-select v-if="productStatus == 'edit' || productStatus == 'create'" outlined dense v-model="category" label="Categoria" hint="" :options="categories"  />
               </div>
               <div class="col-12 col-md-12 flex flex-center">
-                <q-color v-if="categoryStatus == 'edit' || categoryStatus == 'create'" v-model="category.color" default-view="palette" style="max-width: 150px" />
+                <q-color v-if="productStatus == 'edit' || productStatus == 'create'" v-model="product.color" default-view="palette" style="max-width: 150px" />
               </div>
               <div class="col-12 col-md-12 flex flex-center">
                 <q-uploader
-                  v-if="categoryStatus == 'create' || categoryStatus == 'editPhoto'"
+                  v-if="productStatus == 'create' || productStatus == 'editPhoto'"
                   accept=".jpg, .png"
                   multiple
                   auto-upload
@@ -73,7 +79,7 @@
                   @failed="errorFn"
                   max-files="1"
                   auto-expand
-                  :url="categoryStatus=='create'?`${$url}upload/create/1`:`${$url}upload/editCategory/${category.id}`"
+                  :url="productStatus=='create'?`${$url}upload/create/1`:`${$url}upload/editproduct/${product.id}`"
                   stack-label="upload image"
                 />
               </div>
@@ -95,31 +101,34 @@ export default {
   data () {
     return {
       inventarieDialog: false,
-      categoryStatus: 'Crear',
+      productStatus: 'Crear',
       loading: false,
       inventaries: [],
-      categoryShow: false,
+      categories: [],
+      category: {},
+      productShow: false,
       shop_id: this.$route.params.id,
       products: [],
-      category: {
+      product: {
         name: '',
         color: '',
         imagen: ''
       },
       users: [],
-      categoryFiltar: '',
+      productFiltar: '',
       inventaryColumns: [
         { name: 'actions', label: 'Acciones', field: 'actions', align: 'left', sortable: false },
         // { name: 'code', label: 'Codigo', field: 'code', align: 'left', sortable: true },
         { name: 'imagen', label: 'Imagen', field: 'image', align: 'left', sortable: true },
-        { name: 'name', label: 'Nombre', field: 'name', align: 'left', sortable: true }
+        { name: 'name', label: 'Nombre', field: 'name', align: 'left', sortable: true },
         // { name: 'description', label: 'Descripcion', field: 'description', align: 'left', sortable: true }
-        // { name: 'price', label: 'Precio', field: 'price', align: 'left', sortable: true },
-        // { name: 'quantity', label: 'Cantidad', field: 'quantity', align: 'left', sortable: true },
-        // { name: 'category', label: 'Categoria', field: (row) => row.category.name, align: 'left', sortable: true }
+        { name: 'categoria', label: 'Categoria', field: row => row.category.name, align: 'left', sortable: true },
+        { name: 'price', label: 'Precio', field: 'price', align: 'left', sortable: true },
+        { name: 'cantidad', label: 'Cantidad', field: 'cantidad', align: 'left', sortable: true }
+        // { name: 'product', label: 'Categoria', field: (row) => row.product.name, align: 'left', sortable: true }
         // { name: 'user', label: 'Usuario', field: (row) => row.user == null ? '' : row.user.name, align: 'left', sortable: true }
       ],
-      categoryColumns: [
+      productColumns: [
         { name: 'actions', label: 'Acciones', field: 'actions', align: 'left', sortable: false },
         { name: 'id', label: 'Id', field: 'id', align: 'left', sortable: true },
         { name: 'name', label: 'Nombre', field: 'name', align: 'left', sortable: true },
@@ -139,17 +148,31 @@ export default {
     )
   },
   methods: {
-    categoryEditPhoto (category) {
-      this.categoryStatus = 'editPhoto'
-      this.categoryShow = true
-      this.category = category
+    categoriesGet () {
+      this.categories = []
+      this.loading = true
+      this.$api.get('categories/' + this.shop_id).then((response) => {
+        response.data.forEach(d => {
+          d.label = d.name
+          this.categories.push(d)
+        })
+      //  this.categories = response.data
+      }).finally(() => {
+        this.loading = false
+      })
     },
-    categoryEdit (category) {
-      this.categoryStatus = 'edit'
-      this.categoryShow = true
-      this.category = category
+    productEditPhoto (product) {
+      this.productStatus = 'editPhoto'
+      this.productShow = true
+      this.product = product
     },
-    categoryDelete (category) {
+    productEdit (product) {
+      this.productStatus = 'edit'
+      this.productShow = true
+      this.category = product.category
+      this.product = product
+    },
+    productDelete (product) {
       this.$q.dialog({
         title: 'Eliminar Categoria',
         message: '¿Estas seguro de eliminar esta categoria?',
@@ -157,7 +180,7 @@ export default {
         persistent: true
       }).onOk(() => {
         this.loading = true
-        this.$api.delete(`products/${category.id}`)
+        this.$api.delete(`products/${product.id}`)
           .then(() => {
             this.productsGet()
             this.$q.notify({
@@ -203,12 +226,12 @@ export default {
       e.xhr.onload = () => {
         if (e.xhr.readyState === e.xhr.DONE) {
           if (e.xhr.status === 200) {
-            this.category.imagen = e.xhr.response
+            this.product.imagen = e.xhr.response
           }
         }
       }
     },
-    deleteCategory (category) {
+    deleteproduct (product) {
       this.$q.dialog({
         title: 'Eliminar',
         message: '¿Estas seguro de eliminar esta categoria?',
@@ -216,7 +239,7 @@ export default {
         persistent: true
       }).onOk(() => {
         this.$q.loading.show()
-        this.$api.delete('products/' + category.id).then(() => {
+        this.$api.delete('products/' + product.id).then(() => {
           this.productsGet()
         }).finally(() => {
           this.$q.loading.hide()
@@ -230,39 +253,49 @@ export default {
         })
       })
     },
-    categoryCreate () {
-      this.categoryStatus = 'create'
-      this.category = {
+    productCreate () {
+      this.productStatus = 'create'
+      this.product = {
         name: '',
+        price: 0,
+        cantidad: 0,
         color: '',
-        imagen: ''
+        imagen: '',
+        estado: 'ACTIVO'
       }
-      this.categoryShow = true
+      this.category = this.categories[0]
+      this.productShow = true
     },
-    categorySubmit () {
+    productSubmit () {
       this.$q.loading.show()
-      this.category.shop_id = this.shop_id
-      if (this.categoryStatus === 'create') {
-        this.$api.post('products', this.category).then(() => {
+      this.product.category_id = this.category.id
+      if (this.productStatus === 'create') {
+        this.$api.post('products', this.product).then(() => {
           this.productsGet()
-          this.categoryShow = false
+          this.productShow = false
         }).finally(() => {
           this.$q.loading.hide()
         })
       } else {
-        this.$api.put('products/' + this.category.id, this.category).then(() => {
+        this.$api.put('products/' + this.product.id, this.product).then(() => {
           this.productsGet()
-          this.categoryShow = false
+          this.productShow = false
         }).finally(() => {
           this.$q.loading.hide()
         })
       }
     },
     productsGet () {
+      this.categoriesGet()
       this.products = []
       this.loading = true
       this.$api.get('products/' + this.shop_id).then((response) => {
-        this.products = response.data
+        response.data.forEach(r => {
+          // console.log(this.categories)
+          r.category = this.categories.find(x => x.id === r.category_id)
+          this.products.push(r)
+        })
+        console.log(this.products)
       }).finally(() => {
         this.loading = false
       })

@@ -6,6 +6,8 @@ use App\Models\Product;
 use App\Models\Category;
 use App\Http\Requests\StoreProductRequest;
 use App\Http\Requests\UpdateProductRequest;
+use Illuminate\Support\Facades\DB;
+
 
 class ProductController extends Controller
 {
@@ -32,6 +34,7 @@ class ProductController extends Controller
     public function store(StoreProductRequest $request)
     {
         //
+        return Product::create($request->all());
     }
 
     /**
@@ -40,7 +43,14 @@ class ProductController extends Controller
     public function show($shop_id)
     {
         //
-        return Product::with('category')->where('category.shop_id',$shop_id)->get();
+        return  DB::table('products')
+            ->select('products.*')
+            ->join('categories', 'categories.id', '=', 'products.category_id')
+            ->where('categories.shop_id',$shop_id)
+            ->get();
+     
+        return Product::with('category')
+        ->whereIn('category_id',$valor)->get();
     }
 
     /**
@@ -57,6 +67,8 @@ class ProductController extends Controller
     public function update(UpdateProductRequest $request, Product $product)
     {
         //
+        $product->update($request->all());
+        return $product;
     }
 
     /**
@@ -65,5 +77,7 @@ class ProductController extends Controller
     public function destroy(Product $product)
     {
         //
+        $product->delete();
+        return $product;
     }
 }
