@@ -22,6 +22,16 @@ class DatabaseSeeder extends Seeder
             ShopSeeder::class,
             CategorySeeder::class,
             ProductSeeder::class,
+            ActivitySeeder::class,
+            DocumentSectorSeeder::class,
+            DocumentSeeder::class,
+            EventSeeder::class,
+            LeyendaSeeder::class,
+            MedidaSeeder::class,
+            MessageSeeder::class,
+            MotivoSeeder::class,
+            ServicioSeeder::class,
+            TipopagoSeeder::class,
         ]);
     }
 }
