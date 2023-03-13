@@ -136,6 +136,15 @@ export default defineComponent({
       } else if (this.$route.path === '/categories/3') {
         setCssVar('primary', '#00538F')
         return 'Vaca fria'
+      } else if (this.$route.path === '/products/1') {
+        setCssVar('primary', '#8C131A')
+        return 'Sabor peru'
+      } else if (this.$route.path === '/products/2') {
+        setCssVar('primary', '#009203')
+        return 'Cafe italia'
+      } else if (this.$route.path === '/products/3') {
+        setCssVar('primary', '#00538F')
+        return 'Vaca fria'
       } else {
         return ''
       }
