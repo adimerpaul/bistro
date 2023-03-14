@@ -27,11 +27,23 @@ class ReportController extends Controller
     /**
      * Display the specified resource.
      */
+    public function datocine($id){
+        $shop=Shop::find($id);
+        $nit=env('NIT');
+        $razon=$shop->nombre;
+        $dir=env("DIRECCION");
+        $tel=env("TELEFONO");
+        $url=env("URL_SIAT");
+        $url2=env("URL_SIAT2");
+        return json_encode(['nit'=>$nit,'razon'=>$razon,'direccion'=>$dir,'telefono'=>$tel,'url'=>$url,'url2'=>$url2]);
+    }
+
     public function listado(Request $request)
     {
         //
         return Sale::with("client")->with("details")->with("user")
-        ->whereDate("fechaEmision",">=",$request->ini)->whereDate("fechaEmision","<=",$request->fin)
+        ->whereDate("fechaEmision",">=", $request->ini)
+        ->whereDate("fechaEmision","<=", $request->fin)
         ->where("tipo",$request->tipo)->get();
     }
 
