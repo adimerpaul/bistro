@@ -75,46 +75,6 @@
               </q-table>
         </div>
       </div>
-      <q-dialog v-model="categoryShow">
-        <q-card>
-          <q-card-section class="row items-center q-pb-none">
-            <div class="text-h6">{{ categoryStatus== 'create' ? 'Crear Categoria' : 'Editar Categoria' }}</div>
-            <q-space />
-            <q-btn flat icon="close" v-close-popup />
-          </q-card-section>
-          <q-card-section>
-            <q-form @submit.prevent="categorySubmit" ref="myForm">
-              <div class="row">
-                <div class="col-12 col-md-12">
-                  <q-input v-if="categoryStatus == 'edit' || categoryStatus == 'create'" outlined dense v-model="category.name" label="Nombre" hint="" :rules="[val => val.length > 0 || 'El nombre es requerido']" />
-                </div>
-                <div class="col-12 col-md-12 flex flex-center">
-                  <q-color v-if="categoryStatus == 'edit' || categoryStatus == 'create'" v-model="category.color" default-view="palette" style="max-width: 150px" />
-                </div>
-                <div class="col-12 col-md-12 flex flex-center">
-                  <q-uploader
-                    v-if="categoryStatus == 'create' || categoryStatus == 'editPhoto'"
-                    accept=".jpg, .png"
-                    multiple
-                    auto-upload
-                    label="Arrastra una imagen o haz click para seleccionar"
-                    @uploading="uploadingFn"
-                    ref="uploader"
-                    @failed="errorFn"
-                    max-files="1"
-                    auto-expand
-                    :url="categoryStatus=='create'?`${$url}upload/create/1`:`${$url}upload/editCategory/${category.id}`"
-                    stack-label="upload image"
-                  />
-                </div>
-                <div class="col-12 col-md-12 text-center q-pt-xs">
-                  <q-btn :loading="loading" color="primary" label="Guardar" type="submit" no-caps icon="o_save" class="full-width"  />
-                </div>
-              </div>
-            </q-form>
-          </q-card-section>
-        </q-card>
-      </q-dialog>
     </q-page>
   </template>
 

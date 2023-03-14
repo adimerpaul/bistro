@@ -15,7 +15,7 @@ class Product extends Model
     'color',
     'cantidad',
     'estado',
-    'category_id'
+    'category_id',"shop_id"
     ];
     
     public function category(){

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Sale;
+use Illuminate\Support\Facades\DB;
 
 class ReportController extends Controller
 {
@@ -29,7 +30,9 @@ class ReportController extends Controller
     public function listado(Request $request)
     {
         //
-        return Sale::with('client')->with('details')->with('user')->whereDate('fechaEmision','>=',$request->ini)->whereDate('fechaEmision','<=',$request->fin)->where('tipo'->$request->tipo)->get();
+        return Sale::with("client")->with("details")->with("user")
+        ->whereDate("fechaEmision",">=",$request->ini)->whereDate("fechaEmision","<=",$request->fin)
+        ->where("tipo"->$request->tipo)->get();
     }
 
     public function show( $request)
