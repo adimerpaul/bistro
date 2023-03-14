@@ -117,6 +117,24 @@ const linksList = [
     caption: 'Ventas',
     icon: 'o_shopping_cart',
     to: '/sales/3'
+  },
+  {
+    title: 'Listado sabor peru',
+    caption: 'Registros',
+    icon: 'format_list_bulleted',
+    to: '/listado/1'
+  },
+  {
+    title: 'Listado cafe italia',
+    caption: 'Registros',
+    icon: 'format_list_bulleted',
+    to: '/listado/2'
+  },
+  {
+    title: 'Listado vaca fria',
+    caption: 'Registros',
+    icon: 'format_list_bulleted',
+    to: '/listado/3'
   }
 ]
 
@@ -170,6 +188,15 @@ export default defineComponent({
         setCssVar('primary', '#009203')
         return 'Cafe italia'
       } else if (this.$route.path === '/sales/3') {
+        setCssVar('primary', '#00538F')
+        return 'Vaca fria'
+      } else if (this.$route.path === '/listado/1') {
+        setCssVar('primary', '#8C131A')
+        return 'Sabor peru'
+      } else if (this.$route.path === '/listado/2') {
+        setCssVar('primary', '#009203')
+        return 'Cafe italia'
+      } else if (this.$route.path === '/listado/3') {
         setCssVar('primary', '#00538F')
         return 'Vaca fria'
       } else {

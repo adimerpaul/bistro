@@ -136,11 +136,13 @@ export default {
   },
   created () {
     this.productsGet()
+    this.categoriesGet()
     this.$watch(
       () => this.$route.params,
       (toParams) => {
         // console.log(previousParams)
         this.shop_id = toParams.id
+        this.categoriesGet()
         this.productsGet()
       }
     )
@@ -284,15 +286,10 @@ export default {
       }
     },
     productsGet () {
-      this.categoriesGet()
       this.products = []
       this.loading = true
       this.$api.get('products/' + this.shop_id).then((response) => {
-        response.data.forEach(r => {
-          // console.log(this.categories)
-          r.category = this.categories.find(x => x.id === r.category_id)
-          this.products.push(r)
-        })
+        this.products = response.data
         console.log(this.products)
       }).finally(() => {
         this.loading = false
