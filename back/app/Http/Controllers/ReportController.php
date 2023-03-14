@@ -32,7 +32,7 @@ class ReportController extends Controller
         //
         return Sale::with("client")->with("details")->with("user")
         ->whereDate("fechaEmision",">=",$request->ini)->whereDate("fechaEmision","<=",$request->fin)
-        ->where("tipo"->$request->tipo)->get();
+        ->where("tipo",$request->tipo)->get();
     }
 
     public function show( $request)

@@ -35,7 +35,7 @@
               </div>
             </q-img>
             <q-card-section class="q-pa-none q-ma-none">
-              <div class="text-center text-subtitle2">{{ p.precio }} Bs</div>
+              <div class="text-center text-subtitle2">{{ p.price }} Bs</div>
               <div :class="p.cantidad<=0?'text-center text-bold text-red':' text-center text-bold'">{{ p.cantidad }} {{ $q.screen.lt.md?'Dis':'Disponible' }}</div>
             </q-card-section>
           </q-card>
@@ -47,7 +47,7 @@
         <q-card-section class="q-pa-none q-ma-none ">
           <div class="row">
             <div class="col-6 text-h6 q-pt-xs q-pl-lg">Canasta</div>
-            <div class="col-6 text-right"><q-btn class="text-subtitle1 text-blue-10 text-bold" style="text-decoration: underline;" label="Vaciar canasta" @click="productsSale=[]" no-caps flat outline/></div>
+            <div class="col-6 text-right"><q-btn class="text-subtitle1 text-blue-10 text-bold" style="text-decoration: underline;" label="Vaciar canasta" @click="vaciarCanasta" no-caps flat outline/></div>
           </div>
         </q-card-section>
         <q-separator></q-separator>
@@ -68,31 +68,16 @@
                   <q-td key="nombre" :props="props">
                     <div class="row">
                       <div class="col-3">
-                        <q-img :src="$url+'../images/' + props.row.image==null||props.row.image==''?'no-image.png':props.row.image" width="40px" height="80px" />
+                        <q-img :src="$url+'../images/' + (props.row.imagen==null||props.row.imagen==''?'default.png':props.row.imagen)" width="40px" height="80px" />
                       </div>
                       <div class="col-9">
-                        <div>{{props.row.nombre}}</div>
+                        <div class="subtitule-text" style="color: black">{{props.row.name}}</div>
                         <div class="text-grey">Disponible: {{props.row.cantidad}}</div>
-                        <div>
-                          <div class="row">
-                            <div class="col-8">
-                              <q-input v-model="props.row.precioVenta" type="number" @update:model-value="precioVenta(props.row)" dense style="margin: 0px">
-                                <template v-slot:prepend>
-                                  <q-icon name="edit" size="xs" />
-                                  <div style="font-size: 10px">Bs.</div>
-                                </template>
-                              </q-input>
-                            </div>
-                            <div class="col-2 text-bold flex flex-center">
-                              x und
-                            </div>
-                          </div>
-                        </div>
                       </div>
                     </div>
                   </q-td>
-                  <q-td key="cantidadVenta" :props="props">
-                    <q-input dense outlined bottom-slots min="1" v-model="props.row.cantidadVenta" @update:model-value="cambioNumero(props.row,props.pageIndex)" :rules="ruleNumber" type="number" input-class="text-center" required placeholder="Escribe el nombre del producto">
+                  <q-td key="cantidadVenta" :props="props" width="150px">
+                    <q-input dense outlined bottom-slots min="1" v-model="props.row.cantidadVenta" @update:model-value="cambioNumero(props.row,props.pageIndex)" :rules="ruleNumber" input-class="text-center" required placeholder="Escribe el nombre del producto">
                       <template v-slot:prepend>
                         <q-icon style="cursor: pointer" name="remove_circle_outline" @click="removeCantidad(props.row,props.pageIndex)"/>
                       </template>
@@ -136,7 +121,7 @@
                         </q-tooltip>
                       </q-icon>
                     </div>
-                    <div class="col-5 text-right text-green">{{totalganancia}} Bs</div>
+                    <div class="col-5 text-right text-green">0 Bs</div>
                   </div>
                 </q-card-section>
               </q-card>
@@ -159,7 +144,15 @@ export default {
       productsSale: [],
       categories: [],
       category: {},
-      shop_id: this.$route.params.id
+      shop_id: this.$route.params.id,
+      ruleNumber: [
+        val => val > 0 || 'El número debe ser mayor a 0'
+      ],
+      columnsProductosVenta: [
+        { label: 'borrar', field: 'borrar', name: 'borrar', align: 'left' },
+        { label: 'nombre', field: 'nombre', name: 'nombre', align: 'left' },
+        { label: 'cantidadVenta', field: 'cantidadVenta', name: 'cantidadVenta' }
+      ]
     }
   },
   created () {
@@ -169,19 +162,27 @@ export default {
       (toParams) => {
         // console.log(previousParams)
         this.shop_id = toParams.id
+        this.productsSale = []
         this.categoriesGet()
       }
     )
   },
   methods: {
-    addProductsSale (product) {
-      const index = this.productsSale.findIndex(x => x.id === product.id)
-      if (index === -1) {
-        product.cantidadVenta = 1
-        product.precioVenta = product.precio
-        this.productsSale.push(product)
+    vaciarCanasta () {
+      this.productsSale = []
+      this.productsGet()
+    },
+    addProductsSale (p) {
+      p.cantidadPedida++
+      p.cantidad--
+      const producto = this.productsSale.find(pv => pv.id === p.id)
+      if (producto === undefined) {
+        p.cantidadVenta = 1
+        p.precioVenta = p.price
+        this.productsSale.push(p)
       } else {
-        this.productsSale[index].cantidadVenta++
+        producto.cantidad = p.cantidad
+        producto.cantidadVenta++
       }
     },
     categoriesGet () {
@@ -195,7 +196,11 @@ export default {
       })
     },
     productsGet () {
+      this.products = []
       this.$api.get('productSFilter/' + this.category.id).then(response => {
+        response.data.forEach(p => {
+          p.cantidadPedida = 0
+        })
         this.products = response.data
         this.product = this.products[0]
       }).catch(error => {
@@ -242,6 +247,15 @@ export default {
       }).catch(error => {
         console.log(error)
       })
+    }
+  },
+  computed: {
+    total () {
+      let total = 0
+      this.productsSale.forEach(product => {
+        total += product.cantidadVenta * product.precioVenta
+      })
+      return total
     }
   }
 }
