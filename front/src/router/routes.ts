@@ -3,6 +3,7 @@ import MainLayout from 'layouts/MainLayout.vue'
 import IndexPage from 'pages/IndexPage.vue'
 import Categories from 'pages/Categories.vue'
 import Products from 'pages/Products.vue'
+import Sales from 'pages/Sales.vue'
 
 const routes: RouteRecordRaw[] = [
   {
@@ -11,7 +12,8 @@ const routes: RouteRecordRaw[] = [
     children: [
       { path: '', component: IndexPage },
       { path: 'categories/:id', component: Categories },
-      { path: 'products/:id', component: Products }
+      { path: 'products/:id', component: Products },
+      { path: 'sales/:id', component: Sales }
     ]
   },
 

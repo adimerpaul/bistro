@@ -99,6 +99,24 @@ const linksList = [
     caption: 'productos',
     icon: 'storefront',
     to: '/products/3'
+  },
+  {
+    title: 'Ventas sabor peru',
+    caption: 'Ventas',
+    icon: 'o_shopping_cart',
+    to: '/sales/1'
+  },
+  {
+    title: 'Ventas cafe italia',
+    caption: 'Ventas',
+    icon: 'o_shopping_cart',
+    to: '/sales/2'
+  },
+  {
+    title: 'Ventas vaca fria',
+    caption: 'Ventas',
+    icon: 'o_shopping_cart',
+    to: '/sales/3'
   }
 ]
 
@@ -143,6 +161,15 @@ export default defineComponent({
         setCssVar('primary', '#009203')
         return 'Cafe italia'
       } else if (this.$route.path === '/products/3') {
+        setCssVar('primary', '#00538F')
+        return 'Vaca fria'
+      } else if (this.$route.path === '/sales/1') {
+        setCssVar('primary', '#8C131A')
+        return 'Sabor peru'
+      } else if (this.$route.path === '/sales/2') {
+        setCssVar('primary', '#009203')
+        return 'Cafe italia'
+      } else if (this.$route.path === '/sales/3') {
         setCssVar('primary', '#00538F')
         return 'Vaca fria'
       } else {
