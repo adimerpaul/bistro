@@ -15,12 +15,12 @@ class ServicioSeeder extends Seeder
     {
         //
         DB::table("servicios")->insert([
-            [ "codigoActividad"=> "561120","codigoProducto"=> "21391","descripcionProducto"=> "PLATOS PREPARADOS Y COMIDAS A BASE DE VERDURAS, LEGUMBRES Y PAPAS","codigoPuntoVenta"=>0,"codigoSucrsal"=>0],
-            [ "codigoActividad"=> "561120","codigoProducto"=> "63320","descripcionProducto"=> "SERVICIOS DE SUMINISTRO DE COMIDA EN ESTABLECIMIENTOS DE SERVICIO LIMITADO","codigoPuntoVenta"=>0,"codigoSucrsal"=>0],
-            [ "codigoActividad"=> "561120","codigoProducto"=> "99100","descripcionProducto"=> "OTROS PRODUCTOS O SERVICIOS ALCANZADOS POR EL IVA","codigoPuntoVenta"=>0,"codigoSucrsal"=>0],
-            [ "codigoActividad"=> "561120","codigoProducto"=> "213919","descripcionProducto"=> "PLATOS PREPARADOS Y COMIDAS A BASE DE VERDURAS, LEGUMBRES Y PAPAS IMPORTADO","codigoPuntoVenta"=>0,"codigoSucrsal"=>0],
-            [ "codigoActividad"=> "561120","codigoProducto"=> "633209","descripcionProducto"=> "SERVICIOS DE SUMINISTRO DE COMIDA EN ESTABLECIMIENTOS DE SERVICIO LIMITADO IMPORTADO","codigoPuntoVenta"=>0,"codigoSucrsal"=>0],
-            [ "codigoActividad"=> "561120","codigoProducto"=> "991009","descripcionProducto"=> "OTROS PRODUCTOS O SERVICIOS ALCANZADOS POR EL IVA IMPORTADO","codigoPuntoVenta"=>0,"codigoSucrsal"=>0],
+            [ "codigoActividad"=> "561120","codigoProducto"=> "21391","descripcionProducto"=> "PLATOS PREPARADOS Y COMIDAS A BASE DE VERDURAS, LEGUMBRES Y PAPAS","codigoPuntoVenta"=>0,"codigoSucursal"=>0],
+            [ "codigoActividad"=> "561120","codigoProducto"=> "63320","descripcionProducto"=> "SERVICIOS DE SUMINISTRO DE COMIDA EN ESTABLECIMIENTOS DE SERVICIO LIMITADO","codigoPuntoVenta"=>0,"codigoSucursal"=>0],
+            [ "codigoActividad"=> "561120","codigoProducto"=> "99100","descripcionProducto"=> "OTROS PRODUCTOS O SERVICIOS ALCANZADOS POR EL IVA","codigoPuntoVenta"=>0,"codigoSucursal"=>0],
+            [ "codigoActividad"=> "561120","codigoProducto"=> "213919","descripcionProducto"=> "PLATOS PREPARADOS Y COMIDAS A BASE DE VERDURAS, LEGUMBRES Y PAPAS IMPORTADO","codigoPuntoVenta"=>0,"codigoSucursal"=>0],
+            [ "codigoActividad"=> "561120","codigoProducto"=> "633209","descripcionProducto"=> "SERVICIOS DE SUMINISTRO DE COMIDA EN ESTABLECIMIENTOS DE SERVICIO LIMITADO IMPORTADO","codigoPuntoVenta"=>0,"codigoSucursal"=>0],
+            [ "codigoActividad"=> "561120","codigoProducto"=> "991009","descripcionProducto"=> "OTROS PRODUCTOS O SERVICIOS ALCANZADOS POR EL IVA IMPORTADO","codigoPuntoVenta"=>0,"codigoSucursal"=>0],
         ]);
     }
 }

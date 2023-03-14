@@ -15,8 +15,7 @@ class ActivitySeeder extends Seeder
     {
         //
         DB::table("activities")->insert([
-            [ "codigoCaeb"=> "561120","descripcion"=> "EXPENDIO DE COMIDAS EN CAFETERÍAS, CONFITERÍAS, SNACK, HELADERÍAS Y OTROS LOCALES DE COMIDA RÁPIDA","tipoActividad"=>"P","codigoPuntoVenta"=>0,"codigoSucrsal"=>0],
- 
+            [ "codigoCaeb"=> "561120","descripcion"=> "EXPENDIO DE COMIDAS EN CAFETERÍAS, CONFITERÍAS, SNACK, HELADERÍAS Y OTROS LOCALES DE COMIDA RÁPIDA","tipoActividad"=>"P","codigoPuntoVenta"=>0,"codigoSucursal"=>0],
         ]);
     }
 }
