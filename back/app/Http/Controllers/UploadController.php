@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\category;
 use App\Models\Shop;
 use App\Models\User;
+use App\Models\Product;
 use Illuminate\Http\Request;
 use Intervention\Image\ImageManagerStatic as Image;
 
@@ -37,6 +38,14 @@ class UploadController extends Controller
             $category = Category::find($id);
             $category->imagen = $name;
             $category->save();
+            return $name;
+        }
+        if ($type=='editproduct'){
+            $ruta=public_path('/images/');
+            $file->move($ruta,$name);
+            $product = Product::find($id);
+            $product->imagen = $name;
+            $product->save();
             return $name;
         }
     }

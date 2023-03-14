@@ -118,11 +118,9 @@ export default {
       productFiltar: '',
       inventaryColumns: [
         { name: 'actions', label: 'Acciones', field: 'actions', align: 'left', sortable: false },
-        // { name: 'code', label: 'Codigo', field: 'code', align: 'left', sortable: true },
-        { name: 'imagen', label: 'Imagen', field: 'image', align: 'left', sortable: true },
+        { name: 'imagen', label: 'Imagen', field: 'imagen', align: 'left', sortable: true },
         { name: 'name', label: 'Nombre', field: 'name', align: 'left', sortable: true },
-        // { name: 'description', label: 'Descripcion', field: 'description', align: 'left', sortable: true }
-        { name: 'categoria', label: 'Categoria', field: row => row.category.name, align: 'left', sortable: true },
+        { name: 'category', label: 'Categoria', field: row => row.category.name, sortable: true },
         { name: 'price', label: 'Precio', field: 'price', align: 'left', sortable: true },
         { name: 'cantidad', label: 'Cantidad', field: 'cantidad', align: 'left', sortable: true }
         // { name: 'product', label: 'Categoria', field: (row) => row.product.name, align: 'left', sortable: true }
