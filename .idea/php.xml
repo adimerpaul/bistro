@@ -110,6 +110,7 @@
       <path value="$PROJECT_DIR$/back/vendor/tijsverkoyen/css-to-inline-styles" />
       <path value="$PROJECT_DIR$/back/vendor/egulias/email-validator" />
       <path value="$PROJECT_DIR$/back/vendor/intervention/image" />
+      <path value="$PROJECT_DIR$/back/vendor/robrichards/xmlseclibs" />
     </include_path>
   </component>
   <component name="PhpProjectSharedConfiguration" php_language_level="8.1" />

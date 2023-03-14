@@ -32,17 +32,43 @@
       v-model="leftDrawerOpen"
       show-if-above
       bordered
+      width="240"
     >
-      <q-list>
+      <q-list bordered class="rounded-borders">
         <q-item-label header class="text-center text-bold">
           Opciones
         </q-item-label>
 
-        <EssentialLink
-          v-for="link in essentialLinks"
-          :key="link.title"
-          v-bind="link"
-        />
+        <q-item clickable dense to="/" exact active-class="bg-primary text-white">
+          <q-item-section avatar><q-icon name="o_home" /></q-item-section>
+          <q-item-section><q-item-label>Principal</q-item-label><q-item-label caption class="text-grey">Pagina principal</q-item-label></q-item-section>
+        </q-item>
+        <q-expansion-item dense expand-separator icon="o_engineering" label="Siat" >
+          <q-expansion-item dense exact :header-inset-level="1" expand-separator icon="o_psychology" label="Cuis" default-opened to="cuis" expand-icon="null"/>
+          <q-expansion-item dense exact :header-inset-level="1" expand-separator icon="o_countertops" label="sincronizacion" default-opened to="sincronizacion" expand-icon="null"/>
+          <q-expansion-item dense exact :header-inset-level="1" expand-separator icon="link" label="Cufd" default-opened to="cufd" expand-icon="null"/>
+          <q-expansion-item dense exact :header-inset-level="1" expand-separator icon="list" label="Evento significativo" default-opened to="eventoSignificativo" expand-icon="null"/>
+        </q-expansion-item>
+        <q-expansion-item dense  icon="o_category" label="Categoria" default-opened>
+          <q-expansion-item dense expand-separator :header-inset-level="1"  icon="o_category" label="Sabor peru" to="/categories/1" hide-expand-icon/>
+          <q-expansion-item dense expand-separator :header-inset-level="1"  icon="o_category" label="Cafe italia" to="/categories/2" hide-expand-icon/>
+          <q-expansion-item dense expand-separator :header-inset-level="1"  icon="o_category" label="Vaca fria" to="/categories/3" hide-expand-icon/>
+        </q-expansion-item>
+        <q-expansion-item dense  icon="o_shopping_bag" label="Productos" default-opened>
+          <q-expansion-item dense expand-separator :header-inset-level="1"  icon="o_shopping_bag" label="Sabor peru" to="/products/1" hide-expand-icon/>
+          <q-expansion-item dense expand-separator :header-inset-level="1"  icon="o_shopping_bag" label="Cafe italia" to="/products/2" hide-expand-icon/>
+          <q-expansion-item dense expand-separator :header-inset-level="1"  icon="o_shopping_bag" label="Vaca fria" to="/products/3" hide-expand-icon/>
+        </q-expansion-item>
+        <q-expansion-item dense  icon="o_shopping_cart" label="Venta" default-opened>
+          <q-expansion-item dense expand-separator :header-inset-level="1"  icon="o_shopping_cart" label="Sabor peru" to="/sales/1" hide-expand-icon/>
+          <q-expansion-item dense expand-separator :header-inset-level="1"  icon="o_shopping_cart" label="Cafe italia" to="/sales/2" hide-expand-icon/>
+          <q-expansion-item dense expand-separator :header-inset-level="1"  icon="o_shopping_cart" label="Vaca fria" to="/sales/3" hide-expand-icon/>
+        </q-expansion-item>
+        <q-expansion-item dense  icon="o_description" label="Reportes" default-opened>
+          <q-expansion-item dense expand-separator :header-inset-level="1"  icon="o_description" label="Sabor peru" to="/listado/1" hide-expand-icon/>
+          <q-expansion-item dense expand-separator :header-inset-level="1"  icon="o_description" label="Cafe italia" to="/listado/2" hide-expand-icon/>
+          <q-expansion-item dense expand-separator :header-inset-level="1"  icon="o_description" label="Vaca fria" to="/listado/3" hide-expand-icon/>
+        </q-expansion-item>
       </q-list>
     </q-drawer>
 
@@ -54,103 +80,14 @@
 
 <script lang="ts">
 import { defineComponent, ref } from 'vue'
-import EssentialLink from 'components/EssentialLink.vue'
 import { setCssVar } from 'quasar'
-
-const linksList = [
-  {
-    title: 'Principal',
-    caption: 'Página principal',
-    icon: 'o_home',
-    to: '/'
-  },
-  {
-    title: 'Categorías sabor peru',
-    caption: 'Categorías de productos',
-    icon: 'o_category',
-    to: '/categories/1'
-  },
-  {
-    title: 'Categorías cafe italia',
-    caption: 'Categorías de productos',
-    icon: 'o_category',
-    to: '/categories/2'
-  },
-  {
-    title: 'Categorías vaca fria',
-    caption: 'Categorías de productos',
-    icon: 'o_category',
-    to: '/categories/3'
-  },
-  {
-    title: 'Productos sabor peru',
-    caption: 'productos',
-    icon: 'storefront',
-    to: '/products/1'
-  },
-  {
-    title: 'Productos cafe italia',
-    caption: 'productos',
-    icon: 'storefront',
-    to: '/products/2'
-  },
-  {
-    title: 'Productos vaca fria',
-    caption: 'productos',
-    icon: 'storefront',
-    to: '/products/3'
-  },
-  {
-    title: 'Ventas sabor peru',
-    caption: 'Ventas',
-    icon: 'o_shopping_cart',
-    to: '/sales/1'
-  },
-  {
-    title: 'Ventas cafe italia',
-    caption: 'Ventas',
-    icon: 'o_shopping_cart',
-    to: '/sales/2'
-  },
-  {
-    title: 'Ventas vaca fria',
-    caption: 'Ventas',
-    icon: 'o_shopping_cart',
-    to: '/sales/3'
-  },
-  {
-    title: 'Listado sabor peru',
-    caption: 'Registros',
-    icon: 'format_list_bulleted',
-    to: '/listado/1'
-  },
-  {
-    title: 'Listado cafe italia',
-    caption: 'Registros',
-    icon: 'format_list_bulleted',
-    to: '/listado/2'
-  },
-  {
-    title: 'Listado vaca fria',
-    caption: 'Registros',
-    icon: 'format_list_bulleted',
-    to: '/listado/3'
-  }
-]
 
 export default defineComponent({
   name: 'MainLayout',
-  components: {
-    EssentialLink
-  },
   data () {
     return {
-      essentialLinks: linksList,
       leftDrawerOpen: ref(false)
     }
-  },
-  mounted () {
-    console.log(this.$route.path)
   },
   methods: {
     logout () {
