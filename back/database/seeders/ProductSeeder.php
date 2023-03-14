@@ -29,7 +29,7 @@ class ProductSeeder extends Seeder
             [ "name"=> "POLLO AL CILINDRO","price"=>30.00,"imagen"=> "1647104573.png","color"=>"#7d0606","cantidad"=>0,"estado"=>"ACTIVO","category_id"=>1],
             [ "name"=> "CERDO AL CILINDRO","price"=>30.00,"imagen"=> "1647104628.jpg","color"=>"#7d0505","cantidad"=>0,"estado"=>"ACTIVO","category_id"=>1],
             [ "name"=> "POLLO ENTERO","price"=>80.00,"imagen"=> "1648400853.jpg","color"=>"#cfbc5f","cantidad"=>0,"estado"=>"ACTIVO","category_id"=>1],
-            [ "name"=> "Ceviche","price"=>25.00,"imagen"=> "","color"=>"","cantidad"=>0,"estado"=>"ACTIVO","category_id"=>1],
+            [ "name"=> "CEVICHE","price"=>25.00,"imagen"=> "ceviche.png","color"=>"red","cantidad"=>0,"estado"=>"ACTIVO","category_id"=>1],
 
             [ "name"=> "CHICHA MORADA","price"=>5.00,"imagen"=> "chicha.png","color"=>"blue","cantidad"=>0,"estado"=>"ACTIVO","category_id"=>2],
             [ "name"=> "SODA","price"=>9.00,"imagen"=> "1626968877.png","color"=>"#d12424","cantidad"=>0,"estado"=>"ACTIVO","category_id"=>2],
