@@ -4,13 +4,15 @@
       <q-badge label="Categoria" class="text-bold full-width text-center"/>
       <div class="row">
         <div class="col-2" v-for="c in categories" :key="c.id">
-          <q-card @click="clickCategoria(c)" style="cursor: pointer">
+          <q-card @click="clickCategoria(c)" :style="`cursor: pointer;background: ${c.color}`">
             <q-tooltip>
               {{c.name}}
             </q-tooltip>
             <q-img :src="$url+'../images/'+c.imagen" width="100%" height="100px">
-              <div class="absolute-bottom text-center text-subtitle2 noSelect  q-pa-none q-ma-none">
-                {{c.name}}
+              <div class="absolute-bottom text-subtitle2 text-center" style="padding: 0px;margin:0px;border: 0px">
+                <div class="q-pa-none q-ma-none" >
+                  <div class="subtitule-text">{{c.name}}</div>
+                </div>
               </div>
             </q-img>
           </q-card>
@@ -19,15 +21,17 @@
       <q-badge label="Productos" class="text-bold full-width text-center"/>
       <div class="row">
         <div class="col-2" v-for="p in products" :key="p.id">
-          <q-card @click="clickDetalleProducto(p)" style="cursor: pointer">
+          <q-card @click="addProductsSale(p)" style="cursor: pointer">
             <q-tooltip>
               {{p.name}}
             </q-tooltip>
-            <q-img :src="$url+'../images/'+ (p.imagen==''||p.imagen==null||p.imagen==undefined?'default.png':p.imagen)" width="100%" height="100px">
+            <q-img :style="`cursor: pointer;background: ${p.color}`" :src="$url+'../images/'+ (p.imagen==''||p.imagen==null||p.imagen==undefined?'default.png':p.imagen)" width="100%" height="100px">
               <q-btn v-if="p.cantidadPedida==0" style="top: 0px; right: 0px;background: rgba(255,255,255,0.5);border: 1px solid black;cursor: pointer" size="10px" class="absolute all-pointer-events" icon="add_circle_outline" dense/>
               <q-btn v-else :label="p.cantidadPedida" style="top: 0px; right: 0px;background: rgba(255,255,0,0.5);border: 1px solid black;cursor: pointer" size="10px" class="absolute all-pointer-events" icon="o_shopping_basket" dense/>
-              <div class="absolute-bottom text-center text-subtitle2 noSelect  q-pa-none q-ma-none">
-                {{p.name}}
+              <div class="absolute-bottom text-subtitle2 text-center" style="padding: 0px;margin:0px;border: 0px">
+                  <div class="q-pa-none q-ma-none" >
+                    <div class="subtitule-text">{{p.name}}</div>
+                  </div>
               </div>
             </q-img>
             <q-card-section class="q-pa-none q-ma-none">
@@ -170,7 +174,18 @@ export default {
     )
   },
   methods: {
+    addProductsSale (product) {
+      const index = this.productsSale.findIndex(x => x.id === product.id)
+      if (index === -1) {
+        product.cantidadVenta = 1
+        product.precioVenta = product.precio
+        this.productsSale.push(product)
+      } else {
+        this.productsSale[index].cantidadVenta++
+      }
+    },
     categoriesGet () {
+      this.categories = []
       this.$api.get('categories/' + this.shop_id).then(response => {
         this.categories = response.data
         this.category = this.categories[0]
@@ -180,7 +195,7 @@ export default {
       })
     },
     productsGet () {
-      this.$api.get('products/' + this.category.id).then(response => {
+      this.$api.get('productSFilter/' + this.category.id).then(response => {
         this.products = response.data
         this.product = this.products[0]
       }).catch(error => {
@@ -233,5 +248,9 @@ export default {
 </script>
 
 <style scoped>
-
+.subtitule-text{
+  font-size: 12px;
+  line-height: 1;
+  color: #fff;
+}
 </style>

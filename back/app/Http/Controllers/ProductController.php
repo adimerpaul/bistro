@@ -48,9 +48,13 @@ class ProductController extends Controller
             ->join('categories', 'categories.id', '=', 'products.category_id')
             ->where('categories.shop_id',$shop_id)
             ->get();
-     
+
         return Product::with('category')
         ->whereIn('category_id',$valor)->get();
+    }
+    public function productSFilter($category_id)
+    {
+        return Product::where('category_id',$category_id)->get();
     }
 
     /**
