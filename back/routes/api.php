@@ -23,4 +23,5 @@ Route::apiResource('products', \App\Http\Controllers\ProductController::class);
 Route::get('productSFilter/{category_id}', [\App\Http\Controllers\ProductController::class,'productSFilter']);
 Route::post('upload/{type}/{id}', [\App\Http\Controllers\UploadController::class,'upload']);
 Route::post('listado', [\App\Http\Controllers\ReportController::class,'listado']);
-Route::post('datocine', [\App\Http\Controllers\ReportController::class,'datocine']);
+Route::get('datocine/{id}', [\App\Http\Controllers\ReportController::class,'datocine']);
+Route::get('motivoanular', [\App\Http\Controllers\ReportController::class,'motivoanular']);

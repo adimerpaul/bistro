@@ -1,17 +1,14 @@
 <template>
     <q-page>
       <div class="row">
-        <div class="col-12">
-            <div class="bg-primary text-white text-bold text-center text-h4">{{titulo}}</div>
-          </div>
           <div class="col-12">
             <q-form @submit.prevent="listadoGet">
               <div class="row">
                 <div class="col-4 q-pa-xs">
-                  <q-input outlined label="FechaIni" type="date" v-model="fechaIni" />
+                  <q-input outlined label="FechaIni" type="date" v-model="fechaIni" dense />
                 </div>
                 <div class="col-4 q-pa-xs">
-                  <q-input outlined label="FechaFin" type="date" v-model="fechaFin" />
+                  <q-input outlined label="FechaFin" type="date" v-model="fechaFin" dense/>
                 </div>
                 <div class="col-4 q-pa-xs flex flex-center">
                   <q-btn label="Buscar" icon="search" color="primary" type="submit" class="" :loading="loading" />
@@ -22,7 +19,7 @@
         <div class="col-12">
             <q-table :rows="listado" :columns="listaColums" :filter="filter">
                 <template v-slot:top-right>
-                   <q-btn color="green"  label="Export EXCEL" @click="exportar" />
+                   <!--<q-btn color="green"  label="Export EXCEL" @click="exportar" />-->
                    <q-input outlined dense debounce="300" v-model="filter" placeholder="Buscar">
                     <template v-slot:append>
                       <q-icon name="search" />
@@ -97,8 +94,8 @@ import xlsx from 'json-as-xlsx'
 import { date } from 'quasar'
 import { Printd } from 'printd'
 
-// const conversor = require('conversor-numero-a-letras-es-ar')
-const QRCode = require('qrcode')
+import conversor from 'conversor-numero-a-letras-es-ar'
+import QRCode from 'qrcode'
 
 export default {
   name: 'ListadoPage',
@@ -107,7 +104,11 @@ export default {
       inventarieDialog: false,
       categoryStatus: 'Crear',
       loading: false,
+      dialogAnular: false,
       inventaries: [],
+      motivos: [],
+      filter: '',
+      motivo: {},
       categoryShow: false,
       fechaIni: date.formatDate(new Date(), 'YYYY-MM-DD'),
       fechaFin: date.formatDate(new Date(), 'YYYY-MM-DD'),
@@ -154,12 +155,18 @@ export default {
     this.cargarMotivo()
   },
   methods: {
+    encabezado () {
+      this.$api.get('datocine/' + this.shop_id).then(res => {
+        this.cine = res.data
+        // console.log(this.cine)
+      })
+    },
     async printFactura (factura) {
       console.log(factura)
       this.facturadetalle = factura
-      // const ClaseConversor = conversor.conversorNumerosAconstras
-      // const miConversor = new ClaseConversor()
-      // const a = miConversor.convertToText(parseInt(factura.montoTotal))
+      const ClaseConversor = conversor.conversorNumerosAconstras
+      const miConversor = new ClaseConversor()
+      const a = miConversor.convertToText(parseInt(factura.montoTotal))
       this.qrImage = await QRCode.toDataURL(this.cine.url2 + 'consulta/QR?nit=' + this.cine.nit + '&cuf=' + factura.cuf + '&numero=' + factura.numeroFactura + '&t=2', this.opts)
       // eslint-disable-next-line no-multi-str
       let cadena = "<style>\
@@ -218,9 +225,9 @@ export default {
 
     async printComanda (factura) {
       this.facturadetalle = factura
-      // const ClaseConversor = conversor.conversorNumerosALetras
-      // const miConversor = new ClaseConversor()
-      // const a = miConversor.convertToText(parseInt(factura.montoTotal))
+      const ClaseConversor = conversor.conversorNumerosALetras
+      const miConversor = new ClaseConversor()
+      const a = miConversor.convertToText(parseInt(factura.montoTotal))
       // eslint-disable-next-line no-multi-str
       let cadena = "<style>\
       .titulo{\
@@ -276,7 +283,7 @@ export default {
       const d = new Printd()
       d.print(document.getElementById('myelement'))
     },
-    enviarAnular () {
+    anularSale () {
       this.$q.loading.show()
       this.$api.post('anularSale', { sale: this.factura, motivo: this.motivo }).then(res => {
         console.log(res.data)

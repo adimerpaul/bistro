@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Sale;
+use App\Models\Shop;
+use App\Models\Motivo;
 use Illuminate\Support\Facades\DB;
 
 class ReportController extends Controller
@@ -22,6 +24,10 @@ class ReportController extends Controller
     public function store(Request $request)
     {
         //
+    }
+
+    public function motivoanular(){
+        return Motivo::all();
     }
 
     /**
