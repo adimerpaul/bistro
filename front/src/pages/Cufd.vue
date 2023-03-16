@@ -154,6 +154,7 @@ export default {
     cuiCreate () {
       this.loading = true
       this.$api.post('cufd', this.cui).then(res => {
+        console.log(res)
         this.loading = false
         this.cuiDialog = false
         this.cufdGet()
@@ -187,7 +188,7 @@ export default {
         cufdEvento: this.cufdEvento.codigo,
         cufdEventoId: this.cufdEvento.id
       }).then(res => {
-        // console.log(res.data)
+        console.log(res.data)
         this.loading = false
         this.cuiDialog = false
         this.eventoSignificativoDialog = false

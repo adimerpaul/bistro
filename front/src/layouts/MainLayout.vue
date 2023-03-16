@@ -32,7 +32,6 @@
       v-model="leftDrawerOpen"
       show-if-above
       bordered
-      width="240"
     >
       <q-list bordered class="rounded-borders">
         <q-item-label header class="text-center text-bold">
@@ -44,10 +43,10 @@
           <q-item-section><q-item-label>Principal</q-item-label><q-item-label caption class="text-grey">Pagina principal</q-item-label></q-item-section>
         </q-item>
         <q-expansion-item dense expand-separator icon="o_engineering" label="Siat" >
-          <q-expansion-item dense exact :header-inset-level="1" expand-separator icon="o_psychology" label="Cuis" default-opened to="cuis" expand-icon="null"/>
-          <q-expansion-item dense exact :header-inset-level="1" expand-separator icon="o_countertops" label="sincronizacion" default-opened to="sincronizacion" expand-icon="null"/>
-          <q-expansion-item dense exact :header-inset-level="1" expand-separator icon="link" label="Cufd" default-opened to="cufd" expand-icon="null"/>
-          <q-expansion-item dense exact :header-inset-level="1" expand-separator icon="list" label="Evento significativo" default-opened to="eventoSignificativo" expand-icon="null"/>
+          <q-expansion-item dense exact :header-inset-level="1" expand-separator icon="o_psychology" label="Cuis" default-opened to="/cuis" hide-expand-icon/>
+          <q-expansion-item dense exact :header-inset-level="1" expand-separator icon="o_countertops" label="/sincronizacion" default-opened to="/sincronizacion" hide-expand-icon/>
+          <q-expansion-item dense exact :header-inset-level="1" expand-separator icon="link" label="Cufd" default-opened to="/cufd" hide-expand-icon/>
+          <q-expansion-item dense exact :header-inset-level="1" expand-separator icon="list" label="Evento significativo" default-opened to="/eventoSignificativo" hide-expand-icon/>
         </q-expansion-item>
         <q-expansion-item dense  icon="o_category" label="Categoria" default-opened>
           <q-expansion-item dense expand-separator :header-inset-level="1"  icon="o_category" label="Sabor peru" to="/categories/1" hide-expand-icon/>
