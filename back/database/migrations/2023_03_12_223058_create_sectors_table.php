@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('sectors', function (Blueprint $table) {
             $table->id();
             $table->string('codigoActividad');
-            $table->string('codigoDocumentooSector');
+            $table->string('codigoDocumentoSector');
             $table->string('tipoDocumentoSector');
             $table->integer('codigoPuntoVenta');
             $table->integer('codigoSucursal');

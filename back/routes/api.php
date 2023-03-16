@@ -25,3 +25,13 @@ Route::post('upload/{type}/{id}', [\App\Http\Controllers\UploadController::class
 Route::post('listado', [\App\Http\Controllers\ReportController::class,'listado']);
 Route::get('datocine/{id}', [\App\Http\Controllers\ReportController::class,'datocine']);
 Route::get('motivoanular', [\App\Http\Controllers\ReportController::class,'motivoanular']);
+Route::resource('cui', \App\Http\Controllers\CuiController::class);
+Route::resource('cufd', \App\Http\Controllers\CufdController::class);
+Route::resource('activity', \App\Http\Controllers\ActivityController::class);
+Route::resource('document', \App\Http\Controllers\DocumentController::class);
+Route::resource('eventoSignificativo', \App\Http\Controllers\EventoSignificativoController::class);
+Route::get('motivoanular', [\App\Http\Controllers\ActivityController::class,'motivoanular']);
+Route::post('recepcionPaqueteFactura', [\App\Http\Controllers\EventoSignificativoController::class,'recepcionPaqueteFactura']);
+Route::post('cantidadFacturas', [\App\Http\Controllers\EventoSignificativoController::class,'cantidadFacturas']);
+Route::post('validarPaquete', [\App\Http\Controllers\EventoSignificativoController::class,'validarPaquete']);
+Route::resource('event', \App\Http\Controllers\EventController::class);

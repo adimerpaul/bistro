@@ -5,6 +5,10 @@ import Categories from 'pages/Categories.vue'
 import Products from 'pages/Products.vue'
 import Sales from 'pages/Sales.vue'
 import Listado from 'pages/ListadoVenta.vue'
+import Cufd from 'pages/Cufd.vue'
+import Cuis from 'pages/Cuis.vue'
+import EventoSignificativo from 'pages/EventoSignificativo.vue'
+import Sincronizacion from 'pages/Sincronizacion.vue'
 
 const routes: RouteRecordRaw[] = [
   {
@@ -15,7 +19,11 @@ const routes: RouteRecordRaw[] = [
       { path: 'categories/:id', component: Categories },
       { path: 'products/:id', component: Products },
       { path: 'sales/:id', component: Sales },
-      { path: 'listado/:id', component: Listado }
+      { path: 'listado/:id', component: Listado },
+      { path: 'cufd', component: Cufd },
+      { path: 'cuis', component: Cuis },
+      { path: 'eventoSignificativo', component: EventoSignificativo },
+      { path: 'sincronizacion', component: Sincronizacion }
     ]
   },
 

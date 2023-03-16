@@ -2,11 +2,11 @@
 
 namespace App\Policies;
 
-use App\Models\Cuis;
+use App\Models\Cui;
 use App\Models\User;
 use Illuminate\Auth\Access\Response;
 
-class CuisPolicy
+class CuiPolicy
 {
     /**
      * Determine whether the user can view any models.
@@ -19,7 +19,7 @@ class CuisPolicy
     /**
      * Determine whether the user can view the model.
      */
-    public function view(User $user, Cuis $cuis): bool
+    public function view(User $user, Cui $cui): bool
     {
         //
     }
@@ -35,7 +35,7 @@ class CuisPolicy
     /**
      * Determine whether the user can update the model.
      */
-    public function update(User $user, Cuis $cuis): bool
+    public function update(User $user, Cui $cui): bool
     {
         //
     }
@@ -43,7 +43,7 @@ class CuisPolicy
     /**
      * Determine whether the user can delete the model.
      */
-    public function delete(User $user, Cuis $cuis): bool
+    public function delete(User $user, Cui $cui): bool
     {
         //
     }
@@ -51,7 +51,7 @@ class CuisPolicy
     /**
      * Determine whether the user can restore the model.
      */
-    public function restore(User $user, Cuis $cuis): bool
+    public function restore(User $user, Cui $cui): bool
     {
         //
     }
@@ -59,7 +59,7 @@ class CuisPolicy
     /**
      * Determine whether the user can permanently delete the model.
      */
-    public function forceDelete(User $user, Cuis $cuis): bool
+    public function forceDelete(User $user, Cui $cui): bool
     {
         //
     }

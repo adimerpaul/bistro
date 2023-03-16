@@ -23,7 +23,7 @@ class DatabaseSeeder extends Seeder
             CategorySeeder::class,
             ProductSeeder::class,
             ActivitySeeder::class,
-            DocumentSectorSeeder::class,
+            DocumentsectorSeeder::class,
             DocumentSeeder::class,
             EventSeeder::class,
             LeyendaSeeder::class,
@@ -32,6 +32,7 @@ class DatabaseSeeder extends Seeder
             MotivoSeeder::class,
             ServicioSeeder::class,
             TipopagoSeeder::class,
+            CuiSeeder::class,
         ]);
     }
 }

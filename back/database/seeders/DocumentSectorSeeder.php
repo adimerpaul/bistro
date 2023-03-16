@@ -6,7 +6,7 @@ use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 
-class DocumentSectorSeeder extends Seeder
+class DocumentsectorSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -14,7 +14,7 @@ class DocumentSectorSeeder extends Seeder
     public function run(): void
     {
         //
-        DB::table("document_sectors")->insert([
+        DB::table("documentsectors")->insert([
 
             [ "codigoClasificador"=> "1","descripcion"=> "FACTURA COMPRA-VENTA","codigoPuntoVenta"=>0,"codigoSucursal"=>0],
             [ "codigoClasificador"=> "2","descripcion"=> "FACTURA DE ALQUILER DE BIENES INMUEBLES","codigoPuntoVenta"=>0,"codigoSucursal"=>0],

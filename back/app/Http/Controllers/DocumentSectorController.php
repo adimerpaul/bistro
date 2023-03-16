@@ -3,10 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Models\DocumentSector;
-use App\Http\Requests\StoreDocumentSectorRequest;
-use App\Http\Requests\UpdateDocumentSectorRequest;
+use App\Http\Requests\StoreDocumentsectorRequest;
+use App\Http\Requests\UpdateDocumentsectorRequest;
 
-class DocumentSectorController extends Controller
+class DocumentsectorController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -27,7 +27,7 @@ class DocumentSectorController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StoreDocumentSectorRequest $request)
+    public function store(StoreDocumentsectorRequest $request)
     {
         //
     }
@@ -35,7 +35,7 @@ class DocumentSectorController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(DocumentSector $documentSector)
+    public function show(Documentsector $documentsector)
     {
         //
     }
@@ -43,7 +43,7 @@ class DocumentSectorController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(DocumentSector $documentSector)
+    public function edit(Documentsector $documentsector)
     {
         //
     }
@@ -51,7 +51,7 @@ class DocumentSectorController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateDocumentSectorRequest $request, DocumentSector $documentSector)
+    public function update(UpdateDocumentsectorRequest $request, DocumentSector $documentsector)
     {
         //
     }
@@ -59,7 +59,7 @@ class DocumentSectorController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(DocumentSector $documentSector)
+    public function destroy(Documentsector $documentsector)
     {
         //
     }
