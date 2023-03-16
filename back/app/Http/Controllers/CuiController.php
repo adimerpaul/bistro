@@ -3,8 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\Cui;
-use App\Http\Requests\StoreCuisRequest;
-use App\Http\Requests\UpdateCuisRequest;
+use App\Http\Requests\StoreCuiRequest;
+use App\Http\Requests\UpdateCuiRequest;
 
 class CuiController extends Controller
 {
