@@ -269,6 +269,7 @@ export default {
     productSubmit () {
       this.$q.loading.show()
       this.product.category_id = this.category.id
+      this.product.shop_id = this.shop_id
       if (this.productStatus === 'create') {
         this.$api.post('products', this.product).then(() => {
           this.productsGet()
