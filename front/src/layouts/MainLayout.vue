@@ -44,7 +44,7 @@
         </q-item>
         <q-expansion-item dense expand-separator icon="o_engineering" label="Siat" >
           <q-expansion-item dense exact :header-inset-level="1" expand-separator icon="o_psychology" label="Cuis" default-opened to="/cuis" hide-expand-icon/>
-          <q-expansion-item dense exact :header-inset-level="1" expand-separator icon="o_countertops" label="/sincronizacion" default-opened to="/sincronizacion" hide-expand-icon/>
+          <q-expansion-item dense exact :header-inset-level="1" expand-separator icon="o_countertops" label="sincronizacion" default-opened to="/sincronizacion" hide-expand-icon/>
           <q-expansion-item dense exact :header-inset-level="1" expand-separator icon="link" label="Cufd" default-opened to="/cufd" hide-expand-icon/>
           <q-expansion-item dense exact :header-inset-level="1" expand-separator icon="list" label="Evento significativo" default-opened to="/eventoSignificativo" hide-expand-icon/>
         </q-expansion-item>
