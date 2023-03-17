@@ -94,8 +94,8 @@ import xlsx from 'json-as-xlsx'
 import { date } from 'quasar'
 import { Printd } from 'printd'
 
-import conversor from 'conversor-numero-a-letras-es-ar'
-import QRCode from 'qrcode'
+const conversor = require.context('conversor-numero-a-letras-es-ar')
+const QRCode = require.context('qrcode')
 
 export default {
   name: 'ListadoPage',
@@ -145,7 +145,6 @@ export default {
       (toParams) => {
         // console.log(previousParams)
         this.shop_id = toParams.id
-        this.titulo = this.opt[this.shop_id - 1]
         this.listadoGet()
       }
     )
@@ -376,6 +375,7 @@ export default {
       }
     },
     listadoGet () {
+      this.titulo = this.opt[this.shop_id - 1]
       this.loading = true
       this.$api.post('listado', { ini: this.fechaIni, fin: this.fechaFin, tipo: this.titulo }).then((response) => {
         this.listado = response.data

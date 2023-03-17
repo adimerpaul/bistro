@@ -46,11 +46,12 @@ class ReportController extends Controller
 
     public function listado(Request $request)
     {
-        //
+        //        return $request;
         return Sale::with("client")->with("details")->with("user")
         ->whereDate("fechaEmision",">=", $request->ini)
         ->whereDate("fechaEmision","<=", $request->fin)
-        ->where("tipo",$request->tipo)->get();
+        ->where("tipo",$request->tipo)
+        ->get();
     }
 
     public function show( $request)
