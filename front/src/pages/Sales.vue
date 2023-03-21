@@ -1,5 +1,5 @@
 <template>
-  <q-page class="row">
+  <div class="row">
     <div class="col-12 col-sm-7">
       <q-badge label="Categoria" class="text-bold full-width text-center"/>
       <div class="row">
@@ -127,31 +127,77 @@
               </q-card>
             </q-expansion-item>
           </q-list>
-          <q-btn @click="clickSale" class="full-width" no-caps label="Confirmar venta" :color="productsSale.length==0?'grey':'warning'" :disable="productsSale.length==0?true:false"/>
+          <q-btn @click="icon = true;tienerebaja=false; booltarjeta=false; tarjeta=false;" class="full-width" no-caps label="Confirmar venta" :color="productsSale.length==0?'grey':'warning'" :disable="productsSale.length==0?true:false"/>
         </q-card-section>
       </q-card>
     </div>
-    <q-dialog v-model="dialogSale" persistent>
-      <q-card style="width: 400px">
-        <q-card-section class="row items-center">
-          <div class="text-h6">Confirmar venta</div>
-          <q-space/>
-          <q-btn flat icon="close" v-close-popup></q-btn>
+
+    <q-dialog v-model="icon" full-width persistent>
+      <q-card style="width: 700px; max-width: 80vw;">
+        <q-card-section class="row items-center q-pa-xs bg-green-14 text-white">
+          <div class="text-h6"> <q-icon name="send"></q-icon> Realizar venta</div>
+          <q-space />
+          <q-btn icon="close" flat round dense v-close-popup />
         </q-card-section>
         <q-card-section>
           <div class="row">
-            <div class="col-12 text-grey">
-              <q-input model-value="Cliente" dense outlined bottom-slots input-class="text-center" required placeholder="carne">
-                <template v-slot:prepend>
-                  <q-icon name="person"/>
-                </template>
-              </q-input>
+            <div class="col-12">
+              <q-form
+                @submit.prevent="saleInsert"
+                class="q-gutter-md"
+              >
+                <div class="row">
+                  <div class="col-2">
+                    <q-input required @keyup="searchClient" outlined v-model="client.numeroDocumento" label="CI / NIT *"  hint="Carnet o nit" lazy-rules :rules="[ val => val && val.length > 0 || 'Dato obligatorio']" />
+                  </div>
+                  <div class="col-2">
+                    <q-input @keyup="searchClient" outlined v-model="client.complemento" label="COMPLEMENTO" />
+                  </div>
+                  <div class="col-3">
+                    <q-input required outlined v-model="client.nombreRazonSocial" label="Nombre y razon *" hint="Razon social" style="text-transform: uppercase" lazy-rules :rules="[ val => val && val.length > 0 || 'Dato obligatorio']" />
+                  </div>
+                  <div class="col-3">
+                    <q-select v-model="document" outlined :options="documents" @update:model-value="validarnit"/>
+                  </div>
+                  <div class="col-2">
+                    <q-input outlined v-model="client.email" label="Email" type="email" />
+                  </div>
+                  <div class="col-3 q-pa-xs">
+                    <q-input required outlined disable v-model="total" label="Total*" lazy-rules />
+                  </div>
+                  <div class="col-3 q-pa-xs">
+                    <q-input v-model="efectivo" outlined label="Monto recibido" />
+                  </div>
+                  <div class="col-3 q-pa-xs">
+                    <q-input outlined disable label="Cambio" v-model="cambio" />
+                  </div>
+                  <div class="row col-3">
+                    <!--<q-checkbox v-model="credito"  label="T Credito" dense/>
+                    <q-checkbox  v-model="booltarjeta"  label="T VIP" dense @click="verificar"/>-->
+                  </div>
+                  <div class="col-12">
+                  <template v-if="booltarjeta">
+                      <q-form @submit.prevent="consultartarjeta">
+                      <div class="row">
+                      <div class="col-6"><q-input outlined label="Codigo" v-model="codigo"  @keyup="consultartarjeta"/></div>
+                      <div class="col-6"><q-banner >Saldo :{{nombresaldo.saldo}} -- {{nombresaldo.nombre}}</q-banner></div>
+                    </div>
+                    </q-form>
+                  </template>
+                </div>
+              </div>
+                <div>
+                  <q-btn  label="venta" :loading="loading" icon="send" type="submit" color="positive" :disable="btn"/>
+                  <q-btn label="Cerrar" :loading="loading" type="button" size="md" icon="delete" color="negative" class="q-ml-sm" @click="cancelarVenta" />
+                </div>
+              </q-form>
             </div>
           </div>
         </q-card-section>
       </q-card>
     </q-dialog>
-  </q-page>
+
+  </div>
 </template>
 
 <script>
@@ -159,12 +205,18 @@ export default {
   name: 'SalesPage',
   data () {
     return {
+      loading: false,
+      icon: false,
       products: [],
+      client: {},
       product: {},
-      dialogSale: true,
       productsSale: [],
+      documents: [],
+      document: {},
       categories: [],
       category: {},
+      cine: {},
+      efectivo: '',
       shop_id: this.$route.params.id,
       ruleNumber: [
         val => val > 0 || 'El número debe ser mayor a 0'
@@ -177,6 +229,15 @@ export default {
     }
   },
   created () {
+    this.encabezado()
+    this.cargarLeyenda()
+    this.$api.get('document').then(res => {
+      res.data.forEach(r => {
+        r.label = r.descripcion
+      })
+      this.documents = res.data
+      this.document = this.documents[0]
+    })
     this.categoriesGet()
     this.$watch(
       () => this.$route.params,
@@ -189,6 +250,56 @@ export default {
     )
   },
   methods: {
+    validarnit () {
+      if (this.document === this.documents[4]) {
+        this.$api.get('validanit/' + this.client.numeroDocumento).then(res => {
+          console.log(res.data)
+          this.$q.notify({
+            message: res.data.RespuestaVerificarNit.mensajesList.descripcion,
+            color: 'teal',
+            icon: 'info'
+          })
+        })
+      }
+    },
+    cancelarVenta () {
+      this.codigo = ''
+      this.booltarjeta = false
+      this.nombresaldo = {}
+      this.icon = false
+      this.verificar()
+    },
+    searchClient () {
+      // console.log(this.client)
+      this.document = this.documents[0]
+      this.client.nombreRazonSocial = ''
+      this.client.email = ''
+      this.client.id = undefined
+      this.$api.post('searchClient', this.client).then(res => {
+        // console.log(res.data)
+        if (res.data.nombreRazonSocial !== undefined) {
+          this.client.nombreRazonSocial = res.data.nombreRazonSocial
+          this.client.email = res.data.email
+          this.client.id = res.data.id
+          const documento = this.documents.find(r => r.codigoClasificador === res.data.codigoTipoDocumentoIdentidad)
+          documento.label = documento.descripcion
+          this.document = documento
+        }
+        if (this.document.codigoClasificador === 5) this.validarnit()
+      })
+    },
+    encabezado () {
+      this.$api.get('datocine/' + this.shop_id).then(res => {
+        this.cine = res.data
+        // console.log(this.cine)
+      })
+    },
+    cargarLeyenda () {
+      this.$api.post('listleyenda', { codigo: '561120' }).then(res => {
+        // console.log(res.data)
+        this.leyendas = res.data
+      })
+    },
     vaciarCanasta () {
       this.productsSale = []
       this.productsGet()
@@ -238,11 +349,13 @@ export default {
     addCantidad (product, pageIndex) {
       product.cantidadVenta++
       this.productsSale.splice(pageIndex, 1, product)
+      product.cantidadPedida = product.cantidadVenta
     },
     removeCantidad (product, pageIndex) {
       if (product.cantidadVenta > 1) {
         product.cantidadVenta--
         this.productsSale.splice(pageIndex, 1, product)
+        product.cantidadPedida = product.cantidadVenta
       }
     },
     cambioNumero (product, pageIndex) {
@@ -256,8 +369,8 @@ export default {
         product.precioVenta = 1
       }
     },
-    clickSale () {
-      this.$api.post('sales', this.productsSale).then(() => {
+    saleInsert () {
+      this.$axios.post('sales', this.productsSale).then(() => {
         this.$q.notify({
           message: 'Venta realizada con éxito',
           color: 'positive',
@@ -268,15 +381,50 @@ export default {
       }).catch(error => {
         console.log(error)
       })
+      this.error = ''
+      this.loading = true
+      this.client.codigoTipoDocumentoIdentidad = this.document.codigoClasificador
+      this.client.email = this.client.email === undefined ? '' : this.client.email
+      this.$api.post('salecandy', {
+        client: this.client,
+        montoTotal: this.total,
+        detalleVenta: this.productsSale,
+        tarjeta: this.credito ? 'SI' : 'NO',
+        codigoTarjeta: this.codigo,
+        vip: this.booltarjeta ? 'SI' : 'NO'
+      }).then(res => {
+        this.reset()
+        if (res.data.sale.siatEnviado === 1) {
+          this.printFactura(res.data.sale)
+        }
+        this.printComanda(res.data.sale)
+        this.icon = false
+        // console.log(res.data)
+        this.loading = false
+      }).catch(err => {
+        console.log(err)
+        this.loading = false
+        this.$q.notify({
+          color: 'negative',
+          textColor: 'white',
+          message: err.message,
+          position: 'top',
+          timeout: 5000
+        })
+      })
     }
   },
   computed: {
+    cambio () {
+      const cambio = parseFloat(this.efectivo === '' ? 0 : this.efectivo) - parseFloat(this.total)
+      return Math.round(cambio * 100) / 100
+    },
     total () {
       let total = 0
       this.productsSale.forEach(product => {
         total += product.cantidadVenta * product.precioVenta
       })
-      return total
+      return total.toFixed(2)
     }
   }
 }

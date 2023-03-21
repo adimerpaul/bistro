@@ -94,8 +94,8 @@ import xlsx from 'json-as-xlsx'
 import { date } from 'quasar'
 import { Printd } from 'printd'
 
-const conversor = require.context('conversor-numero-a-letras-es-ar')
-const QRCode = require.context('qrcode')
+// const conversor = require.context('conversor-numero-a-letras-es-ar')
+// const QRCode = require.context('qrcode')
 
 export default {
   name: 'ListadoPage',
@@ -163,10 +163,10 @@ export default {
     async printFactura (factura) {
       console.log(factura)
       this.facturadetalle = factura
-      const ClaseConversor = conversor.conversorNumerosAconstras
-      const miConversor = new ClaseConversor()
-      const a = miConversor.convertToText(parseInt(factura.montoTotal))
-      this.qrImage = await QRCode.toDataURL(this.cine.url2 + 'consulta/QR?nit=' + this.cine.nit + '&cuf=' + factura.cuf + '&numero=' + factura.numeroFactura + '&t=2', this.opts)
+      // const ClaseConversor = conversor.conversorNumerosAconstras
+      // const miConversor = new ClaseConversor()
+      // const a = miConversor.convertToText(parseInt(factura.montoTotal))
+      // this.qrImage = await QRCode.toDataURL(this.cine.url2 + 'consulta/QR?nit=' + this.cine.nit + '&cuf=' + factura.cuf + '&numero=' + factura.numeroFactura + '&t=2', this.opts)
       // eslint-disable-next-line no-multi-str
       let cadena = "<style>\
       .titulo{\
@@ -216,7 +216,7 @@ export default {
       // eslint-disable-next-line no-multi-str
       cadena += "<hr>\
       <table style='font-size: 8px;'>\
-      <tr><td class='titder' style='width: 60%'>SUBTOTAL Bs</td><td class='conte2'>" + parseFloat(factura.montoTotal).toFixed(2) + "</td></tr><tr><td class='titder'>DESCUENTO Bs</td><td class='conte2'>0.00</td></tr><tr><td class='titder'>TOTAL Bs</td><td class='conte2'>" + parseFloat(factura.montoTotal).toFixed(2) + "</td></tr><tr><td class='titder'>MONTO GIFT CARD Bs</td ><td class='conte2'>0.00</td></tr><tr><td class='titder'>MONTO A PAGAR Bs</td><td class='conte2'>" + parseFloat(factura.montoTotal).toFixed(2) + "</td></tr><tr><td class='titder' style='font-size: 8px'>IMPORTE BASE CRÉDITO FISCAL Bs</td><td class='conte2'>" + parseFloat(factura.montoTotal).toFixed(2) + '</td></tr></table><br><div>Son ' + a + ' ' + (parseFloat(factura.montoTotal).toFixed(2) - Math.floor(parseFloat(factura.montoTotal).toFixed(2))) * 100 + "/100 Bolivianos</div><hr><div class='titulo2' style='font-size: 9px'>ESTA FACTURA CONTRIBUYE AL DESARROLLO DEL PAÍS,<br>EL USO ILÍCITO SERÁ SANCIONADO PENALMENTE DE<br>ACUERDO A LEY<br><br>" + factura.leyenda + " <br><br>“Este documento es la Representación Gráfica de un<br>Documento Fiscal Digital emitido en una modalidad de<br>facturación en línea”</div><br><div style='display: flex;justify-content: center;'> <img src=" + this.qrImage + ' ></div></div>'
+      <tr><td class='titder' style='width: 60%'>SUBTOTAL Bs</td><td class='conte2'>" + parseFloat(factura.montoTotal).toFixed(2) + "</td></tr><tr><td class='titder'>DESCUENTO Bs</td><td class='conte2'>0.00</td></tr><tr><td class='titder'>TOTAL Bs</td><td class='conte2'>" + parseFloat(factura.montoTotal).toFixed(2) + "</td></tr><tr><td class='titder'>MONTO GIFT CARD Bs</td ><td class='conte2'>0.00</td></tr><tr><td class='titder'>MONTO A PAGAR Bs</td><td class='conte2'>" + parseFloat(factura.montoTotal).toFixed(2) + "</td></tr><tr><td class='titder' style='font-size: 8px'>IMPORTE BASE CRÉDITO FISCAL Bs</td><td class='conte2'>" + parseFloat(factura.montoTotal).toFixed(2) + '</td></tr></table><br><div>Son ' + ' ' + (parseFloat(factura.montoTotal).toFixed(2) - Math.floor(parseFloat(factura.montoTotal).toFixed(2))) * 100 + "/100 Bolivianos</div><hr><div class='titulo2' style='font-size: 9px'>ESTA FACTURA CONTRIBUYE AL DESARROLLO DEL PAÍS,<br>EL USO ILÍCITO SERÁ SANCIONADO PENALMENTE DE<br>ACUERDO A LEY<br><br>" + factura.leyenda + " <br><br>“Este documento es la Representación Gráfica de un<br>Documento Fiscal Digital emitido en una modalidad de<br>facturación en línea”</div><br><div style='display: flex;justify-content: center;'> <img src=" + this.qrImage + ' ></div></div>'
       document.getElementById('myelement').innerHTML = cadena
       const d = new Printd()
       d.print(document.getElementById('myelement'))
@@ -224,9 +224,9 @@ export default {
 
     async printComanda (factura) {
       this.facturadetalle = factura
-      const ClaseConversor = conversor.conversorNumerosALetras
-      const miConversor = new ClaseConversor()
-      const a = miConversor.convertToText(parseInt(factura.montoTotal))
+      // const ClaseConversor = conversor.conversorNumerosALetras
+      // const miConversor = new ClaseConversor()
+      // const a = miConversor.convertToText(parseInt(factura.montoTotal))
       // eslint-disable-next-line no-multi-str
       let cadena = "<style>\
       .titulo{\
@@ -277,7 +277,7 @@ export default {
       // eslint-disable-next-line no-multi-str
       cadena += "</tbody></table><hr>\
       <table style='font-size: 8px;'>\
-      <tr><td class='titder'>TOTAL Bs</td><td class='conte2'>" + parseFloat(factura.montoTotal).toFixed(2) + '</td></tr> </table><br> <div>Son ' + a + ' ' + (parseFloat(factura.montoTotal).toFixed(2) - Math.floor(parseFloat(factura.montoTotal).toFixed(2))) * 100 + '/100 Bolivianos</div><div>Usuario: ' + factura.usuario + '</div><div>Venta: ' + factura.id + '</div>'
+      <tr><td class='titder'>TOTAL Bs</td><td class='conte2'>" + parseFloat(factura.montoTotal).toFixed(2) + '</td></tr> </table><br> <div>Son ' + ' ' + (parseFloat(factura.montoTotal).toFixed(2) - Math.floor(parseFloat(factura.montoTotal).toFixed(2))) * 100 + '/100 Bolivianos</div><div>Usuario: ' + factura.usuario + '</div><div>Venta: ' + factura.id + '</div>'
       document.getElementById('myelement').innerHTML = cadena
       const d = new Printd()
       d.print(document.getElementById('myelement'))

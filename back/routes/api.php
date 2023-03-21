@@ -36,3 +36,6 @@ Route::post('cantidadFacturas', [\App\Http\Controllers\EventoSignificativoContro
 Route::post('validarPaquete', [\App\Http\Controllers\EventoSignificativoController::class,'validarPaquete']);
 Route::resource('event', \App\Http\Controllers\EventController::class);
 Route::resource('client', \App\Http\Controllers\ClientController::class);
+
+Route::post('listleyenda', [\App\Http\Controllers\ActivityController::class,'listleyenda']);
+Route::post('searchClient', [\App\Http\Controllers\ClientController::class,'searchClient']);
