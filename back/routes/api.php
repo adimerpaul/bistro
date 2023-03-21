@@ -35,3 +35,4 @@ Route::post('recepcionPaqueteFactura', [\App\Http\Controllers\EventoSignificativ
 Route::post('cantidadFacturas', [\App\Http\Controllers\EventoSignificativoController::class,'cantidadFacturas']);
 Route::post('validarPaquete', [\App\Http\Controllers\EventoSignificativoController::class,'validarPaquete']);
 Route::resource('event', \App\Http\Controllers\EventController::class);
+Route::resource('client', \App\Http\Controllers\ClientController::class);

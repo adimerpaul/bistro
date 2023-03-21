@@ -32,6 +32,7 @@
       v-model="leftDrawerOpen"
       show-if-above
       bordered
+      :width="250"
     >
       <q-list bordered class="rounded-borders">
         <q-item-label header class="text-center text-bold">

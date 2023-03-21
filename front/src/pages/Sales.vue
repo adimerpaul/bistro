@@ -1,5 +1,5 @@
 <template>
-  <div class="row">
+  <q-page class="row">
     <div class="col-12 col-sm-7">
       <q-badge label="Categoria" class="text-bold full-width text-center"/>
       <div class="row">
@@ -131,7 +131,27 @@
         </q-card-section>
       </q-card>
     </div>
-  </div>
+    <q-dialog v-model="dialogSale" persistent>
+      <q-card style="width: 400px">
+        <q-card-section class="row items-center">
+          <div class="text-h6">Confirmar venta</div>
+          <q-space/>
+          <q-btn flat icon="close" v-close-popup></q-btn>
+        </q-card-section>
+        <q-card-section>
+          <div class="row">
+            <div class="col-12 text-grey">
+              <q-input model-value="Cliente" dense outlined bottom-slots input-class="text-center" required placeholder="carne">
+                <template v-slot:prepend>
+                  <q-icon name="person"/>
+                </template>
+              </q-input>
+            </div>
+          </div>
+        </q-card-section>
+      </q-card>
+    </q-dialog>
+  </q-page>
 </template>
 
 <script>
@@ -141,6 +161,7 @@ export default {
     return {
       products: [],
       product: {},
+      dialogSale: true,
       productsSale: [],
       categories: [],
       category: {},
@@ -236,7 +257,7 @@ export default {
       }
     },
     clickSale () {
-      this.$axios.post('sales', this.productsSale).then(() => {
+      this.$api.post('sales', this.productsSale).then(() => {
         this.$q.notify({
           message: 'Venta realizada con éxito',
           color: 'positive',
