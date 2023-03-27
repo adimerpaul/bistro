@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<facturaElectronicaCompraVenta xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="facturaElectronicaCompraVenta.xsd">
+  <cabecera>
+    <nitEmisor>408741025</nitEmisor>
+    <razonSocialEmisor>BistroFood S.R.L.</razonSocialEmisor>
+    <municipio>Oruro</municipio>
+    <telefono>5281290</telefono>
+    <numeroFactura>1</numeroFactura>
+    <cuf>1BF79A259EA788E6F02CF538C2CC2548E0639E06A74F6B2A40EF5FD74</cuf>
+    <cufd>BQUF5Q3Apb0FBNzzlFN0MwMUIwRjY=QkvCrEFyV2JEWFVcwNDEwNkJCMEYwQ</cufd>
+    <codigoSucursal>0</codigoSucursal>
+    <direccion>AVENIDA TACNA ENTRE TOMAS FRIAS Y JAEN Nª2337 ZONA ESTE</direccion>
+    <codigoPuntoVenta>0</codigoPuntoVenta>
+    <fechaEmision>2023-03-26T23:02:38.000</fechaEmision>
+    <nombreRazonSocial>LOPEZ</nombreRazonSocial>
+    <codigoTipoDocumentoIdentidad>1</codigoTipoDocumentoIdentidad>
+    <numeroDocumento>5769706</numeroDocumento>
+    <complemento/>
+    <codigoCliente>9389</codigoCliente>
+    <codigoMetodoPago>1</codigoMetodoPago>
+    <numeroTarjeta xsi:nil="true"/>
+    <montoTotal>40.00</montoTotal>
+    <montoTotalSujetoIva>40.00</montoTotalSujetoIva>
+    <codigoMoneda>1</codigoMoneda>
+    <tipoCambio>1</tipoCambio>
+    <montoTotalMoneda>40.00</montoTotalMoneda>
+    <montoGiftCard xsi:nil="true"/>
+    <descuentoAdicional>0</descuentoAdicional>
+    <codigoExcepcion>0</codigoExcepcion>
+    <cafc xsi:nil="true"/>
+    <leyenda>Ley N° 453: Los servicios deben suministrarse en condiciones de inocuidad, calidad y seguridad.</leyenda>
+    <usuario>admin</usuario>
+    <codigoDocumentoSector>1</codigoDocumentoSector>
+  </cabecera>
+  <detalle>
+    <actividadEconomica>561120</actividadEconomica>
+    <codigoProductoSin>99100</codigoProductoSin>
+    <codigoProducto>10</codigoProducto>
+    <descripcion>CALDO DE GALLINA</descripcion>
+    <cantidad>-2</cantidad>
+    <unidadMedida>62</unidadMedida>
+    <precioUnitario>20</precioUnitario>
+    <montoDescuento>0</montoDescuento>
+    <subTotal>-40</subTotal>
+    <numeroSerie xsi:nil="true"/>
+    <numeroImei xsi:nil="true"/>
+  </detalle>
+</facturaElectronicaCompraVenta>

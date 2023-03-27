@@ -206,9 +206,10 @@ export default {
   data () {
     return {
       loading: false,
+      btn: false,
       icon: false,
       products: [],
-      client: {},
+      client: { complemento: '' },
       product: {},
       productsSale: [],
       documents: [],
@@ -217,6 +218,7 @@ export default {
       category: {},
       cine: {},
       efectivo: '',
+      tipo: ['SABOR PERU', 'CAFE ITALIA', 'VACA FRIA'],
       shop_id: this.$route.params.id,
       ruleNumber: [
         val => val > 0 || 'El número debe ser mayor a 0'
@@ -311,10 +313,15 @@ export default {
       if (producto === undefined) {
         p.cantidadVenta = 1
         p.precioVenta = p.price
+        p.product_id = p.id
+        p.nombre = p.name
+        p.precio = p.price
+        p.subtotal = p.price
         this.productsSale.push(p)
       } else {
         producto.cantidad = p.cantidad
         producto.cantidadVenta++
+        producto.subtotal = producto.cantidad * producto.precio
       }
     },
     categoriesGet () {
@@ -369,29 +376,23 @@ export default {
         product.precioVenta = 1
       }
     },
+    reset () {
+      this.client = { complemento: '' }
+      this.productsSale = []
+    },
     saleInsert () {
-      this.$axios.post('sales', this.productsSale).then(() => {
-        this.$q.notify({
-          message: 'Venta realizada con éxito',
-          color: 'positive',
-          icon: 'check_circle',
-          position: 'top'
-        })
-        this.productsSale = []
-      }).catch(error => {
-        console.log(error)
-      })
       this.error = ''
       this.loading = true
       this.client.codigoTipoDocumentoIdentidad = this.document.codigoClasificador
       this.client.email = this.client.email === undefined ? '' : this.client.email
-      this.$api.post('salecandy', {
+      this.$api.post('/sale', {
         client: this.client,
         montoTotal: this.total,
         detalleVenta: this.productsSale,
         tarjeta: this.credito ? 'SI' : 'NO',
         codigoTarjeta: this.codigo,
-        vip: this.booltarjeta ? 'SI' : 'NO'
+        vip: this.booltarjeta ? 'SI' : 'NO',
+        tipo: this.tipo[parseInt(this.shop_id) - 1]
       }).then(res => {
         this.reset()
         if (res.data.sale.siatEnviado === 1) {

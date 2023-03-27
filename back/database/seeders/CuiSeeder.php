@@ -15,8 +15,8 @@ class CuiSeeder extends Seeder
     {
         //    
         DB::table("cuis")->insert([
-            ["codigo"=>"AD8087E1","fechaVigencia"=>"2024-02-20 18:43:27",	"fechaCreacion"=>"2024-02-20 18:43:27",	"codigoPuntoVenta"=>0,	"codigoSucursal"=>0	],
-            ["codigo"=>"1D464E1F","fechaVigencia"=>"2024-02-20 18:43:27",	"fechaCreacion"=>"2024-02-20 18:43:27",	"codigoPuntoVenta"=>1,	"codigoSucursal"=>0	],
+            ["codigo"=>"AD8087E1","fechaVigencia"=>"2024-02-20 18:43:27",	"fechaCreacion"=>"2023-02-20 18:43:27",	"codigoPuntoVenta"=>0,	"codigoSucursal"=>0	],
+            ["codigo"=>"1D464E1F","fechaVigencia"=>"2024-02-20 18:43:27",	"fechaCreacion"=>"2023-02-20 18:43:27",	"codigoPuntoVenta"=>1,	"codigoSucursal"=>0	],
         ]);
     }
 }

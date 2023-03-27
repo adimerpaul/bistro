@@ -3,15 +3,387 @@
 namespace App\Http\Controllers;
 
 use App\Models\Sale;
+use App\Models\Client;
+use App\Models\User;
+use App\Mail\TestMail;
+use App\Models\Cufd;
+use App\Models\Cui;
+use App\Models\Detail;
+use App\Models\Leyenda;
 use App\Http\Requests\StoreSaleRequest;
 use App\Http\Requests\UpdateSaleRequest;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Mail;
+use Luecano\NumeroALetras\NumeroALetras;
+use SimpleSoftwareIO\QrCode\Facades\QrCode;
+use App\Patrones\Env;
+use SimpleXMLElement;
+use DOMDocument;
 
 class SaleController extends Controller{
     public function index(){}
-    public function store(StoreSaleRequest $request){
+
+   public function store(StoreSaleRequest $request)
+    {
+        if ($request->client['complemento']==null){
+            $complemento="";
+        }else{
+            $complemento=$request->client['complemento'];
+        }
+        if ( $complemento!= "" && Client::whereComplemento($complemento)->where('numeroDocumento',$request->client['numeroDocumento'])->count()==1) {
+            $client=Client::find($request->client['id']);
+            $client->nombreRazonSocial=strtoupper($request->client['nombreRazonSocial']);
+            $client->codigoTipoDocumentoIdentidad=$request->client['codigoTipoDocumentoIdentidad'];
+            $client->email=$request->client['email'];
+            $client->save();
+//            return "actualizado con complento";
+        }else if(Client::where('numeroDocumento',$request->client['numeroDocumento'])->whereComplemento($complemento)->count()){
+            $client=Client::find($request->client['id']);
+            $client->nombreRazonSocial=strtoupper($request->client['nombreRazonSocial']);
+            $client->codigoTipoDocumentoIdentidad=$request->client['codigoTipoDocumentoIdentidad'];
+            $client->email=$request->client['email'];
+            $client->save();
+//            return "actualizado";
+        }else{
+            $client=new Client();
+            $client->nombreRazonSocial=strtoupper($request->client['nombreRazonSocial']);
+            $client->codigoTipoDocumentoIdentidad=$request->client['codigoTipoDocumentoIdentidad'];
+            $client->numeroDocumento=$request->client['numeroDocumento'];
+            $client->complemento=strtoupper($request->client['complemento']);
+            $client->email=$request->client['email'];
+            $client->save();
+//            return "nuevo";
+        }
+
+        if ($request->vip=="SI"){
+            return $this->insertarVip($request,$client);
+        }
+
+        if ($request->client['numeroDocumento']=="0"){
+            return $this->insertarRecibo($request,$client);
+        }
+
+        if (sizeof($request->detalleVenta) > 0){
 
 
+        $codigoAmbiente=env('AMBIENTE');
+        $codigoDocumentoSector=1; // 1 compraventa 2 alquiler 23 prevaloradas
+        $codigoEmision=1; // 1 online 2 offline 3 masivo
+        $codigoModalidad=env('MODALIDAD'); //1 electronica 2 computarizada
+        $codigoPuntoVenta=0;
+        $codigoSistema=env('CODIGO_SISTEMA');
+        $tipoFacturaDocumento=1; // 1 con credito fiscal 2 sin creditofical 3 nota debito credito
+
+        $codigoSucursal=0;
+
+        //$user=User::find($request->user()->id);
+        $user=User::find(1);
+
+        if (Cui::where('codigoPuntoVenta', $codigoPuntoVenta)->where('codigoSucursal', $codigoSucursal)->where('fechaVigencia','>=', now())->count()==0){
+            return response()->json(['message' => 'No existe CUI para la venta!!'], 400);
+        }
+        if (Cufd::where('codigoPuntoVenta', $codigoPuntoVenta)->where('codigoSucursal', $codigoSucursal)->where('fechaVigencia','>=', now())->count()==0){
+            return response()->json(['message' => 'No exite CUFD para la venta!!'], 400);
+        }
+        $cui=Cui::where('codigoPuntoVenta', $codigoPuntoVenta)->where('codigoSucursal', $codigoSucursal)->where('fechaVigencia','>=', now())->first();
+        $cufd=Cufd::where('codigoPuntoVenta', $codigoPuntoVenta)->where('codigoSucursal', $codigoSucursal)->where('fechaVigencia','>=', now())->first();
+
+
+        if (Sale::where('cufd', $cufd->codigo)->where('tipo', $request->tipo)->count()==0){
+            $numeroFactura=1;
+        }else{
+            $max=Sale::where('cufd',$cufd->codigo)->where('tipo',$request->tipo)->max('numeroFactura');
+            $numeroFactura=intval($max)+1;
+        }
+        if (count(Sale::all())==0) {
+            $saleId=1;
+        }else{
+            $sale=Sale::orderBy('id', 'desc')->first();
+            $saleId=$sale->id+1;
+        }
+        $detalleFactura="";
+        foreach ($request->detalleVenta as $detalle){
+            $detalleFactura.="<detalle>
+                <actividadEconomica>561120</actividadEconomica>
+                <codigoProductoSin>99100</codigoProductoSin>
+                <codigoProducto>".$detalle['product_id']."</codigoProducto>
+                <descripcion>".$detalle['nombre']."</descripcion>
+                <cantidad>".$detalle['cantidad']."</cantidad>
+                <unidadMedida>62</unidadMedida>
+                <precioUnitario>".$detalle['precio']."</precioUnitario>
+                <montoDescuento>0</montoDescuento>
+                <subTotal>".$detalle['subtotal']."</subTotal>
+                <numeroSerie xsi:nil='true'/>
+                <numeroImei xsi:nil='true'/>
+            </detalle>";
+        }
+//
+//        Ticket::insert($data);
+//
+//        Detail::insert($dataDetail);
+
+
+        $cuf = new CUF();
+        //     * @param nit NIT emisor
+//     * @param fh Fecha y Hora en formato yyyyMMddHHmmssSSS
+//     * @param sucursal
+//     * @param mod Modalidad
+//     * @param temision Tipo de Emision
+//     * @param cdf Codigo Documento Fiscal
+//     * @param tds Tipo Documento Sector
+//     * @param nf Numero de Factura
+//     * @param pos Punto de Venta
+        $leyenda=Leyenda::where("codigoActividad","561120")->get();
+        $count=$leyenda->count();
+        $leyenda=$leyenda[rand(0,$count-1)]->descripcionLeyenda;
+
+        $fechaEnvio=date("Y-m-d\TH:i:s.000");
+
+        $cuf = $cuf->obtenerCUF(env('NIT'), date("YmdHis000"), $codigoSucursal, $codigoModalidad, $codigoEmision, $tipoFacturaDocumento, $codigoDocumentoSector, $numeroFactura, $codigoPuntoVenta);
+        $cuf=$cuf.$cufd->codigoControl;
+        $text="<?xml version='1.0' encoding='UTF-8' standalone='yes'?>
+        <facturaElectronicaCompraVenta xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance' xsi:noNamespaceSchemaLocation='facturaElectronicaCompraVenta.xsd'>    <cabecera>
+        <nitEmisor>".env('NIT')."</nitEmisor>
+        <razonSocialEmisor>".env('RAZON')."</razonSocialEmisor>
+        <municipio>Oruro</municipio>
+        <telefono>".env('TELEFONO')."</telefono>
+        <numeroFactura>$numeroFactura</numeroFactura>
+        <cuf>$cuf</cuf>
+        <cufd>".$cufd->codigo."</cufd>
+        <codigoSucursal>$codigoSucursal</codigoSucursal>
+        <direccion>".env('DIRECCION')."</direccion>
+        <codigoPuntoVenta>$codigoPuntoVenta</codigoPuntoVenta>
+        <fechaEmision>$fechaEnvio</fechaEmision>
+        <nombreRazonSocial>".utf8_encode(str_replace("&","&amp;",$client->nombreRazonSocial))."</nombreRazonSocial>
+        <codigoTipoDocumentoIdentidad>".$client->codigoTipoDocumentoIdentidad."</codigoTipoDocumentoIdentidad>
+        <numeroDocumento>".$client->numeroDocumento."</numeroDocumento>
+        <complemento>".$client->complemento."</complemento>
+        <codigoCliente>".$client->id."</codigoCliente>
+        <codigoMetodoPago>1</codigoMetodoPago>
+        <numeroTarjeta xsi:nil='true'/>
+        <montoTotal>".$request->montoTotal."</montoTotal>
+        <montoTotalSujetoIva>".$request->montoTotal."</montoTotalSujetoIva>
+        <codigoMoneda>1</codigoMoneda>
+        <tipoCambio>1</tipoCambio>
+        <montoTotalMoneda>".$request->montoTotal."</montoTotalMoneda>
+        <montoGiftCard xsi:nil='true'/>
+        <descuentoAdicional>0</descuentoAdicional>
+        <codigoExcepcion>".($client->codigoTipoDocumentoIdentidad==5?1:0)."</codigoExcepcion>
+        <cafc xsi:nil='true'/>
+        <leyenda>$leyenda</leyenda>
+        <usuario>".explode(" ", $user->name)[0]."</usuario>
+        <codigoDocumentoSector>".$codigoDocumentoSector."</codigoDocumentoSector>
+        </cabecera>";
+        $text.=$detalleFactura;
+        $text.="</facturaElectronicaCompraVenta>";
+
+        $xml = new SimpleXMLElement($text);
+        $dom = new DOMDocument('1.0');
+        $dom->preserveWhiteSpace = false;
+        $dom->formatOutput = true;
+        $dom->loadXML($xml->asXML());
+        $nameFile=$saleId;
+        $dom->save("archivos/".$nameFile.'.xml');
+
+        $firmar = new Firmar();
+        $firmar->firmar("archivos/".$nameFile.'.xml');
+
+
+        $xml = new DOMDocument();
+        $xml->load("archivos/".$nameFile.'.xml');
+        if (!$xml->schemaValidate('./facturaElectronicaCompraVenta.xsd')) {
+            echo "invalid";
+        }
+        else {
+//            echo "validated";
+        }
+//        exit;
+
+
+        $file = "archivos/".$nameFile.'.xml';
+        $gzfile = "archivos/".$nameFile.'.xml'.'.gz';
+        $fp = gzopen ($gzfile, 'w9');
+        gzwrite ($fp, file_get_contents($file));
+        gzclose($fp);
+
+        $archivo=$firmar->getFileGzip("archivos/".$nameFile.'.xml'.'.gz');
+        $hashArchivo=hash('sha256', $archivo);
+//        unlink($gzfile);
+        try {
+            $clientSoap = new \SoapClient(env("URL_SIAT")."ServicioFacturacionCompraVenta?WSDL",  [
+                'stream_context' => stream_context_create([
+                    'http' => [
+                        'header' => "apikey: TokenApi " . env('TOKEN'),
+                    ]
+                ]),
+                'cache_wsdl' => WSDL_CACHE_NONE,
+                'compression' => SOAP_COMPRESSION_ACCEPT | SOAP_COMPRESSION_GZIP | SOAP_COMPRESSION_DEFLATE,
+                'trace' => 1,
+                'use' => SOAP_LITERAL,
+                'style' => SOAP_DOCUMENT,
+            ]);
+            $result= $clientSoap->recepcionFactura([
+                "SolicitudServicioRecepcionFactura"=>[
+                    "codigoAmbiente"=>$codigoAmbiente,
+                    "codigoDocumentoSector"=>$codigoDocumentoSector,
+                    "codigoEmision"=>$codigoEmision,
+                    "codigoModalidad"=>$codigoModalidad,
+                    "codigoPuntoVenta"=>$codigoPuntoVenta,
+                    "codigoSistema"=>$codigoSistema,
+                    "codigoSucursal"=>$codigoSucursal,
+                    "cufd"=>$cufd->codigo,
+                    "cuis"=>$cui->codigo,
+                    "nit"=>env('NIT'),
+                    "tipoFacturaDocumento"=>$tipoFacturaDocumento,
+                    "archivo"=>$archivo,
+                    "fechaEnvio"=>$fechaEnvio,
+                    "hashArchivo"=>$hashArchivo,
+                ]
+            ]);
+            error_log("result ".json_encode($result));
+            if ($result->RespuestaServicioFacturacion->transaccion) {
+                $sale=new Sale();
+                $sale->numeroFactura=$numeroFactura;
+                $sale->cuf="";
+                $sale->cufd=$cufd->codigo;
+                $sale->cui=$cui->codigo;
+                $sale->codigoSucursal=$codigoSucursal;
+                $sale->codigoPuntoVenta=$codigoPuntoVenta;
+                $sale->fechaEmision=now();
+                $sale->montoTotal=$request->montoTotal;
+                $sale->usuario=$user->name;
+                $sale->codigoDocumentoSector=$codigoDocumentoSector;
+                $sale->user_id=$user->id;
+                $sale->cufd_id=$cufd->id;
+                $sale->client_id=$client->id;
+                $sale->tipo=$request->tipo;
+                $sale->leyenda=$leyenda;
+                $sale->vip=$request->vip;
+                $sale->credito=$request->tarjeta;
+                $sale->save();
+
+                error_log("sale : ".json_encode($sale));
+
+                try {
+                    if ($request->client['email']!='' && $request->client['email']!=null ){
+                        $details=[
+                            "title"=>"Factura",
+                            "body"=>"Gracias por su compra",
+                            "online"=>true,
+                            "anulado"=>false,
+                            "cuf"=>"",
+                            "numeroFactura"=>"",
+                            "sale_id"=>$sale->id,
+                            "carpeta"=>"archivos",
+                        ];
+                        Mail::to($request->client['email'])->send(new TestMail($details));
+                    }
+                }catch (\Exception $e){
+                    error_log("error mail sale: ".$e->getMessage());
+                }
+
+                $dataDetail=[];
+                foreach ($request->detalleVenta as $detalle){
+                    $d=[
+                        'actividadEconomica'=>"561120",
+                        'codigoProductoSin'=>"99100",
+                        'cantidad'=>$detalle['cantidad'],
+                        'precioUnitario'=>$detalle['precio'],
+                        'subTotal'=>$detalle['subtotal'],
+                        'sale_id'=>$sale->id,
+//                        'programa_id'=>$detalle['programa_id'],
+                        'product_id'=>$detalle['product_id'],
+                        'descripcion'=>$detalle['nombre'],
+                    ];
+                    array_push($dataDetail, $d);
+                }
+
+                Detail::insert($dataDetail);
+
+                $sale->siatEnviado=true;
+                $sale->codigoRecepcion=$result->RespuestaServicioFacturacion->codigoRecepcion;
+                $sale->cuf=$cuf;
+                $sale->save();
+               // $tickets=Ticket::where('sale_id',$sale->id)->get();
+                return response()->json([
+                    'sale' => Sale::where('id',$sale->id)->with('client')->with('details')->with('user')->first(),
+                   // "tickets"=>$tickets,
+                    "error"=>"",
+                ]);
+            }else{
+                return response()->json(['message' => $result->RespuestaServicioFacturacion->mensajesList->descripcion], 400);
+            }
+        }catch (\Exception $e){
+            //if(sizeof($request->detalleVenta) > 0){
+            $sale=new Sale();
+            $sale->numeroFactura=$numeroFactura;
+            $sale->cuf="";
+            $sale->cufd=$cufd->codigo;
+            $sale->cui=$cui->codigo;
+            $sale->codigoSucursal=$codigoSucursal;
+            $sale->codigoPuntoVenta=$codigoPuntoVenta;
+            $sale->fechaEmision=now();
+            $sale->montoTotal=$request->montoTotal;
+            $sale->usuario=$user->name;
+            $sale->codigoDocumentoSector=$codigoDocumentoSector;
+            $sale->user_id=$user->id;
+            $sale->cufd_id=$cufd->id;
+            $sale->client_id=$client->id;
+            $sale->tipo=$request->tipo;
+            $sale->leyenda=$leyenda;
+            $sale->vip=$request->vip;
+            $sale->credito=$request->tarjeta;
+            $sale->save();
+
+            if ($request->client['email']!='' && $request->client['email']!= null  ){
+                $details=[
+                    "title"=>"Factura",
+                    "body"=>"Gracias por su compra",
+                    "online"=>false,
+                    "anulado"=>false,
+                    "cuf"=>"",
+                    "numeroFactura"=>"",
+                    "sale_id"=>$sale->id,
+                    "carpeta"=>"archivos",
+                ];
+                Mail::to($request->client['email'])->send(new TestMail($details));
+            }
+            $dataDetail=[];
+            // sabor peru 21391 PLATOS PREPARADOS Y COMIDAS A BASE DE VERDURAS, LE...
+            //63320 SERVICIOS DE SUMINISTRO DE COMIDA EN ESTABLECIMIENTOS DE SERVICIO LIMITADO
+            // 99100 OTROS PRODUCTOS O SERVICIOS ALCANZADOS POR EL IVA
+            foreach ($request->detalleVenta as $detalle){
+                $d=[
+                    'actividadEconomica'=>"561120",
+                    'codigoProductoSin'=>"99100",
+                    'cantidad'=>$detalle['cantidad'],
+                    'precioUnitario'=>$detalle['precio'],
+                    'subTotal'=>$detalle['subtotal'],
+                    'sale_id'=>$sale->id,
+//                    'programa_id'=>$detalle['programa_id'],
+                    'descripcion'=>$detalle['nombre'],
+                ];
+                array_push($dataDetail, $d);
+            }
+
+            Detail::insert($dataDetail);
+
+            $sale->siatEnviado=false;
+            $sale->codigoRecepcion="";
+            $sale->cuf=$cuf;
+            $sale->save();
+           // $tickets=Ticket::where('sale_id',$sale->id)->get();
+            return response()->json([
+                'sale' => Sale::where('id',$sale->id)->with('client')->with('details')->first(),
+              // "tickets"=>$tickets,
+                "error"=>"Se creo la venta pero no se pudo enviar a siat!!!",
+            ]);
+            return response()->json(['message' => $e->getMessage()], 500);
+            }
+        }
+     // }
     }
+
     public function anularSale(Request $request){
 
         $codigoAmbiente=env('AMBIENTE');
