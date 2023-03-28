@@ -108,7 +108,7 @@ class SaleController extends Controller{
                 <codigoProductoSin>99100</codigoProductoSin>
                 <codigoProducto>".$detalle['product_id']."</codigoProducto>
                 <descripcion>".$detalle['nombre']."</descripcion>
-                <cantidad>".$detalle['cantidad']."</cantidad>
+                <cantidad>".$detalle['cantidadPedida']."</cantidad>
                 <unidadMedida>62</unidadMedida>
                 <precioUnitario>".$detalle['precio']."</precioUnitario>
                 <montoDescuento>0</montoDescuento>
@@ -141,6 +141,16 @@ class SaleController extends Controller{
 
         $cuf = $cuf->obtenerCUF(env('NIT'), date("YmdHis000"), $codigoSucursal, $codigoModalidad, $codigoEmision, $tipoFacturaDocumento, $codigoDocumentoSector, $numeroFactura, $codigoPuntoVenta);
         $cuf=$cuf.$cufd->codigoControl;
+        $clientNombreRazonSocialUtf8 = ($client->nombreRazonSocial);
+//        error_log($clientNombreRazonSocialUtf8);
+        if (str_contains($clientNombreRazonSocialUtf8, '&')) {
+            $clientNombreRazonSocialUtf8 = str_replace('&', '&amp;', $clientNombreRazonSocialUtf8);
+        }
+        if ($user->contador>=2){
+            $excepcion=1;
+        }else{
+            $excepcion=0;
+        }
         $text="<?xml version='1.0' encoding='UTF-8' standalone='yes'?>
         <facturaElectronicaCompraVenta xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance' xsi:noNamespaceSchemaLocation='facturaElectronicaCompraVenta.xsd'>    <cabecera>
         <nitEmisor>".env('NIT')."</nitEmisor>
@@ -154,7 +164,7 @@ class SaleController extends Controller{
         <direccion>".env('DIRECCION')."</direccion>
         <codigoPuntoVenta>$codigoPuntoVenta</codigoPuntoVenta>
         <fechaEmision>$fechaEnvio</fechaEmision>
-        <nombreRazonSocial>".utf8_encode(str_replace("&","&amp;",$client->nombreRazonSocial))."</nombreRazonSocial>
+        <nombreRazonSocial>".$clientNombreRazonSocialUtf8."</nombreRazonSocial>
         <codigoTipoDocumentoIdentidad>".$client->codigoTipoDocumentoIdentidad."</codigoTipoDocumentoIdentidad>
         <numeroDocumento>".$client->numeroDocumento."</numeroDocumento>
         <complemento>".$client->complemento."</complemento>
@@ -168,7 +178,7 @@ class SaleController extends Controller{
         <montoTotalMoneda>".$request->montoTotal."</montoTotalMoneda>
         <montoGiftCard xsi:nil='true'/>
         <descuentoAdicional>0</descuentoAdicional>
-        <codigoExcepcion>".($client->codigoTipoDocumentoIdentidad==5?1:0)."</codigoExcepcion>
+        <codigoExcepcion>".$excepcion."</codigoExcepcion>
         <cafc xsi:nil='true'/>
         <leyenda>$leyenda</leyenda>
         <usuario>".explode(" ", $user->name)[0]."</usuario>
@@ -305,12 +315,20 @@ class SaleController extends Controller{
                 $sale->cuf=$cuf;
                 $sale->save();
                // $tickets=Ticket::where('sale_id',$sale->id)->get();
+                $user->contador=0;
+                $user->save();
                 return response()->json([
                     'sale' => Sale::where('id',$sale->id)->with('client')->with('details')->with('user')->first(),
                    // "tickets"=>$tickets,
                     "error"=>"",
                 ]);
             }else{
+                if (str_contains($result->RespuestaServicioFacturacion->mensajesList->descripcion,'para codigo excepcion 0')) {
+                    $user->contador=$user->contador+1;
+                }else{
+                    $user->contador=0;
+                }
+                $user->save();
                 return response()->json(['message' => $result->RespuestaServicioFacturacion->mensajesList->descripcion], 400);
             }
         }catch (\Exception $e){
@@ -373,6 +391,8 @@ class SaleController extends Controller{
             $sale->cuf=$cuf;
             $sale->save();
            // $tickets=Ticket::where('sale_id',$sale->id)->get();
+            $user->contador=0;
+            $user->save();
             return response()->json([
                 'sale' => Sale::where('id',$sale->id)->with('client')->with('details')->first(),
               // "tickets"=>$tickets,

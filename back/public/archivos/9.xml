@@ -5,25 +5,25 @@
     <razonSocialEmisor>BistroFood S.R.L.</razonSocialEmisor>
     <municipio>Oruro</municipio>
     <telefono>5281290</telefono>
-    <numeroFactura>3</numeroFactura>
-    <cuf>1BF79A259EA78917E97C351D945E8E6BC9C3A113E5760FE7DB106FD74</cuf>
-    <cufd>BQXlDcClvQUE=NzzlFN0MwMUIwRjY=QlVldmlXY0RYVUFcwNDEwNkJCMEYwQ</cufd>
+    <numeroFactura>9</numeroFactura>
+    <cuf>1BF79A259EA78917756A5433D788CFDFEBE3AA3BA97D487DBA106FD74</cuf>
+    <cufd>BQUF5Q3Apb0FBNzzlFN0MwMUIwRjY=QsKhQGp4VWNEWFVcwNDEwNkJCMEYwQ</cufd>
     <codigoSucursal>0</codigoSucursal>
     <direccion>AVENIDA TACNA ENTRE TOMAS FRIAS Y JAEN Nª2337 ZONA ESTE</direccion>
     <codigoPuntoVenta>0</codigoPuntoVenta>
-    <fechaEmision>2023-03-27T22:35:46.000</fechaEmision>
-    <nombreRazonSocial>MARAÑON</nombreRazonSocial>
-    <codigoTipoDocumentoIdentidad>5</codigoTipoDocumentoIdentidad>
-    <numeroDocumento>96528452017</numeroDocumento>
+    <fechaEmision>2023-03-27T21:43:50.000</fechaEmision>
+    <nombreRazonSocial>CHAMBI</nombreRazonSocial>
+    <codigoTipoDocumentoIdentidad>1</codigoTipoDocumentoIdentidad>
+    <numeroDocumento>7336199017</numeroDocumento>
     <complemento/>
-    <codigoCliente>9994</codigoCliente>
+    <codigoCliente>2</codigoCliente>
     <codigoMetodoPago>1</codigoMetodoPago>
     <numeroTarjeta xsi:nil="true"/>
-    <montoTotal>35.00</montoTotal>
-    <montoTotalSujetoIva>35.00</montoTotalSujetoIva>
+    <montoTotal>20.00</montoTotal>
+    <montoTotalSujetoIva>20.00</montoTotalSujetoIva>
     <codigoMoneda>1</codigoMoneda>
     <tipoCambio>1</tipoCambio>
-    <montoTotalMoneda>35.00</montoTotalMoneda>
+    <montoTotalMoneda>20.00</montoTotalMoneda>
     <montoGiftCard xsi:nil="true"/>
     <descuentoAdicional>0</descuentoAdicional>
     <codigoExcepcion>0</codigoExcepcion>
@@ -35,18 +35,18 @@
   <detalle>
     <actividadEconomica>561120</actividadEconomica>
     <codigoProductoSin>99100</codigoProductoSin>
-    <codigoProducto>119</codigoProducto>
-    <descripcion>COPA MIX GRANDE</descripcion>
-    <cantidad>1</cantidad>
+    <codigoProducto>6</codigoProducto>
+    <descripcion>PORCIÓN DE CARNE</descripcion>
+    <cantidad>2</cantidad>
     <unidadMedida>62</unidadMedida>
-    <precioUnitario>35</precioUnitario>
+    <precioUnitario>10</precioUnitario>
     <montoDescuento>0</montoDescuento>
-    <subTotal>35</subTotal>
+    <subTotal>20</subTotal>
     <numeroSerie xsi:nil="true"/>
     <numeroImei xsi:nil="true"/>
   </detalle>
 <ds:Signature xmlns:ds="http://www.w3.org/2000/09/xmldsig#">
   <ds:SignedInfo><ds:CanonicalizationMethod Algorithm="http://www.w3.org/2001/10/xml-exc-c14n#"/>
     <ds:SignatureMethod Algorithm="http://www.w3.org/2001/04/xmldsig-more#rsa-sha256"/>
-  <ds:Reference URI=""><ds:Transforms><ds:Transform Algorithm="http://www.w3.org/2000/09/xmldsig#enveloped-signature"/><ds:Transform Algorithm="http://www.w3.org/TR/2001/REC-xml-c14n-20010315#WithComments"/></ds:Transforms><ds:DigestMethod Algorithm="http://www.w3.org/2001/04/xmlenc#sha256"/><ds:DigestValue>sS3S9DvOXlTCS5Yko0gPXJBuZj3omS5mOo+x070xCFE=</ds:DigestValue></ds:Reference></ds:SignedInfo><ds:SignatureValue>IZv2zOSZl3wtMh+CydYzxxHr44tbZ4Gbmu3kIwQxHeru1xabNUtKMnIVW2AhBw8cpvTZb1oUanJV/5AKLHHku5+NXGydRtoo0BEXfOr5saQj0IV3xUALhfsHZfnkLTJQmfQRXmq8PBs7M0tV5jWTgoTaNPL6GUtQma7ZweS6IZlnRi5jhOwvGNCK5mgR/g8w7+0XMnbM23QeE52BGY/cwZP/FMSSP/ULuvir1KIKucYeNpfw7mbw3FDkCVNthUxkeEJcam0aPVsCXwTMt7LcI/ANUs0eaME2bZvgMIfByGOb6cfLEJGdqss3c/5xVr/J1cfvA5eQXCCoRhKLcUC/mw==</ds:SignatureValue>
+  <ds:Reference URI=""><ds:Transforms><ds:Transform Algorithm="http://www.w3.org/2000/09/xmldsig#enveloped-signature"/><ds:Transform Algorithm="http://www.w3.org/TR/2001/REC-xml-c14n-20010315#WithComments"/></ds:Transforms><ds:DigestMethod Algorithm="http://www.w3.org/2001/04/xmlenc#sha256"/><ds:DigestValue>77ub8RmSF4XGfm58sB43YMTlqYNikDK0PaCjdcAA29U=</ds:DigestValue></ds:Reference></ds:SignedInfo><ds:SignatureValue>LOC/weOdGDFHrDjgNZIuUR6VwYd+LKVb4ytjBMtOSjPzctAwRsLxCpAY7sP8TbRgUzaxLmeptxM+Q9bwkKBWENxHgdYu69XO734Ua1xFXIEPiAZqSmkh+idWKNXFvpT0yqpQ77/RMiadGxZvji74nLgLF0ybP2zoOobiQddo83opHekigVY23BSjy8RcMZGXrDe3QFPGIYZgA+BR5ntWaWz46dzYbZdxIv85AxqmnnX6OZgxc1BT+1dsIPfZaNabX2W9x0MrCl6Pr6fTP/CDeN0yeESAJUZsFRa7OjigTid9XusJB3vQwnCJfhBmKythI7enxZy757RCOL3i5Y6z7w==</ds:SignatureValue>
 <ds:KeyInfo><ds:X509Data><ds:X509Certificate>MIIEtDCCA5ygAwIBAgIIMaXn+NfUKgAwDQYJKoZIhvcNAQEFBQAwgbUxCzAJBgNVBAYTAkJPMQ8wDQYDVQQIDAZMQSBQQVoxDzANBgNVBAcMBkxBIFBBWjEeMBwGA1UECgwVRW50aWRhZCBDZXJ0aWZpY2Fkb3JhMQwwCgYDVQQLDANVSUQxEzARBgNVBAMMCkFEU0lCIEZBS0UxJDAiBgkqhkiG9w0BCQEWFW5jb2FyaXRlQGFkc2liLmdvYi5ibzEbMBkGA1UEBRMSNzM1MjQyNDI0NDY0NjM0MjM0MB4XDTIzMDMyMDIyMTAwMloXDTI0MDMxOTIyMTAwMlowgeMxITAfBgNVBAMTGEVERFkgQ0FSTE9TIFBMQVpBIEdBUkNJQTEXMBUGA1UEChMOQklTVFJPRk9PRCBTUkwxEzARBgNVBAsTCkJJU1RST0ZPT0QxDzANBgNVBAwTBkJJU1RSTzELMAkGA1UEBhMCQk8xCzAJBgNVBC4TAkNJMRQwEgYHKwYBAQEBABMHMzUyMDIyNjERMA8GCgmSJomT8ixkAQETATExEjAQBgNVBAUTCTQwODc0MTAyNTEoMCYGCSqGSIb3DQEJARYZZWRkeXBsYXphZ2FyY2lhQGdtYWlsLmNvbTCCASIwDQYJKoZIhvcNAQEBBQADggEPADCCAQoCggEBANPF6d36pMAOqlKWyBzViUSCo4wpplfFxGu1H/uA3OVL5nXpLIqtGGODLeiQ0j+K5JNPe0ZD9eni8hOFIvBHh2EP1UzlOcYx/a37ZAGsLIexen4cFsVs3g51DvQWsRqhhhTNR5D0HxABJyUUu0VrADgSVLCTSjrjEizJuxovzT5ZykmAh2+Mu/iAnZ2ZOS/424LMcOS15qQZaDJXK0b2sDglYE1tkzERBvxJqxK/rEB5OqImGZMXQIcx8ijLBuO/w6fUOK0Fgr+UN8mQiUF/kD9E+BL5L6ZHRDaFO8m3VC84siBvNOKa2EoWHgX55TjFcUNaF3j/5ybWkv/w/jJgwLMCAwEAAaOBlzCBlDAMBgNVHRMEBTADAQH/MAsGA1UdDwQEAwIE8DAkBgNVHREEHTAbhhllZGR5cGxhemFnYXJjaWFAZ21haWwuY29tMFEGA1UdHwRKMEgwRqBEoEKGQGh0dHBzOi8vZGVzYXJyb2xsby5hZHNpYi5nb2IuYm8vZGVzYV9hZ2VuY2lhL2xpc3RfcmV2b2NhY2lvbi5jcmwwDQYJKoZIhvcNAQEFBQADggEBACi4Dd2Tnwc7IN0DrrgXlRcgOoyfQA1mIW/jAP1IrhSTyB4sapXIAJt+7A896WuFcSR6Hrt39ziMlh+uZ+IRo5LK8FA4BV3CatAFKmmlVWKRV6sopwfHWJkIq2nJ1sa5IEm4RBhymdhBqO8EzbNuI2iNJdnoKLMtD4FsPU5eDtor0drkrSopemYoqRTWo6OcT/fk52w2T8mveE/7MmuR2Y4PmPt6Qy1wTtKKkcYcu2W7Q2r3oI4fa4nPEP9ItiiscvTzD2fgZDQEZ9BuBQV2YbedOIIhvZQic8QHkAixQg3AjHpZ1UpW/96qkTbhJ8o/WmRewkaMd2uJiM4gC2lnxos=</ds:X509Certificate></ds:X509Data></ds:KeyInfo></ds:Signature></facturaElectronicaCompraVenta>

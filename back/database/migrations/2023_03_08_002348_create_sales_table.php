@@ -37,7 +37,7 @@ return new class extends Migration
             $table->unsignedBigInteger("cufd_id")->nullable();
             $table->foreign("cufd_id")->references("id")->on("cufds");
             $table->unsignedBigInteger("client_id")->nullable();
-            $table->foreign("client_id")->references("id")->on("clients");
+//            $table->foreign("client_id")->references("id")->on("clients");
             $table->timestamps();
         });
     }
