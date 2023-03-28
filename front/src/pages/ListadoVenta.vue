@@ -282,13 +282,17 @@ export default {
       const d = new Printd()
       d.print(document.getElementById('myelement'))
     },
-    anularSale () {
+    anularSale (factura) {
+      this.factura = factura
+      this.dialogAnular = true
+    },
+    enviarAnular () {
       this.$q.loading.show()
       this.$api.post('anularSale', { sale: this.factura, motivo: this.motivo }).then(res => {
         console.log(res.data)
-        this.$q.loading.hide()
-        this.listadoGet()
         this.dialogAnular = false
+        this.listadoGet()
+        this.$q.loading.hide()
       })
     },
     cargarMotivo () {

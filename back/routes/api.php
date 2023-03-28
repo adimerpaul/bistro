@@ -34,6 +34,8 @@ Route::get('motivoanular', [\App\Http\Controllers\ActivityController::class,'mot
 Route::post('recepcionPaqueteFactura', [\App\Http\Controllers\EventoSignificativoController::class,'recepcionPaqueteFactura']);
 Route::post('cantidadFacturas', [\App\Http\Controllers\EventoSignificativoController::class,'cantidadFacturas']);
 Route::post('validarPaquete', [\App\Http\Controllers\EventoSignificativoController::class,'validarPaquete']);
+
+Route::post('anularSale', [\App\Http\Controllers\SaleController::class,'anularSale']);
 Route::resource('event', \App\Http\Controllers\EventController::class);
 Route::resource('client', \App\Http\Controllers\ClientController::class);
 Route::resource('sale', \App\Http\Controllers\SaleController::class);

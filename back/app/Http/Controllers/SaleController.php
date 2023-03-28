@@ -12,6 +12,7 @@ use App\Models\Detail;
 use App\Models\Leyenda;
 use App\Http\Requests\StoreSaleRequest;
 use App\Http\Requests\UpdateSaleRequest;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Mail;
 use Luecano\NumeroALetras\NumeroALetras;
@@ -410,13 +411,13 @@ class SaleController extends Controller{
         $codigoDocumentoSector=1; // 1 compraventa 2 alquiler 23 prevaloradas
         $codigoEmision=1; // 1 online 2 offline 3 masivo
         $codigoModalidad=env('MODALIDAD'); //1 electronica 2 computarizada
-        $codigoPuntoVenta=$request->sale['codigoPuntoVenta'];
+        $codigoPuntoVenta=0;
         $codigoSistema=env('CODIGO_SISTEMA');
         $tipoFacturaDocumento=1; // 1 con credito fiscal 2 sin creditofical 3 nota debito credito
-        $codigoSucursal=$request->sale['codigoSucursal'];
+        $codigoSucursal=0;
         $nit=ENV('NIT');
 
-        $user=User::find($request->user()->id);
+        $user=User::find(1);
 
         if (Cui::where('codigoPuntoVenta', $codigoPuntoVenta)->where('codigoSucursal', $codigoSucursal)->where('fechaVigencia','>=', now())->count()==0){
             return response()->json(['message' => 'No existe CUI para la venta!!'], 400);
@@ -430,7 +431,7 @@ class SaleController extends Controller{
         //codigomotivo
         //cuf
 
-        try {
+//        try {
             //return 'llega';
             $client = new \SoapClient(env("URL_SIAT")."ServicioFacturacionCompraVenta?WSDL",  [
                 'stream_context' => stream_context_create([
@@ -454,14 +455,14 @@ class SaleController extends Controller{
                     "codigoSistema"=>$codigoSistema,
                     "codigoSucursal"=>$codigoSucursal,
                     "cufd"=>$cufd->codigo,
-                    "cuis"=>$request->sale['cui'],
+                    "cuis"=>$cui->codigo,
                     "nit"=>env('NIT'),
                     "tipoFacturaDocumento"=>$tipoFacturaDocumento,
                     "codigoMotivo"=>$request->motivo['codigoClasificador'],
                     "cuf"=>$request->sale['cuf']
                 ]
             ]);
-            //return $result;
+            error_log(json_encode($result));
             if($result->RespuestaServicioFacturacion->transaccion){
                 $sale=Sale::find($request->sale['id']);
                 $sale->siatAnulado=1;
@@ -485,9 +486,9 @@ class SaleController extends Controller{
             }
             return $result;
 
-        }catch (\Exception $e) {
-            //return response()->json(['error' => $e->getMessage()]);
-            return response()->json(['message' => 'anulado error'], 400);
-        }
+//        }catch (\Exception $e) {
+//            //return response()->json(['error' => $e->getMessage()]);
+//            return response()->json(['message' => 'anulado error'], 400);
+//        }
     }
 }

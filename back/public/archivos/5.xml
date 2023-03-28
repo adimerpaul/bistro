@@ -5,48 +5,48 @@
     <razonSocialEmisor>BistroFood S.R.L.</razonSocialEmisor>
     <municipio>Oruro</municipio>
     <telefono>5281290</telefono>
-    <numeroFactura>5</numeroFactura>
-    <cuf>1BF79A259EA7891759925BC56E621ED314B3A421237D487DBA106FD74</cuf>
-    <cufd>BQUF5Q3Apb0FBNzzlFN0MwMUIwRjY=QsKhQGp4VWNEWFVcwNDEwNkJCMEYwQ</cufd>
+    <numeroFactura>1</numeroFactura>
+    <cuf>1BF79A259EA78947552214A15986B146F2D39E06A078EE1D25506FD74</cuf>
+    <cufd>BQXlDcClvQUE=NzzlFN0MwMUIwRjY=QlVyZjJTZERYVUFcwNDEwNkJCMEYwQ</cufd>
     <codigoSucursal>0</codigoSucursal>
     <direccion>AVENIDA TACNA ENTRE TOMAS FRIAS Y JAEN Nª2337 ZONA ESTE</direccion>
     <codigoPuntoVenta>0</codigoPuntoVenta>
-    <fechaEmision>2023-03-27T21:21:44.000</fechaEmision>
-    <nombreRazonSocial>CHAMBI</nombreRazonSocial>
+    <fechaEmision>2023-03-28T18:53:48.000</fechaEmision>
+    <nombreRazonSocial>ÑUNEZ</nombreRazonSocial>
     <codigoTipoDocumentoIdentidad>1</codigoTipoDocumentoIdentidad>
-    <numeroDocumento>7336199017</numeroDocumento>
+    <numeroDocumento>1010</numeroDocumento>
     <complemento/>
-    <codigoCliente>2</codigoCliente>
+    <codigoCliente>9991</codigoCliente>
     <codigoMetodoPago>1</codigoMetodoPago>
     <numeroTarjeta xsi:nil="true"/>
-    <montoTotal>50.00</montoTotal>
-    <montoTotalSujetoIva>50.00</montoTotalSujetoIva>
+    <montoTotal>30.00</montoTotal>
+    <montoTotalSujetoIva>30.00</montoTotalSujetoIva>
     <codigoMoneda>1</codigoMoneda>
     <tipoCambio>1</tipoCambio>
-    <montoTotalMoneda>50.00</montoTotalMoneda>
+    <montoTotalMoneda>30.00</montoTotalMoneda>
     <montoGiftCard xsi:nil="true"/>
     <descuentoAdicional>0</descuentoAdicional>
     <codigoExcepcion>0</codigoExcepcion>
     <cafc xsi:nil="true"/>
-    <leyenda>Ley N° 453: El proveedor de servicios debe habilitar medios e instrumentos para efectuar consultas y reclamaciones.</leyenda>
+    <leyenda>Ley N° 453: Tienes derecho a un trato equitativo sin discriminación en la oferta de servicios.</leyenda>
     <usuario>Administrator</usuario>
     <codigoDocumentoSector>1</codigoDocumentoSector>
   </cabecera>
   <detalle>
     <actividadEconomica>561120</actividadEconomica>
     <codigoProductoSin>99100</codigoProductoSin>
-    <codigoProducto>11</codigoProducto>
-    <descripcion>Menudito</descripcion>
-    <cantidad>2</cantidad>
+    <codigoProducto>3</codigoProducto>
+    <descripcion>TALLARIN SALTEADO</descripcion>
+    <cantidad>1</cantidad>
     <unidadMedida>62</unidadMedida>
-    <precioUnitario>25</precioUnitario>
+    <precioUnitario>30</precioUnitario>
     <montoDescuento>0</montoDescuento>
-    <subTotal>50</subTotal>
+    <subTotal>30</subTotal>
     <numeroSerie xsi:nil="true"/>
     <numeroImei xsi:nil="true"/>
   </detalle>
 <ds:Signature xmlns:ds="http://www.w3.org/2000/09/xmldsig#">
   <ds:SignedInfo><ds:CanonicalizationMethod Algorithm="http://www.w3.org/2001/10/xml-exc-c14n#"/>
     <ds:SignatureMethod Algorithm="http://www.w3.org/2001/04/xmldsig-more#rsa-sha256"/>
-  <ds:Reference URI=""><ds:Transforms><ds:Transform Algorithm="http://www.w3.org/2000/09/xmldsig#enveloped-signature"/><ds:Transform Algorithm="http://www.w3.org/TR/2001/REC-xml-c14n-20010315#WithComments"/></ds:Transforms><ds:DigestMethod Algorithm="http://www.w3.org/2001/04/xmlenc#sha256"/><ds:DigestValue>b4SiHDJINyOM87IWCtoI9MV4dDXHJMKgUIJpNVSeUcc=</ds:DigestValue></ds:Reference></ds:SignedInfo><ds:SignatureValue>e4+TuhLjzNn6nwHk++1hHbrjZHufhzD0qAwRHcWLHGIvwTyqXmKcVHf4EeE/73kgaccaSEdekW8rXD9CwdDbMefK6o9b9Tt+XcNThLy+8Sr7reENXgg49uN0dVPpfW19dmPenE2HFqLdVJSFRsb13tf3URK/jXLBsrExBSupOd7yNWnpPgb0yeXSuoctDW1I8ls+xCn1seYarovE0VBnHy0xWM20o0gQgAXN0XudJCd80Iat2Ku6H21Gvj2xmHkh7hZ1fXHtYwzqY/8Bbx5zyen8/yGzvJJl2wXWH7xt78wtL6LddPm/HFU+chn4bnokDY43fxzVTh7fbr4RMFHhSQ==</ds:SignatureValue>
+  <ds:Reference URI=""><ds:Transforms><ds:Transform Algorithm="http://www.w3.org/2000/09/xmldsig#enveloped-signature"/><ds:Transform Algorithm="http://www.w3.org/TR/2001/REC-xml-c14n-20010315#WithComments"/></ds:Transforms><ds:DigestMethod Algorithm="http://www.w3.org/2001/04/xmlenc#sha256"/><ds:DigestValue>i0IZa6GROiFXVlRabLMp9gWcNmZF66yfWKOTyLKGLik=</ds:DigestValue></ds:Reference></ds:SignedInfo><ds:SignatureValue>vERdlzebYWHP4IJxhO7iCMLuwR53WwIwD5pkYJX+ArWM1w3qiNeyvoxqT+M0201iTF5IWQuZ5bmml+XoFLte1tFRhDq/sUZ7U9gl7X7GQu8h7VtUnFS883vTSuLFL6QME4iv76+929vgBmv74dN/s1tUpcM4+nQlrePvu6NhvUUL3isDH9CbKpBAU+ttqPPPKyO/Dr3O3smDFys7faxrZi+Tvu5jHihPqH5UbeEsR4py27hbZup8CGD4ccvGnCSdTx3gGGC/5OUHLa55ewka7dXmOPfqRkNOBCaWQMfbZFdD1K0Ud+n4uxxKifhNEb5eP5BoFuSieNPzCOTqtwOcdA==</ds:SignatureValue>
 <ds:KeyInfo><ds:X509Data><ds:X509Certificate>MIIEtDCCA5ygAwIBAgIIMaXn+NfUKgAwDQYJKoZIhvcNAQEFBQAwgbUxCzAJBgNVBAYTAkJPMQ8wDQYDVQQIDAZMQSBQQVoxDzANBgNVBAcMBkxBIFBBWjEeMBwGA1UECgwVRW50aWRhZCBDZXJ0aWZpY2Fkb3JhMQwwCgYDVQQLDANVSUQxEzARBgNVBAMMCkFEU0lCIEZBS0UxJDAiBgkqhkiG9w0BCQEWFW5jb2FyaXRlQGFkc2liLmdvYi5ibzEbMBkGA1UEBRMSNzM1MjQyNDI0NDY0NjM0MjM0MB4XDTIzMDMyMDIyMTAwMloXDTI0MDMxOTIyMTAwMlowgeMxITAfBgNVBAMTGEVERFkgQ0FSTE9TIFBMQVpBIEdBUkNJQTEXMBUGA1UEChMOQklTVFJPRk9PRCBTUkwxEzARBgNVBAsTCkJJU1RST0ZPT0QxDzANBgNVBAwTBkJJU1RSTzELMAkGA1UEBhMCQk8xCzAJBgNVBC4TAkNJMRQwEgYHKwYBAQEBABMHMzUyMDIyNjERMA8GCgmSJomT8ixkAQETATExEjAQBgNVBAUTCTQwODc0MTAyNTEoMCYGCSqGSIb3DQEJARYZZWRkeXBsYXphZ2FyY2lhQGdtYWlsLmNvbTCCASIwDQYJKoZIhvcNAQEBBQADggEPADCCAQoCggEBANPF6d36pMAOqlKWyBzViUSCo4wpplfFxGu1H/uA3OVL5nXpLIqtGGODLeiQ0j+K5JNPe0ZD9eni8hOFIvBHh2EP1UzlOcYx/a37ZAGsLIexen4cFsVs3g51DvQWsRqhhhTNR5D0HxABJyUUu0VrADgSVLCTSjrjEizJuxovzT5ZykmAh2+Mu/iAnZ2ZOS/424LMcOS15qQZaDJXK0b2sDglYE1tkzERBvxJqxK/rEB5OqImGZMXQIcx8ijLBuO/w6fUOK0Fgr+UN8mQiUF/kD9E+BL5L6ZHRDaFO8m3VC84siBvNOKa2EoWHgX55TjFcUNaF3j/5ybWkv/w/jJgwLMCAwEAAaOBlzCBlDAMBgNVHRMEBTADAQH/MAsGA1UdDwQEAwIE8DAkBgNVHREEHTAbhhllZGR5cGxhemFnYXJjaWFAZ21haWwuY29tMFEGA1UdHwRKMEgwRqBEoEKGQGh0dHBzOi8vZGVzYXJyb2xsby5hZHNpYi5nb2IuYm8vZGVzYV9hZ2VuY2lhL2xpc3RfcmV2b2NhY2lvbi5jcmwwDQYJKoZIhvcNAQEFBQADggEBACi4Dd2Tnwc7IN0DrrgXlRcgOoyfQA1mIW/jAP1IrhSTyB4sapXIAJt+7A896WuFcSR6Hrt39ziMlh+uZ+IRo5LK8FA4BV3CatAFKmmlVWKRV6sopwfHWJkIq2nJ1sa5IEm4RBhymdhBqO8EzbNuI2iNJdnoKLMtD4FsPU5eDtor0drkrSopemYoqRTWo6OcT/fk52w2T8mveE/7MmuR2Y4PmPt6Qy1wTtKKkcYcu2W7Q2r3oI4fa4nPEP9ItiiscvTzD2fgZDQEZ9BuBQV2YbedOIIhvZQic8QHkAixQg3AjHpZ1UpW/96qkTbhJ8o/WmRewkaMd2uJiM4gC2lnxos=</ds:X509Certificate></ds:X509Data></ds:KeyInfo></ds:Signature></facturaElectronicaCompraVenta>
