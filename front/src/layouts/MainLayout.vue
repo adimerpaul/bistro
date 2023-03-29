@@ -51,23 +51,23 @@
         </q-expansion-item>
         <q-expansion-item dense  icon="o_category" label="Categoria" default-opened>
           <q-expansion-item dense expand-separator :header-inset-level="1"  icon="o_category" label="Sabor peru" to="/categories/1" hide-expand-icon/>
-          <q-expansion-item dense expand-separator :header-inset-level="1"  icon="o_category" label="Cafe italia" to="/categories/2" hide-expand-icon/>
-          <q-expansion-item dense expand-separator :header-inset-level="1"  icon="o_category" label="Vaca fria" to="/categories/3" hide-expand-icon/>
+          <q-expansion-item dense expand-separator :header-inset-level="1"  icon="o_category" label="Cafe italia" to="/categories/2" hide-expand-icon hidden/>
+          <q-expansion-item dense expand-separator :header-inset-level="1"  icon="o_category" label="Vaca fria" to="/categories/3" hide-expand-icon hidden/>
         </q-expansion-item>
         <q-expansion-item dense  icon="o_shopping_bag" label="Productos" default-opened>
           <q-expansion-item dense expand-separator :header-inset-level="1"  icon="o_shopping_bag" label="Sabor peru" to="/products/1" hide-expand-icon/>
-          <q-expansion-item dense expand-separator :header-inset-level="1"  icon="o_shopping_bag" label="Cafe italia" to="/products/2" hide-expand-icon/>
-          <q-expansion-item dense expand-separator :header-inset-level="1"  icon="o_shopping_bag" label="Vaca fria" to="/products/3" hide-expand-icon/>
+          <q-expansion-item dense expand-separator :header-inset-level="1"  icon="o_shopping_bag" label="Cafe italia" to="/products/2" hide-expand-icon hidden/>
+          <q-expansion-item dense expand-separator :header-inset-level="1"  icon="o_shopping_bag" label="Vaca fria" to="/products/3" hide-expand-icon hidden/>
         </q-expansion-item>
         <q-expansion-item dense  icon="o_shopping_cart" label="Venta" default-opened>
           <q-expansion-item dense expand-separator :header-inset-level="1"  icon="o_shopping_cart" label="Sabor peru" to="/sales/1" hide-expand-icon/>
-          <q-expansion-item dense expand-separator :header-inset-level="1"  icon="o_shopping_cart" label="Cafe italia" to="/sales/2" hide-expand-icon/>
-          <q-expansion-item dense expand-separator :header-inset-level="1"  icon="o_shopping_cart" label="Vaca fria" to="/sales/3" hide-expand-icon/>
+          <q-expansion-item dense expand-separator :header-inset-level="1"  icon="o_shopping_cart" label="Cafe italia" to="/sales/2" hide-expand-icon hidden/>
+          <q-expansion-item dense expand-separator :header-inset-level="1"  icon="o_shopping_cart" label="Vaca fria" to="/sales/3" hide-expand-icon hidden/>
         </q-expansion-item>
         <q-expansion-item dense  icon="o_description" label="Reportes" default-opened>
           <q-expansion-item dense expand-separator :header-inset-level="1"  icon="o_description" label="Sabor peru" to="/listado/1" hide-expand-icon/>
-          <q-expansion-item dense expand-separator :header-inset-level="1"  icon="o_description" label="Cafe italia" to="/listado/2" hide-expand-icon/>
-          <q-expansion-item dense expand-separator :header-inset-level="1"  icon="o_description" label="Vaca fria" to="/listado/3" hide-expand-icon/>
+          <q-expansion-item dense expand-separator :header-inset-level="1"  icon="o_description" label="Cafe italia" to="/listado/2" hide-expand-icon hidden/>
+          <q-expansion-item dense expand-separator :header-inset-level="1"  icon="o_description" label="Vaca fria" to="/listado/3" hide-expand-icon hidden/>
         </q-expansion-item>
       </q-list>
     </q-drawer>
