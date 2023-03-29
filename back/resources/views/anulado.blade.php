@@ -8,7 +8,7 @@
     <title>Document</title>
 </head>
 <body>
-Una factura suya fue anulada codigo de autorizacion N: {{ $cuf }} <br>
+La factura N :{{$numeroFactura}} fue anulada, con codigo de N autorizacion: {{ $cuf }} <br>
 Pueve ver el estado en <a href="{{env('URL_SIAT2')}}/consulta/QR?nit={{env('NIT')}}&cuf={{$cuf}}&numero={{$numeroFactura}}&t=2">AQUI</a>
 </body>
 </html>

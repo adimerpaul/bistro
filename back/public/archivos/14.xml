@@ -5,48 +5,74 @@
     <razonSocialEmisor>BistroFood S.R.L.</razonSocialEmisor>
     <municipio>Oruro</municipio>
     <telefono>5281290</telefono>
-    <numeroFactura>4</numeroFactura>
-    <cuf>1BF79A259EA78917BD6C2D98DD0649AD3A0BA29A857D487DBA106FD74</cuf>
-    <cufd>BQUF5Q3Apb0FBNzzlFN0MwMUIwRjY=QsKhQGp4VWNEWFVcwNDEwNkJCMEYwQ</cufd>
+    <numeroFactura>7</numeroFactura>
+    <cuf>1BF79A259EA789781BAA50EB77A38B2CBA5BA72E65316B40AF806FD74</cuf>
+    <cufd>BQUF5Q3Apb0FBNzzlFN0MwMUIwRjY=QnnDiTY4UWVEWFVcwNDEwNkJCMEYwQ</cufd>
     <codigoSucursal>0</codigoSucursal>
     <direccion>AVENIDA TACNA ENTRE TOMAS FRIAS Y JAEN Nª2337 ZONA ESTE</direccion>
     <codigoPuntoVenta>0</codigoPuntoVenta>
-    <fechaEmision>2023-03-27T22:00:55.000</fechaEmision>
-    <nombreRazonSocial>ÃUNEZ</nombreRazonSocial>
-    <codigoTipoDocumentoIdentidad>1</codigoTipoDocumentoIdentidad>
-    <numeroDocumento>1010</numeroDocumento>
+    <fechaEmision>2023-03-29T17:46:33.000</fechaEmision>
+    <nombreRazonSocial>BORTH PARODY &amp; ASOCIADOS</nombreRazonSocial>
+    <codigoTipoDocumentoIdentidad>5</codigoTipoDocumentoIdentidad>
+    <numeroDocumento>2629822901014</numeroDocumento>
     <complemento/>
-    <codigoCliente>9991</codigoCliente>
+    <codigoCliente>9997</codigoCliente>
     <codigoMetodoPago>1</codigoMetodoPago>
     <numeroTarjeta xsi:nil="true"/>
-    <montoTotal>95.00</montoTotal>
-    <montoTotalSujetoIva>95.00</montoTotalSujetoIva>
+    <montoTotal>52.00</montoTotal>
+    <montoTotalSujetoIva>52.00</montoTotalSujetoIva>
     <codigoMoneda>1</codigoMoneda>
     <tipoCambio>1</tipoCambio>
-    <montoTotalMoneda>95.00</montoTotalMoneda>
+    <montoTotalMoneda>52.00</montoTotalMoneda>
     <montoGiftCard xsi:nil="true"/>
     <descuentoAdicional>0</descuentoAdicional>
-    <codigoExcepcion>0</codigoExcepcion>
+    <codigoExcepcion>1</codigoExcepcion>
     <cafc xsi:nil="true"/>
-    <leyenda>Ley N° 453: Tienes derecho a recibir información sobre las características y contenidos de los servicios que utilices.</leyenda>
+    <leyenda>Ley N° 453: La interrupción del servicio debe comunicarse con anterioridad a las Autoridades que correspondan y a los usuarios afectados.</leyenda>
     <usuario>Administrator</usuario>
     <codigoDocumentoSector>1</codigoDocumentoSector>
   </cabecera>
   <detalle>
     <actividadEconomica>561120</actividadEconomica>
     <codigoProductoSin>99100</codigoProductoSin>
-    <codigoProducto>95</codigoProducto>
-    <descripcion>TOMATODO</descripcion>
-    <cantidad>2</cantidad>
+    <codigoProducto>8</codigoProducto>
+    <descripcion>PORCIÓN DE POLLO</descripcion>
+    <cantidad>1</cantidad>
     <unidadMedida>62</unidadMedida>
-    <precioUnitario>95</precioUnitario>
+    <precioUnitario>10</precioUnitario>
     <montoDescuento>0</montoDescuento>
-    <subTotal>95</subTotal>
+    <subTotal>10</subTotal>
+    <numeroSerie xsi:nil="true"/>
+    <numeroImei xsi:nil="true"/>
+  </detalle>
+  <detalle>
+    <actividadEconomica>561120</actividadEconomica>
+    <codigoProductoSin>99100</codigoProductoSin>
+    <codigoProducto>13</codigoProducto>
+    <descripcion>CERDO AL CILINDRO</descripcion>
+    <cantidad>1</cantidad>
+    <unidadMedida>62</unidadMedida>
+    <precioUnitario>30</precioUnitario>
+    <montoDescuento>0</montoDescuento>
+    <subTotal>30</subTotal>
+    <numeroSerie xsi:nil="true"/>
+    <numeroImei xsi:nil="true"/>
+  </detalle>
+  <detalle>
+    <actividadEconomica>561120</actividadEconomica>
+    <codigoProductoSin>99100</codigoProductoSin>
+    <codigoProducto>23</codigoProducto>
+    <descripcion>CHICHA MORADA 1 LITRO</descripcion>
+    <cantidad>1</cantidad>
+    <unidadMedida>62</unidadMedida>
+    <precioUnitario>12</precioUnitario>
+    <montoDescuento>0</montoDescuento>
+    <subTotal>12</subTotal>
     <numeroSerie xsi:nil="true"/>
     <numeroImei xsi:nil="true"/>
   </detalle>
 <ds:Signature xmlns:ds="http://www.w3.org/2000/09/xmldsig#">
   <ds:SignedInfo><ds:CanonicalizationMethod Algorithm="http://www.w3.org/2001/10/xml-exc-c14n#"/>
     <ds:SignatureMethod Algorithm="http://www.w3.org/2001/04/xmldsig-more#rsa-sha256"/>
-  <ds:Reference URI=""><ds:Transforms><ds:Transform Algorithm="http://www.w3.org/2000/09/xmldsig#enveloped-signature"/><ds:Transform Algorithm="http://www.w3.org/TR/2001/REC-xml-c14n-20010315#WithComments"/></ds:Transforms><ds:DigestMethod Algorithm="http://www.w3.org/2001/04/xmlenc#sha256"/><ds:DigestValue>JmgQ4hE3hjb9+Hn2BPRrS3UrGI/ZrOh0+crpRbMWKyI=</ds:DigestValue></ds:Reference></ds:SignedInfo><ds:SignatureValue>DKf+s8DbAeAhr5hbqqJBQnyNbISnAtKUgLd1gnNLqfOiNbb4vG8L32JqfNRcuXtG2G+K+CjVvhDTKmxiWxLjQFW9ItG7d02DEYlXOA7fuOtSMCkky8GMXaw0Jo3n1O/F5Deq2lq/y8IEG1wVrznzNk09jyyupTKOYP9W++5XiRTEVw9C5kYr7C58qR/2qq9plOCrX2LzpschB9Y5RxA2sNPvv8wS9HunnG/ImAEFfXtpUmxcbN6ytZUdCz8NqVHpJFQ92yl4kKongSbHuFLivXuBTgTDguAi1M3w61QDx7feCp47bNc0x3Jf7JEqpcaL13ISycaTj0OPRFVgEyHHKw==</ds:SignatureValue>
+  <ds:Reference URI=""><ds:Transforms><ds:Transform Algorithm="http://www.w3.org/2000/09/xmldsig#enveloped-signature"/><ds:Transform Algorithm="http://www.w3.org/TR/2001/REC-xml-c14n-20010315#WithComments"/></ds:Transforms><ds:DigestMethod Algorithm="http://www.w3.org/2001/04/xmlenc#sha256"/><ds:DigestValue>itsTjeWT3JEqwXzYq1/aOMr42Vk72m8wZKW8k4dy6Yc=</ds:DigestValue></ds:Reference></ds:SignedInfo><ds:SignatureValue>MaF926vHF98zq+jt0gkw3D8CUcUqGNtGU04cRIu/MWB0WVc2EUDjl2HdZUfNeMmnktejxsIrbJc1dcPhz8JezzdRugTOoJ8F42Jq2SAkLy1TnqobXQsxqesk0SyypQAJyv9T8/bQ1Qi2Aug0IiZm00/bvqp01N1c6EP7I7ZQZ4hV2ZnmcayAyYbYC862aLTwonNRClacs0iGUAbS9KXKfXc6MqyGzWMszrl1Tb8UBtC/9hBc2FHT7mW1OIZ8OfLoaTTd1QZYw3fLQ+ou50KGNjneR2TY1BwM5vmz+Vu3SpJvtbjIl6SjE9ATiDp2Mu8GehFUSyQ4e3Wo+OwHl8nWgQ==</ds:SignatureValue>
 <ds:KeyInfo><ds:X509Data><ds:X509Certificate>MIIEtDCCA5ygAwIBAgIIMaXn+NfUKgAwDQYJKoZIhvcNAQEFBQAwgbUxCzAJBgNVBAYTAkJPMQ8wDQYDVQQIDAZMQSBQQVoxDzANBgNVBAcMBkxBIFBBWjEeMBwGA1UECgwVRW50aWRhZCBDZXJ0aWZpY2Fkb3JhMQwwCgYDVQQLDANVSUQxEzARBgNVBAMMCkFEU0lCIEZBS0UxJDAiBgkqhkiG9w0BCQEWFW5jb2FyaXRlQGFkc2liLmdvYi5ibzEbMBkGA1UEBRMSNzM1MjQyNDI0NDY0NjM0MjM0MB4XDTIzMDMyMDIyMTAwMloXDTI0MDMxOTIyMTAwMlowgeMxITAfBgNVBAMTGEVERFkgQ0FSTE9TIFBMQVpBIEdBUkNJQTEXMBUGA1UEChMOQklTVFJPRk9PRCBTUkwxEzARBgNVBAsTCkJJU1RST0ZPT0QxDzANBgNVBAwTBkJJU1RSTzELMAkGA1UEBhMCQk8xCzAJBgNVBC4TAkNJMRQwEgYHKwYBAQEBABMHMzUyMDIyNjERMA8GCgmSJomT8ixkAQETATExEjAQBgNVBAUTCTQwODc0MTAyNTEoMCYGCSqGSIb3DQEJARYZZWRkeXBsYXphZ2FyY2lhQGdtYWlsLmNvbTCCASIwDQYJKoZIhvcNAQEBBQADggEPADCCAQoCggEBANPF6d36pMAOqlKWyBzViUSCo4wpplfFxGu1H/uA3OVL5nXpLIqtGGODLeiQ0j+K5JNPe0ZD9eni8hOFIvBHh2EP1UzlOcYx/a37ZAGsLIexen4cFsVs3g51DvQWsRqhhhTNR5D0HxABJyUUu0VrADgSVLCTSjrjEizJuxovzT5ZykmAh2+Mu/iAnZ2ZOS/424LMcOS15qQZaDJXK0b2sDglYE1tkzERBvxJqxK/rEB5OqImGZMXQIcx8ijLBuO/w6fUOK0Fgr+UN8mQiUF/kD9E+BL5L6ZHRDaFO8m3VC84siBvNOKa2EoWHgX55TjFcUNaF3j/5ybWkv/w/jJgwLMCAwEAAaOBlzCBlDAMBgNVHRMEBTADAQH/MAsGA1UdDwQEAwIE8DAkBgNVHREEHTAbhhllZGR5cGxhemFnYXJjaWFAZ21haWwuY29tMFEGA1UdHwRKMEgwRqBEoEKGQGh0dHBzOi8vZGVzYXJyb2xsby5hZHNpYi5nb2IuYm8vZGVzYV9hZ2VuY2lhL2xpc3RfcmV2b2NhY2lvbi5jcmwwDQYJKoZIhvcNAQEFBQADggEBACi4Dd2Tnwc7IN0DrrgXlRcgOoyfQA1mIW/jAP1IrhSTyB4sapXIAJt+7A896WuFcSR6Hrt39ziMlh+uZ+IRo5LK8FA4BV3CatAFKmmlVWKRV6sopwfHWJkIq2nJ1sa5IEm4RBhymdhBqO8EzbNuI2iNJdnoKLMtD4FsPU5eDtor0drkrSopemYoqRTWo6OcT/fk52w2T8mveE/7MmuR2Y4PmPt6Qy1wTtKKkcYcu2W7Q2r3oI4fa4nPEP9ItiiscvTzD2fgZDQEZ9BuBQV2YbedOIIhvZQic8QHkAixQg3AjHpZ1UpW/96qkTbhJ8o/WmRewkaMd2uJiM4gC2lnxos=</ds:X509Certificate></ds:X509Data></ds:KeyInfo></ds:Signature></facturaElectronicaCompraVenta>

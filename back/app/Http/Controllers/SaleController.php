@@ -147,11 +147,11 @@ class SaleController extends Controller{
         if (str_contains($clientNombreRazonSocialUtf8, '&')) {
             $clientNombreRazonSocialUtf8 = str_replace('&', '&amp;', $clientNombreRazonSocialUtf8);
         }
-        if ($user->contador>=2){
-            $excepcion=1;
-        }else{
-            $excepcion=0;
-        }
+//        if ($user->contador>=2){
+//            $excepcion=1;
+//        }else{
+//            $excepcion=0;
+//        }
         $text="<?xml version='1.0' encoding='UTF-8' standalone='yes'?>
         <facturaElectronicaCompraVenta xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance' xsi:noNamespaceSchemaLocation='facturaElectronicaCompraVenta.xsd'>    <cabecera>
         <nitEmisor>".env('NIT')."</nitEmisor>
@@ -179,7 +179,7 @@ class SaleController extends Controller{
         <montoTotalMoneda>".$request->montoTotal."</montoTotalMoneda>
         <montoGiftCard xsi:nil='true'/>
         <descuentoAdicional>0</descuentoAdicional>
-        <codigoExcepcion>".$excepcion."</codigoExcepcion>
+        <codigoExcepcion>".($client->codigoTipoDocumentoIdentidad==5?1:0)."</codigoExcepcion>
         <cafc xsi:nil='true'/>
         <leyenda>$leyenda</leyenda>
         <usuario>".explode(" ", $user->name)[0]."</usuario>
