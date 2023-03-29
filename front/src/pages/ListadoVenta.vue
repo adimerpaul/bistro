@@ -91,11 +91,11 @@
   </template>
 
 <script>
-import xlsx from 'json-as-xlsx'
-import { date } from 'quasar'
 import { Printd } from 'printd'
 import conversor from 'conversor-numero-a-letras-es-ar'
 import QRCode from 'qrcode'
+import xlsx from 'json-as-xlsx'
+import { date } from 'quasar'
 // const conversor = require.context('conversor-numero-a-letras-es-ar')
 // const QRCode = require.context('qrcode')
 
