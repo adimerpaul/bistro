@@ -34,6 +34,9 @@ class DatabaseSeeder extends Seeder
             ServicioSeeder::class,
             TipopagoSeeder::class,
             CuiSeeder::class,
+            PermisoSeeder::class,
+            Permiso_user::class
+            
         ]);
     }
 }

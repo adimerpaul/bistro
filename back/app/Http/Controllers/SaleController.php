@@ -491,4 +491,8 @@ class SaleController extends Controller{
 //            return response()->json(['message' => 'anulado error'], 400);
 //        }
     }
+    public function eventSearch(Request $request)
+    {
+        return Sale::where('siatEnviado',false)->where('siatAnulado',false)->count();
+    }
 }

@@ -11,7 +11,7 @@
           @click="leftDrawerOpen=!leftDrawerOpen"
         />
         <q-toolbar-title>
-          Bilstro
+          Bistro
           <span class="text-grey text-subtitle2">Usuario</span>
           {{title}}
         </q-toolbar-title>
@@ -42,7 +42,8 @@
         <q-item clickable dense to="/" exact active-class="bg-primary text-white">
           <q-item-section avatar><q-icon name="o_home" /></q-item-section>
           <q-item-section><q-item-label>Principal</q-item-label><q-item-label caption class="text-grey">Pagina principal</q-item-label></q-item-section>
-        </q-item>
+      </q-item>
+        <q-expansion-item dense exact expand-separator icon="o_people" label="Usuarios" to="usuarios" expand-icon="null"/>
         <q-expansion-item dense expand-separator icon="o_engineering" label="Siat" >
           <q-expansion-item dense exact :header-inset-level="1" expand-separator icon="o_psychology" label="Cuis" default-opened to="/cuis" hide-expand-icon/>
           <q-expansion-item dense exact :header-inset-level="1" expand-separator icon="o_countertops" label="sincronizacion" default-opened to="/sincronizacion" hide-expand-icon/>
@@ -51,23 +52,23 @@
         </q-expansion-item>
         <q-expansion-item dense  icon="o_category" label="Categoria" default-opened>
           <q-expansion-item dense expand-separator :header-inset-level="1"  icon="o_category" label="Sabor peru" to="/categories/1" hide-expand-icon/>
-          <q-expansion-item dense expand-separator :header-inset-level="1"  icon="o_category" label="Cafe italia" to="/categories/2" hide-expand-icon hidden/>
-          <q-expansion-item dense expand-separator :header-inset-level="1"  icon="o_category" label="Vaca fria" to="/categories/3" hide-expand-icon hidden/>
+          <q-expansion-item dense expand-separator :header-inset-level="1"  icon="o_category" label="Cafe italia" to="/categories/2" hide-expand-icon />
+          <q-expansion-item dense expand-separator :header-inset-level="1"  icon="o_category" label="Vaca fria" to="/categories/3" hide-expand-icon />
         </q-expansion-item>
         <q-expansion-item dense  icon="o_shopping_bag" label="Productos" default-opened>
           <q-expansion-item dense expand-separator :header-inset-level="1"  icon="o_shopping_bag" label="Sabor peru" to="/products/1" hide-expand-icon/>
-          <q-expansion-item dense expand-separator :header-inset-level="1"  icon="o_shopping_bag" label="Cafe italia" to="/products/2" hide-expand-icon hidden/>
-          <q-expansion-item dense expand-separator :header-inset-level="1"  icon="o_shopping_bag" label="Vaca fria" to="/products/3" hide-expand-icon hidden/>
+          <q-expansion-item dense expand-separator :header-inset-level="1"  icon="o_shopping_bag" label="Cafe italia" to="/products/2" hide-expand-icon />
+          <q-expansion-item dense expand-separator :header-inset-level="1"  icon="o_shopping_bag" label="Vaca fria" to="/products/3" hide-expand-icon />
         </q-expansion-item>
         <q-expansion-item dense  icon="o_shopping_cart" label="Venta" default-opened>
           <q-expansion-item dense expand-separator :header-inset-level="1"  icon="o_shopping_cart" label="Sabor peru" to="/sales/1" hide-expand-icon/>
-          <q-expansion-item dense expand-separator :header-inset-level="1"  icon="o_shopping_cart" label="Cafe italia" to="/sales/2" hide-expand-icon hidden/>
-          <q-expansion-item dense expand-separator :header-inset-level="1"  icon="o_shopping_cart" label="Vaca fria" to="/sales/3" hide-expand-icon hidden/>
+          <q-expansion-item dense expand-separator :header-inset-level="1"  icon="o_shopping_cart" label="Cafe italia" to="/sales/2" hide-expand-icon />
+          <q-expansion-item dense expand-separator :header-inset-level="1"  icon="o_shopping_cart" label="Vaca fria" to="/sales/3" hide-expand-icon />
         </q-expansion-item>
         <q-expansion-item dense  icon="o_description" label="Reportes" default-opened>
           <q-expansion-item dense expand-separator :header-inset-level="1"  icon="o_description" label="Sabor peru" to="/listado/1" hide-expand-icon/>
-          <q-expansion-item dense expand-separator :header-inset-level="1"  icon="o_description" label="Cafe italia" to="/listado/2" hide-expand-icon hidden/>
-          <q-expansion-item dense expand-separator :header-inset-level="1"  icon="o_description" label="Vaca fria" to="/listado/3" hide-expand-icon hidden/>
+          <q-expansion-item dense expand-separator :header-inset-level="1"  icon="o_description" label="Cafe italia" to="/listado/2" hide-expand-icon />
+          <q-expansion-item dense expand-separator :header-inset-level="1"  icon="o_description" label="Vaca fria" to="/listado/3" hide-expand-icon />
         </q-expansion-item>
       </q-list>
     </q-drawer>
@@ -81,18 +82,68 @@
 <script lang="ts">
 import { defineComponent, ref } from 'vue'
 import { setCssVar } from 'quasar'
+import { globalStore } from 'stores/globalStore'
 
 export default defineComponent({
   name: 'MainLayout',
   data () {
     return {
-      leftDrawerOpen: ref(false)
+      leftDrawerOpen: ref(false),
+      store: globalStore()
     }
+  },
+  created () {
+    this.eventSearch()
   },
   methods: {
     logout () {
-      console.log('logout')
-      setCssVar('primary', '#1976d2')
+      this.$q.dialog({
+        title: 'Cerrar sesión',
+        message: '¿Está seguro que desea cerrar sesión?',
+        cancel: true,
+        persistent: true
+      }).onOk(() => {
+        this.$q.loading.show()
+        this.$api.post('logout').then(() => {
+          globalStore().user = {}
+          localStorage.removeItem('tokenMulti')
+          globalStore().isLoggedIn = false
+          this.$router.push('/login')
+          this.$q.loading.hide()
+          globalStore().isLoggedIn = false
+          globalStore().booluser = false
+          globalStore().boolcuis = false
+          globalStore().boolsincr = false
+          globalStore().boolcufd = false
+          globalStore().boolevento = false
+          globalStore().boolrubrosp = false
+          globalStore().boolrubroci = false
+          globalStore().boolrubrovf = false
+          globalStore().boolproductosp = false
+          globalStore().boolproductoci = false
+          globalStore().boolproductovf = false
+          globalStore().boolsabor = false
+          globalStore().boolcafe = false
+          globalStore().boolvaca = false
+          globalStore().boollistsabor = false
+          globalStore().boollistcafe = false
+          globalStore().boollistvaca = false
+          globalStore().boolcajasabor = false
+          globalStore().boolcajacafe = false
+          globalStore().boolcajavaca = false
+          globalStore().boolcliente = false
+        })
+      // eslint-disable-next-line @typescript-eslint/no-empty-function
+      }).onCancel(() => {})
+    },
+    eventSearch () {
+      // this.$api.post('eventSearch').then((res: { data: number }) => {
+      // console.log(res.data)
+      // this.store.eventNumber = res.data
+      // })
+    },
+    toggleLeftDrawer () {
+      this.leftDrawerOpen = !this.leftDrawerOpen
     }
   },
   computed: {

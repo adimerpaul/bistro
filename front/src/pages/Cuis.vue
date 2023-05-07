@@ -80,7 +80,7 @@ export default {
     },
     cuiCreate () {
       this.loading = true
-      this.$api.post('cui', this.cui).then(res => {
+      this.$api.post('cui', this.cui).then(() => {
         this.loading = false
         this.cuiDialog = false
         this.getCuis()

@@ -17,28 +17,36 @@ use Illuminate\Support\Facades\Route;
 //Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 //    return $request->user();
 //});
+Route::post('login', [App\Http\Controllers\UserController::class, 'login']);
+Route::get('verificarComunicacion', [\App\Http\Controllers\ActivityController::class,'verificarComunicacion']);
+Route::group(['middleware' => 'auth:sanctum'], function () {
+    Route::post('eventSearch', [\App\Http\Controllers\SaleController::class, 'eventSearch']);
 
-Route::apiResource('categories', \App\Http\Controllers\CategoryController::class);
-Route::apiResource('products', \App\Http\Controllers\ProductController::class);
-Route::get('productSFilter/{category_id}', [\App\Http\Controllers\ProductController::class,'productSFilter']);
-Route::post('upload/{type}/{id}', [\App\Http\Controllers\UploadController::class,'upload']);
-Route::post('listado', [\App\Http\Controllers\ReportController::class,'listado']);
-Route::get('datocine/{id}', [\App\Http\Controllers\ReportController::class,'datocine']);
-Route::get('motivoanular', [\App\Http\Controllers\ReportController::class,'motivoanular']);
-Route::resource('cui', \App\Http\Controllers\CuiController::class);
-Route::resource('cufd', \App\Http\Controllers\CufdController::class);
-Route::resource('activity', \App\Http\Controllers\ActivityController::class);
-Route::resource('document', \App\Http\Controllers\DocumentController::class);
-Route::resource('eventoSignificativo', \App\Http\Controllers\EventoSignificativoController::class);
-Route::get('motivoanular', [\App\Http\Controllers\ActivityController::class,'motivoanular']);
-Route::post('recepcionPaqueteFactura', [\App\Http\Controllers\EventoSignificativoController::class,'recepcionPaqueteFactura']);
-Route::post('cantidadFacturas', [\App\Http\Controllers\EventoSignificativoController::class,'cantidadFacturas']);
-Route::post('validarPaquete', [\App\Http\Controllers\EventoSignificativoController::class,'validarPaquete']);
+    Route::post('me', [App\Http\Controllers\UserController::class, 'me']);
+    Route::post('logout', [App\Http\Controllers\UserController::class, 'logout']);
+    Route::apiResource('user', App\Http\Controllers\UserController::class);
+    Route::apiResource('categories', \App\Http\Controllers\CategoryController::class);
+    Route::apiResource('products', \App\Http\Controllers\ProductController::class);
+    Route::get('productSFilter/{category_id}', [\App\Http\Controllers\ProductController::class,'productSFilter']);
+    Route::post('upload/{type}/{id}', [\App\Http\Controllers\UploadController::class,'upload']);
+    Route::post('listado', [\App\Http\Controllers\ReportController::class,'listado']);
+    Route::get('datocine/{id}', [\App\Http\Controllers\ReportController::class,'datocine']);
+    Route::get('motivoanular', [\App\Http\Controllers\ReportController::class,'motivoanular']);
+    Route::resource('cui', \App\Http\Controllers\CuiController::class);
+    Route::resource('cufd', \App\Http\Controllers\CufdController::class);
+    Route::resource('activity', \App\Http\Controllers\ActivityController::class);
+    Route::resource('document', \App\Http\Controllers\DocumentController::class);
+    Route::resource('eventoSignificativo', \App\Http\Controllers\EventoSignificativoController::class);
+    Route::get('motivoanular', [\App\Http\Controllers\ActivityController::class,'motivoanular']);
+    Route::post('recepcionPaqueteFactura', [\App\Http\Controllers\EventoSignificativoController::class,'recepcionPaqueteFactura']);
+    Route::post('cantidadFacturas', [\App\Http\Controllers\EventoSignificativoController::class,'cantidadFacturas']);
+    Route::post('validarPaquete', [\App\Http\Controllers\EventoSignificativoController::class,'validarPaquete']);
 
-Route::post('anularSale', [\App\Http\Controllers\SaleController::class,'anularSale']);
-Route::resource('event', \App\Http\Controllers\EventController::class);
-Route::resource('client', \App\Http\Controllers\ClientController::class);
-Route::resource('sale', \App\Http\Controllers\SaleController::class);
+    Route::post('anularSale', [\App\Http\Controllers\SaleController::class,'anularSale']);
+    Route::resource('event', \App\Http\Controllers\EventController::class);
+    Route::resource('client', \App\Http\Controllers\ClientController::class);
+    Route::resource('sale', \App\Http\Controllers\SaleController::class);
 
-Route::post('listleyenda', [\App\Http\Controllers\ActivityController::class,'listleyenda']);
-Route::post('searchClient', [\App\Http\Controllers\ClientController::class,'searchClient']);
+    Route::post('listleyenda', [\App\Http\Controllers\ActivityController::class,'listleyenda']);
+    Route::post('searchClient', [\App\Http\Controllers\ClientController::class,'searchClient']);
+});

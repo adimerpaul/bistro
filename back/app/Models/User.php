@@ -19,9 +19,13 @@ class User extends Authenticatable
      */
     protected $fillable = [
         'name',
+        'nick',
         'email',
         'password',
+        'state',
+        'fechaLimite',
         'contador'
+
     ];
 
     /**
@@ -33,7 +37,9 @@ class User extends Authenticatable
         'password',
         'remember_token',
     ];
-
+    public function permisos(){
+        return $this->belongsToMany(Permiso::class);
+    }
     /**
      * The attributes that should be cast.
      *

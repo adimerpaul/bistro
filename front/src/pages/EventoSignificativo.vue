@@ -52,11 +52,10 @@
 </template>
 
 <script>
-import { date } from 'quasar'
 // import { globalStore } from 'stores/globalStore'
 
 export default {
-  name: `EventoSignificativo`,
+  name: 'EventoSignificativo',
   data () {
     return {
       // store: globalStore(),
