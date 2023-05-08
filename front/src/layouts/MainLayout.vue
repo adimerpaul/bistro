@@ -43,32 +43,32 @@
           <q-item-section avatar><q-icon name="o_home" /></q-item-section>
           <q-item-section><q-item-label>Principal</q-item-label><q-item-label caption class="text-grey">Pagina principal</q-item-label></q-item-section>
       </q-item>
-        <q-expansion-item dense exact expand-separator icon="o_people" label="Usuarios" to="usuarios" expand-icon="null"/>
+        <q-expansion-item dense exact expand-separator icon="o_people" label="Usuarios" to="usuarios" expand-icon="null" v-if="store.booluser"/>
         <q-expansion-item dense expand-separator icon="o_engineering" label="Siat" >
-          <q-expansion-item dense exact :header-inset-level="1" expand-separator icon="o_psychology" label="Cuis" default-opened to="/cuis" hide-expand-icon/>
-          <q-expansion-item dense exact :header-inset-level="1" expand-separator icon="o_countertops" label="sincronizacion" default-opened to="/sincronizacion" hide-expand-icon/>
-          <q-expansion-item dense exact :header-inset-level="1" expand-separator icon="link" label="Cufd" default-opened to="/cufd" hide-expand-icon/>
-          <q-expansion-item dense exact :header-inset-level="1" expand-separator icon="list" label="Evento significativo" default-opened to="/eventoSignificativo" hide-expand-icon/>
+          <q-expansion-item dense exact :header-inset-level="1" expand-separator icon="o_psychology" label="Cuis" default-opened to="/cuis" hide-expand-icon  v-if="store.boolcuis"/>
+          <q-expansion-item dense exact :header-inset-level="1" expand-separator icon="o_countertops" label="sincronizacion" default-opened to="/sincronizacion" hide-expand-icon  v-if="store.boolsincr"/>
+          <q-expansion-item dense exact :header-inset-level="1" expand-separator icon="link" label="Cufd" default-opened to="/cufd" hide-expand-icon  v-if="store.boolcufd"/>
+          <q-expansion-item dense exact :header-inset-level="1" expand-separator icon="list" label="Evento significativo" default-opened to="/eventoSignificativo" hide-expand-icon  v-if="store.boolevento"/>
         </q-expansion-item>
         <q-expansion-item dense  icon="o_category" label="Categoria" default-opened>
-          <q-expansion-item dense expand-separator :header-inset-level="1"  icon="o_category" label="Sabor peru" to="/categories/1" hide-expand-icon/>
-          <q-expansion-item dense expand-separator :header-inset-level="1"  icon="o_category" label="Cafe italia" to="/categories/2" hide-expand-icon />
-          <q-expansion-item dense expand-separator :header-inset-level="1"  icon="o_category" label="Vaca fria" to="/categories/3" hide-expand-icon />
+          <q-expansion-item dense expand-separator :header-inset-level="1"  icon="o_category" label="Sabor peru" to="/categories/1" hide-expand-icon  v-if="store.boolrubrosp"/>
+          <q-expansion-item dense expand-separator :header-inset-level="1"  icon="o_category" label="Cafe italia" to="/categories/2" hide-expand-icon  v-if="store.boolrubroci"/>
+          <q-expansion-item dense expand-separator :header-inset-level="1"  icon="o_category" label="Vaca fria" to="/categories/3" hide-expand-icon  v-if="store.boolrubrovf"/>
         </q-expansion-item>
         <q-expansion-item dense  icon="o_shopping_bag" label="Productos" default-opened>
-          <q-expansion-item dense expand-separator :header-inset-level="1"  icon="o_shopping_bag" label="Sabor peru" to="/products/1" hide-expand-icon/>
-          <q-expansion-item dense expand-separator :header-inset-level="1"  icon="o_shopping_bag" label="Cafe italia" to="/products/2" hide-expand-icon />
-          <q-expansion-item dense expand-separator :header-inset-level="1"  icon="o_shopping_bag" label="Vaca fria" to="/products/3" hide-expand-icon />
+          <q-expansion-item dense expand-separator :header-inset-level="1"  icon="o_shopping_bag" label="Sabor peru" to="/products/1" hide-expand-icon  v-if="store.boolproductosp"/>
+          <q-expansion-item dense expand-separator :header-inset-level="1"  icon="o_shopping_bag" label="Cafe italia" to="/products/2" hide-expand-icon  v-if="store.boolproductoci"/>
+          <q-expansion-item dense expand-separator :header-inset-level="1"  icon="o_shopping_bag" label="Vaca fria" to="/products/3" hide-expand-icon  v-if="store.boolproductovf"/>
         </q-expansion-item>
         <q-expansion-item dense  icon="o_shopping_cart" label="Venta" default-opened>
-          <q-expansion-item dense expand-separator :header-inset-level="1"  icon="o_shopping_cart" label="Sabor peru" to="/sales/1" hide-expand-icon/>
-          <q-expansion-item dense expand-separator :header-inset-level="1"  icon="o_shopping_cart" label="Cafe italia" to="/sales/2" hide-expand-icon />
-          <q-expansion-item dense expand-separator :header-inset-level="1"  icon="o_shopping_cart" label="Vaca fria" to="/sales/3" hide-expand-icon />
+          <q-expansion-item dense expand-separator :header-inset-level="1"  icon="o_shopping_cart" label="Sabor peru" to="/sales/1" hide-expand-icon  v-if="store.boolsabor"/>
+          <q-expansion-item dense expand-separator :header-inset-level="1"  icon="o_shopping_cart" label="Cafe italia" to="/sales/2" hide-expand-icon  v-if="store.boolcafe"/>
+          <q-expansion-item dense expand-separator :header-inset-level="1"  icon="o_shopping_cart" label="Vaca fria" to="/sales/3" hide-expand-icon  v-if="store.boolvaca"/>
         </q-expansion-item>
         <q-expansion-item dense  icon="o_description" label="Reportes" default-opened>
-          <q-expansion-item dense expand-separator :header-inset-level="1"  icon="o_description" label="Sabor peru" to="/listado/1" hide-expand-icon/>
-          <q-expansion-item dense expand-separator :header-inset-level="1"  icon="o_description" label="Cafe italia" to="/listado/2" hide-expand-icon />
-          <q-expansion-item dense expand-separator :header-inset-level="1"  icon="o_description" label="Vaca fria" to="/listado/3" hide-expand-icon />
+          <q-expansion-item dense expand-separator :header-inset-level="1"  icon="o_description" label="Sabor peru" to="/listado/1" hide-expand-icon  v-if="store.boollistsabor"/>
+          <q-expansion-item dense expand-separator :header-inset-level="1"  icon="o_description" label="Cafe italia" to="/listado/2" hide-expand-icon  v-if="store.boollistcafe"/>
+          <q-expansion-item dense expand-separator :header-inset-level="1"  icon="o_description" label="Vaca fria" to="/listado/3" hide-expand-icon  v-if="store.boollistvaca"/>
         </q-expansion-item>
       </q-list>
     </q-drawer>
@@ -79,10 +79,10 @@
   </q-layout>
 </template>
 
-<script lang="ts">
+<script>
 import { defineComponent, ref } from 'vue'
 import { setCssVar } from 'quasar'
-import { globalStore } from 'stores/globalStore'
+import { globalStore } from '../stores/globalStore'
 
 export default defineComponent({
   name: 'MainLayout',

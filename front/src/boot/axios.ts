@@ -1,13 +1,7 @@
 import { boot } from 'quasar/wrappers'
-import axios, { AxiosInstance } from 'axios'
+import axios from 'axios'
 import { useCounterStore } from 'stores/example-store'
 import { globalStore } from 'stores/globalStore'
-
-declare module '@vue/runtime-core' {
-  interface ComponentCustomProperties {
-    $axios: AxiosInstance;
-  }
-}
 
 // Be careful when using SSR for cross-request state pollution
 // due to creating a Singleton instance here;
@@ -90,8 +84,9 @@ export default boot(({ app, router }) => {
     })
   } else {
     console.log('no tokrn')
+    console.log(router)
     // router.push('/login')
-    router.push('login')
+    router.push('/login')
     router.replace({ path: '/login' })
     globalStore().user = {}
     globalStore().isLoggedIn = false

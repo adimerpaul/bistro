@@ -129,27 +129,27 @@ export default {
         this.store.user = res.data.user
         this.store.isLoggedIn = true
         res.data.user.permisos.forEach(r => {
-          if (r.id === 1) this.store.booluser = false
-          if (r.id === 2) this.store.boolcuis = false
-          if (r.id === 3) this.store.boolsincr = false
-          if (r.id === 4) this.store.boolcufd = false
-          if (r.id === 5) this.store.boolevento = false
-          if (r.id === 6) this.store.boolrubrosp = false
-          if (r.id === 7) this.store.boolrubroci = false
-          if (r.id === 8) this.store.boolrubrovf = false
-          if (r.id === 9) this.store.boolproductosp = false
-          if (r.id === 10) this.store.boolproductoci = false
-          if (r.id === 11) this.store.boolproductovf = false
-          if (r.id === 12) this.store.boolsabor = false
-          if (r.id === 13) this.store.boolcafe = false
-          if (r.id === 14) this.store.boolvaca = false
-          if (r.id === 15) this.store.boollistsabor = false
-          if (r.id === 16) this.store.boollistcafe = false
-          if (r.id === 17) this.store.boollistvaca = false
-          if (r.id === 18) this.store.boolcajasabor = false
-          if (r.id === 19) this.store.boolcajacafe = false
-          if (r.id === 20) this.store.boolcajavaca = false
-          if (r.id === 21) this.store.boolcliente = false
+          if (r.id === 1) this.store.booluser = true
+          if (r.id === 2) this.store.boolcuis = true
+          if (r.id === 3) this.store.boolsincr = true
+          if (r.id === 4) this.store.boolcufd = true
+          if (r.id === 5) this.store.boolevento = true
+          if (r.id === 6) this.store.boolrubrosp = true
+          if (r.id === 7) this.store.boolrubroci = true
+          if (r.id === 8) this.store.boolrubrovf = true
+          if (r.id === 9) this.store.boolproductosp = true
+          if (r.id === 10) this.store.boolproductoci = true
+          if (r.id === 11) this.store.boolproductovf = true
+          if (r.id === 12) this.store.boolsabor = true
+          if (r.id === 13) this.store.boolcafe = true
+          if (r.id === 14) this.store.boolvaca = true
+          if (r.id === 15) this.store.boollistsabor = true
+          if (r.id === 16) this.store.boollistcafe = true
+          if (r.id === 17) this.store.boollistvaca = true
+          if (r.id === 18) this.store.boolcajasabor = true
+          if (r.id === 19) this.store.boolcajacafe = true
+          if (r.id === 20) this.store.boolcajavaca = true
+          if (r.id === 21) this.store.boolcliente = true
         })
         this.$api.defaults.headers.common.Authorization = 'Bearer ' + res.data.token
         localStorage.setItem('tokenBistro', res.data.token)
