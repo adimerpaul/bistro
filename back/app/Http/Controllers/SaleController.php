@@ -24,6 +24,25 @@ use DOMDocument;
 class SaleController extends Controller{
     public function index(){}
 
+    public function  validarTarjeta($codigo){
+        $codigo=$this->hexToStr($codigo);
+       // return $codigo;
+        $res= DB::connection('tarjeta')->table('cliente')->where('codigo',$codigo)->where('estado','ACTIVO')->get();
+        if(sizeof($res)>0){
+            return $res[0];
+        }
+        else return 0;
+
+    }
+    
+    public function hexToStr($hex){
+        $string='';
+        for ($i=0; $i < strlen($hex)-1; $i+=2){
+            $string .= chr(hexdec($hex[$i].$hex[$i+1]));
+        }
+        return $string;
+    }
+
    public function store(StoreSaleRequest $request)
     {
         if ($request->client['complemento']==null){

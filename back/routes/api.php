@@ -49,4 +49,5 @@ Route::group(['middleware' => 'auth:sanctum'], function () {
 
     Route::post('listleyenda', [\App\Http\Controllers\ActivityController::class,'listleyenda']);
     Route::post('searchClient', [\App\Http\Controllers\ClientController::class,'searchClient']);
+    Route::get('validarTarjeta/{cod}', [\App\Http\Controllers\SaleController::class, 'validarTarjeta']);
 });

@@ -127,7 +127,7 @@
               </q-card>
             </q-expansion-item>
           </q-list>
-          <q-btn @click="icon = true;tienerebaja=false; booltarjeta=false; tarjeta=false;" class="full-width" no-caps label="Confirmar venta" :color="productsSale.length==0?'grey':'warning'" :disable="productsSale.length==0?true:false"/>
+          <q-btn @click="icon = true;tienerebaja=false; booltarjeta=false; booltarjeta=false;" class="full-width" no-caps label="Confirmar venta" :color="productsSale.length==0?'grey':'warning'" :disable="productsSale.length==0?true:false"/>
         </q-card-section>
       </q-card>
     </div>
@@ -172,8 +172,8 @@
                     <q-input outlined disable label="Cambio" v-model="cambio" />
                   </div>
                   <div class="row col-3">
-                    <!--<q-checkbox v-model="credito"  label="T Credito" dense/>
-                    <q-checkbox  v-model="booltarjeta"  label="T VIP" dense @click="verificar"/>-->
+                    <q-checkbox v-model="boolcredito"  label="T Credito" dense/>
+                    <q-checkbox  v-model="booltarjeta"  label="T VIP" dense @click="verificar"/>
                   </div>
                   <div class="col-12">
                   <template v-if="booltarjeta">
@@ -209,6 +209,7 @@ export default {
   data () {
     return {
       opts: {
+
         errorCorrectionLevel: 'M',
         type: 'png',
         quality: 0.95,
@@ -219,6 +220,9 @@ export default {
           light: '#FFF'
         }
       },
+      boolcredito: false,
+      booltarjeta: false,
+      nombresaldo: {},
       loading: false,
       btn: false,
       icon: false,
@@ -266,6 +270,40 @@ export default {
     )
   },
   methods: {
+    consultartarjeta () {
+      if (this.codigo !== '' || this.codigo !== undefined) {
+        this.nombresaldo = ''
+        this.codigo = this.codigo.replaceAll(' ', '')
+        if (this.tienerebaja) {
+          this.store.productsSale.forEach(r => {
+            r.precioVenta = (1.25 * r.precioVenta).toFixed(2)
+            r.subtotal = (1.25 * r.subtotal).toFixed(2)
+          })
+          this.btn = false
+          this.tienerebaja = false
+        }
+        this.$api.get('validarTarjeta/' + this.codigo).then(res => {
+          console.log(res.data)
+          this.$q.loading.hide()
+          if (res.data === '0' || res.data === '') { /* empty */ } else {
+            this.nombresaldo = res.data
+            if (!this.tienerebaja) {
+              this.store.productsSale.forEach(r => {
+                r.precioVenta = (0.8 * r.precioVenta).toFixed(2)
+                r.subtotal = (0.8 * r.subtotal).toFixed(2)
+              })
+              this.tienerebaja = true
+              if (parseFloat(this.total) <= parseFloat(this.nombresaldo.saldo)) {
+                this.btn = false
+              } else {
+                this.btn = true
+              }
+            }
+          }
+        })
+      }
+    },
+
     validarnit () {
       if (this.document === this.documents[4]) {
         this.$api.get('validanit/' + this.client.numeroDocumento).then(res => {
@@ -284,6 +322,20 @@ export default {
       this.nombresaldo = {}
       this.icon = false
       this.verificar()
+    },
+    verificar () {
+      this.codigo = ''
+      this.nombresaldo = ''
+      if (!this.booltarjeta) {
+        if (this.tienerebaja) {
+          this.store.productsSale.forEach(r => {
+            r.precioVenta = (1.25 * r.precioVenta).toFixed(2)
+            r.subtotal = (1.25 * r.subtotal).toFixed(2)
+          })
+          this.btn = false
+          this.tienerebaja = false
+        }
+      }
     },
     searchClient () {
       if (this.client.numeroDocumento.length >= 4) {
