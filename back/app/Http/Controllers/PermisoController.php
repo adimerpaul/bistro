@@ -14,6 +14,8 @@ class PermisoController extends Controller
     public function index()
     {
         //
+        return Permiso::all();
+
     }
 
     /**

@@ -90,10 +90,12 @@
 
 <script>
 import xlsx from 'json-as-xlsx'
+import { globalStore } from '../stores/globalStore'
 export default {
   name: 'CategoriesPage',
   data () {
     return {
+      store: globalStore(),
       inventarieDialog: false,
       categoryStatus: 'Crear',
       loading: false,
@@ -127,18 +129,44 @@ export default {
       ]
     }
   },
-  created () {
+  mounted () {
+    this.validar()
     this.categoriesGet()
-    this.$watch(
-      () => this.$route.params,
+    this.$watch(() => this.$route.params,
       (toParams) => {
         // console.log(previousParams)
         this.shop_id = toParams.id
+
         this.categoriesGet()
+        this.validar()
       }
     )
   },
   methods: {
+    validar () {
+      console.log(this.shop_id)
+      console.log(this.store.boolrubrovf)
+      switch (this.shop_id) {
+        case 1:
+          if (!this.store.boolrubrosp) {
+            this.$router.replace({ path: '/' })
+          }
+          break
+        case 2:
+          if (!this.store.boolrubroci) {
+            this.$router.replace({ path: '/' })
+          }
+          break
+        case 3:
+          if (!this.store.boolrubrovf) {
+            this.$router.replace({ path: '/' })
+          }
+          break
+        default:
+          this.$router.replace({ path: '/' })
+          break
+      }
+    },
     categoryEditPhoto (category) {
       this.categoryStatus = 'editPhoto'
       this.categoryShow = true

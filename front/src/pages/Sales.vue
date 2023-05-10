@@ -220,6 +220,7 @@ export default {
           light: '#FFF'
         }
       },
+      tienerebaja: false,
       boolcredito: false,
       booltarjeta: false,
       nombresaldo: {},
@@ -275,7 +276,7 @@ export default {
         this.nombresaldo = ''
         this.codigo = this.codigo.replaceAll(' ', '')
         if (this.tienerebaja) {
-          this.store.productsSale.forEach(r => {
+          this.productsSale.forEach(r => {
             r.precioVenta = (1.25 * r.precioVenta).toFixed(2)
             r.subtotal = (1.25 * r.subtotal).toFixed(2)
           })
@@ -288,7 +289,7 @@ export default {
           if (res.data === '0' || res.data === '') { /* empty */ } else {
             this.nombresaldo = res.data
             if (!this.tienerebaja) {
-              this.store.productsSale.forEach(r => {
+              this.productsSale.forEach(r => {
                 r.precioVenta = (0.8 * r.precioVenta).toFixed(2)
                 r.subtotal = (0.8 * r.subtotal).toFixed(2)
               })
@@ -324,11 +325,11 @@ export default {
       this.verificar()
     },
     verificar () {
-      this.codigo = ''
+      // this.codigo = ''
       this.nombresaldo = ''
       if (!this.booltarjeta) {
         if (this.tienerebaja) {
-          this.store.productsSale.forEach(r => {
+          this.productsSale.forEach(r => {
             r.precioVenta = (1.25 * r.precioVenta).toFixed(2)
             r.subtotal = (1.25 * r.subtotal).toFixed(2)
           })

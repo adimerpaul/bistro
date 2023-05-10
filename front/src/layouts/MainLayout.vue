@@ -12,8 +12,8 @@
         />
         <q-toolbar-title>
           Bistro
-          <span class="text-grey text-subtitle2">Usuario</span>
-          {{title}}
+          <span class="text-accent "></span>
+          {{ store.user.name }}
         </q-toolbar-title>
         <div>
           <q-btn

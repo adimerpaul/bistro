@@ -96,8 +96,8 @@ class SaleController extends Controller{
 
         $codigoSucursal=0;
 
-        //$user=User::find($request->user()->id);
-        $user=User::find(1);
+        $user=User::find($request->user()->id);
+        //$user=User::find(1);
 
         if (Cui::where('codigoPuntoVenta', $codigoPuntoVenta)->where('codigoSucursal', $codigoSucursal)->where('fechaVigencia','>=', now())->count()==0){
             return response()->json(['message' => 'No existe CUI para la venta!!'], 400);
@@ -510,6 +510,142 @@ class SaleController extends Controller{
 //            return response()->json(['message' => 'anulado error'], 400);
 //        }
     }
+
+    private function insertarRecibo(Request $request, $client)
+    {
+        $numeroFactura=0;
+        $codigoSucursal=0;
+        $codigoPuntoVenta=0;
+        $codigoDocumentoSector=0;
+        $sale=new Sale();
+        $sale->numeroFactura=$numeroFactura;
+        $sale->cuf="";
+        $sale->cufd="";
+        $sale->cui="";
+        $sale->codigoSucursal=$codigoSucursal;
+        $sale->codigoPuntoVenta=$codigoPuntoVenta;
+        $sale->fechaEmision=now();
+        $sale->montoTotal=$request->montoTotal;
+        $sale->usuario=$request->user()->name;
+        $sale->codigoDocumentoSector=$codigoDocumentoSector;
+        $sale->user_id=$request->user()->id;
+        $sale->cufd_id=null;
+        $sale->client_id=$client->id;
+        $sale->tipo=$request->tipo;
+        $sale->leyenda="";
+        $sale->venta="R";
+        $sale->vip=$request->vip;
+        $sale->credito=$request->tarjeta;
+        $sale->save();
+
+
+        $dataDetail=[];
+        foreach ($request->detalleVenta as $detalle){
+            $d=[
+                'actividadEconomica'=>"561120",
+                'codigoProductoSin'=>"99100",
+                'cantidad'=>$detalle['cantidad'],
+                'precioUnitario'=>$detalle['precio'],
+                'subTotal'=>$detalle['subtotal'],
+                'sale_id'=>$sale->id,
+                'product_id'=>$detalle['product_id'],
+                'descripcion'=>$detalle['nombre'],
+
+            ];
+            array_push($dataDetail, $d);
+        }
+
+        Detail::insert($dataDetail);
+
+        $sale->siatEnviado=true;
+        $sale->codigoRecepcion="";
+        $sale->cuf="";
+        $sale->save();
+
+        $sale=Sale::where('id',$sale->id)->with('client')->with('details')->first();
+        $sale->siatEnviado=false;
+        return response()->json([
+            'sale' => $sale,
+            "error"=>"Se creo la venta!!!",
+        ]);
+//        return response()->json(['message' => $e->getMessage()], 500);
+    }
+
+    private function insertarVip(Request $request, Client $client)
+    {
+        $numeroFactura=0;
+        $codigoSucursal=0;
+        $codigoPuntoVenta=0;
+        $codigoDocumentoSector=0;
+        $user=User::find($request->user()->id);
+            $sale=new Sale();
+            $sale->numeroFactura=$numeroFactura;
+            $sale->cuf="";
+            $sale->cufd="";
+            $sale->cui="";
+            $sale->codigoSucursal=$codigoSucursal;
+            $sale->codigoPuntoVenta=$codigoPuntoVenta;
+            $sale->fechaEmision=now();
+            $sale->montoTotal=$request->montoTotal;
+            $sale->usuario=$user->name;
+            $sale->codigoDocumentoSector=$codigoDocumentoSector;
+            $sale->user_id=$user->id;
+            $sale->cufd_id=null;
+            $sale->client_id=$client->id;
+            $sale->tipo=$request->tipo;
+            $sale->leyenda="";
+            $sale->vip=$request->vip;
+            $sale->credito=$request->tarjeta;
+            $sale->venta="R";
+            $sale->save();
+            $tipoventa=$request->tipo;
+            $dataDetail=[];
+            foreach ($request->detalleVenta as $detalle){
+                $d=[
+                    'actividadEconomica'=>"561120",
+                    'codigoProductoSin'=>"99100",
+                    'cantidad'=>$detalle['cantidad'],
+                    'precioUnitario'=>$detalle['precio'],
+                    'subTotal'=>$detalle['subtotal'],
+                    'sale_id'=>$sale->id,
+//                        'programa_id'=>$detalle['programa_id'],
+                    'product_id'=>$detalle['product_id'],
+                    'descripcion'=>$detalle['nombre'],
+                ];
+                array_push($dataDetail, $d);
+            }
+
+            Detail::insert($dataDetail);
+
+            $sale->siatEnviado=true;
+            $sale->codigoRecepcion="";
+            $sale->cuf="";
+            $sale->save();
+            // $tickets=Ticket::where('sale_id',$sale->id)->get();
+        $sale=Sale::where('id',$sale->id)->with('client')->with('details')->with('user')->first();
+        $sale->siatEnviado=false;
+        $codigo=$this->hexToStr($request->codigoTarjeta);
+
+        $result=DB::connection('tarjeta')->select("SELECT * from cliente  WHERE codigo='$codigo'")[0];
+
+        DB::connection('tarjeta')->select("
+            UPDATE cliente SET saldo=saldo-$sale->montoTotal WHERE codigo='$codigo'
+        ");
+        $fecha=date('Y-m-d');
+        $monto=$sale->montoTotal;
+        $numero=$sale->id;
+        $cliente=$result->id;
+        //$cliente=$client->id;
+        DB::connection('tarjeta')->select("
+        INSERT INTO historial (fecha, lugar, monto, numero, cliente_id) VALUES ('$fecha', $tipoventa, $monto, $numero, $cliente)
+        ");
+            return response()->json([
+                'sale' => $sale,
+                // "tickets"=>$tickets,
+                "error"=>"",
+            ]);
+    }
+
     public function eventSearch(Request $request)
     {
         return Sale::where('siatEnviado',false)->where('siatAnulado',false)->count();
