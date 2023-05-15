@@ -9,6 +9,7 @@ import Cufd from 'pages/Cufd.vue'
 import Cuis from 'pages/Cuis.vue'
 import EventoSignificativo from 'pages/EventoSignificativo.vue'
 import Sincronizacion from 'pages/Sincronizacion.vue'
+import Caja from 'pages/Caja.vue'
 import User from 'pages/User.vue'
 import Login from 'pages/Login.vue'
 
@@ -26,6 +27,7 @@ const routes: RouteRecordRaw[] = [
       { path: 'cuis', component: Cuis, meta: { requiresAuth: true } },
       { path: 'eventoSignificativo', component: EventoSignificativo, meta: { requiresAuth: true } },
       { path: 'sincronizacion', component: Sincronizacion, meta: { requiresAuth: true } },
+      { path: 'caja/:id', component: Caja, meta: { requiresAuth: true } },
       { path: 'usuarios', component: User, meta: { requiresAuth: true } }
     ]
   },

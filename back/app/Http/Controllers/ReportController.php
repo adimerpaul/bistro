@@ -74,4 +74,187 @@ class ReportController extends Controller
     {
         //
     }
+    public function resumenRF(Request $request){
+        $cadena='';
+        if($request->id!=0)  $cadena='and s.user_id=' .$request->id;
+        return DB::SELECT("
+        select
+        (SELECT  sum(d.subTotal)
+        from sales s inner join details d on s.id=d.sale_id
+        where
+        date(s.fechaEmision) >='$request->ini'
+        and date(s.fechaEmision) <='$request->fin'
+        ".$cadena."
+        and s.tipo='$request->tipo'
+        and s.siatAnulado=false
+        and s.credito='SI'
+        and s.venta='R') as tarjetaR,
+        (SELECT sum(d.subTotal)
+        from sales s inner join details d on s.id=d.sale_id
+        where date(s.fechaEmision)>='$request->ini'
+        and date(s.fechaEmision)<='$request->fin'
+        ".$cadena."
+        and s.tipo='$request->tipo'
+        and s.siatAnulado=false
+        and s.vip='NO'
+		and s.credito='NO'
+        and s.cortesia='NO'
+        and s.venta='R') as efectivoR,
+        (SELECT  sum(d.subTotal)
+        from sales s inner join details d on s.id=d.sale_id
+        where
+        date(s.fechaEmision) >='$request->ini'
+        and date(s.fechaEmision) <='$request->fin'
+        ".$cadena."
+        and s.tipo='$request->tipo'
+        and s.siatAnulado=false
+        and s.credito='SI'
+        and s.venta='F') as tarjetaF,
+        (SELECT sum(d.subTotal)
+        from sales s inner join details d on s.id=d.sale_id
+        where date(s.fechaEmision)>='$request->ini'
+        and date(s.fechaEmision)<='$request->fin'
+        ".$cadena."
+        and s.tipo='$request->tipo'
+        and s.siatAnulado=false
+        and s.vip='NO'
+		and s.credito='NO'
+        and s.cortesia='NO'
+        and s.venta='F') as efectivoF ");
+    }
+
+    public function resumen(Request $request){
+        $cadena='';
+        if($request->id!=0)  $cadena='and s.user_id=' .$request->id;
+        return DB::SELECT("
+        select
+        (SELECT  sum(d.subTotal)
+        from sales s inner join details d on s.id=d.sale_id
+        where
+        date(s.fechaEmision) >='$request->ini'
+        and date(s.fechaEmision) <='$request->fin'
+        ".$cadena."
+        and s.tipo='$request->tipo'
+        and s.siatAnulado=false
+        and s.credito='SI') as tarjeta,
+        (SELECT  sum(d.subTotal)
+        from sales s inner join details d on s.id=d.sale_id
+        where
+        date(s.fechaEmision) >='$request->ini'
+        and date(s.fechaEmision) <='$request->fin'
+        ".$cadena."
+        and s.tipo='$request->tipo'
+        and s.siatAnulado=false
+        and s.vip='SI') as vip,
+        (SELECT  sum(d.subTotal)
+        from sales s inner join details d on s.id=d.sale_id
+        where
+        date(s.fechaEmision) >='$request->ini'
+        and date(s.fechaEmision) <='$request->fin'
+        ".$cadena."
+        and s.tipo='$request->tipo'
+        and s.siatAnulado=false
+        and s.vip='NO'
+		and s.credito='NO') as efectivo ");
+    }
+
+    public function caja(Request $request){
+        $cadena='';
+        if($request->id!=0)  $cadena='and s.user_id=' .$request->id;
+
+        return DB::SELECT("SELECT d.descripcion,d.product_id, sum(d.subTotal) total,sum(d.cantidad) cantidad
+        from sales s inner join details d on s.id=d.sale_id
+        where date(s.fechaEmision)>='$request->ini'
+        and date(s.fechaEmision)<='$request->fin'
+        ".$cadena."
+        and s.tipo='$request->tipo'
+        and s.siatAnulado=false
+        GROUP by  d.product_id");
+    }
+
+    public function cajaF(Request $request){
+        $cadena='';
+        if($request->id!=0)  $cadena='and s.user_id=' .$request->id;
+
+        return DB::SELECT("SELECT d.descripcion,d.product_id, sum(d.subTotal) total,sum(d.cantidad) cantidad
+        from sales s inner join details d on s.id=d.sale_id
+        where date(s.fechaEmision)>='$request->ini'
+        and date(s.fechaEmision)<='$request->fin'
+        ".$cadena."
+        and s.tipo='$request->tipo'
+        and s.siatAnulado=false
+
+        and s.cortesia='NO'
+        and s.venta='F'
+        GROUP by  d.product_id");
+    }
+
+    public function cajaFefectivo(Request $request){
+        $cadena='';
+        if($request->id!=0)  $cadena='and s.user_id=' .$request->id;
+
+        return DB::SELECT("SELECT sum(d.subTotal) total
+        from sales s inner join details d on s.id=d.sale_id
+        where date(s.fechaEmision)>='$request->ini'
+        and date(s.fechaEmision)<='$request->fin'
+        ".$cadena."
+        and s.tipo='$request->tipo'
+        and s.siatAnulado=false
+        and s.vip='NO'
+		and s.credito='NO'
+        and s.cortesia='NO'
+        and s.venta='F'
+        ");
+    }
+    public function cajaRefectivo(Request $request){
+        $cadena='';
+        if($request->id!=0)  $cadena='and s.user_id=' .$request->id;
+
+        return DB::SELECT("SELECT sum(d.subTotal) total
+        from sales s inner join details d on s.id=d.sale_id
+        where date(s.fechaEmision)>='$request->ini'
+        and date(s.fechaEmision)<='$request->fin'
+        ".$cadena."
+        and s.tipo='$request->tipo'
+        and s.siatAnulado=false
+        and s.vip='NO'
+		and s.credito='NO'
+        and s.cortesia='NO'
+        and s.venta='R'
+        ");
+    }
+
+    public function cajaR(Request $request){
+        $cadena='';
+        if($request->id!=0)  $cadena='and s.user_id=' .$request->id;
+
+        return DB::SELECT("SELECT d.descripcion,d.product_id, sum(d.subTotal) total,sum(d.cantidad) cantidad
+        from sales s inner join details d on s.id=d.sale_id
+        where date(s.fechaEmision)>='$request->ini'
+        and date(s.fechaEmision)<='$request->fin'
+        ".$cadena."
+        and s.tipo='$request->tipo'
+        and s.siatAnulado=false
+
+        and s.cortesia='NO'
+        and s.venta='R'
+        GROUP by  d.product_id");
+        //and s.vip='NO'
+		//and s.credito='NO'
+    }
+    public function usercaja(Request $request){  //and s.siatEnviado=true
+        $cadena='';
+        return DB::SELECT("
+        SELECT u.name usuario,SUM(s.montoTotal) total
+        from users u INNER JOIN sales s on u.id=s.user_id
+        where date(s.fechaEmision)>='$request->ini'
+        and date(s.fechaEmision)<='$request->fin'
+        and s.tipo='$request->tipo'
+        and s.siatAnulado=false
+
+        and s.credito='NO'
+        and s.vip='NO'
+        group by usuario;
+        ");
+    }
 }

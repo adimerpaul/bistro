@@ -70,9 +70,13 @@
           <q-expansion-item dense expand-separator :header-inset-level="1"  icon="o_description" label="Cafe italia" to="/listado/2" hide-expand-icon  v-if="store.boollistcafe"/>
           <q-expansion-item dense expand-separator :header-inset-level="1"  icon="o_description" label="Vaca fria" to="/listado/3" hide-expand-icon  v-if="store.boollistvaca"/>
         </q-expansion-item>
+        <q-expansion-item dense  icon="point_of_sale" label="Caja" default-opened>
+          <q-expansion-item dense expand-separator :header-inset-level="1"  icon="point_of_sale" label="Sabor peru" to="/caja/1" hide-expand-icon  v-if="store.boolcajasabor"/>
+          <q-expansion-item dense expand-separator :header-inset-level="1"  icon="point_of_sale" label="Cafe italia" to="/caja/2" hide-expand-icon  v-if="store.boolcajacafe"/>
+          <q-expansion-item dense expand-separator :header-inset-level="1"  icon="point_of_sale" label="Vaca fria" to="/caja/3" hide-expand-icon  v-if="store.boolcajavaca"/>
+        </q-expansion-item>
       </q-list>
     </q-drawer>
-
     <q-page-container>
       <router-view />
     </q-page-container>
@@ -185,6 +189,15 @@ export default defineComponent({
         setCssVar('primary', '#009203')
         return 'Cafe italia'
       } else if (this.$route.path === '/listado/3') {
+        setCssVar('primary', '#00538F')
+        return 'Vaca fria'
+      } else if (this.$route.path === '/caja/1') {
+        setCssVar('primary', '#8C131A')
+        return 'Sabor peru'
+      } else if (this.$route.path === '/caja/2') {
+        setCssVar('primary', '#009203')
+        return 'Cafe italia'
+      } else if (this.$route.path === '/caja/3') {
         setCssVar('primary', '#00538F')
         return 'Vaca fria'
       } else {
