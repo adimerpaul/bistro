@@ -8,5 +8,5 @@ use Illuminate\Database\Eloquent\Model;
 class Client extends Model
 {
     use HasFactory;
-    protected $table = 'multisalas.clients';
+    protected $table = 'multicine.clients';
 }

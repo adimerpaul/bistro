@@ -345,7 +345,7 @@ export default {
         this.client.email = ''
         this.client.id = undefined
         this.$api.post('searchClient', this.client).then(res => {
-          // console.log(res.data)
+          console.log(res.data)
           if (res.data.nombreRazonSocial !== undefined) {
             this.client.nombreRazonSocial = res.data.nombreRazonSocial
             this.client.email = res.data.email

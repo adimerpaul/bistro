@@ -8,7 +8,7 @@
             <div class="col-2 flex flex-center"> <q-btn icon="print" color="info"  label="Imprimir" @click="impresion"/></div>
             <div class="col-12">
                 <pre>{{shop_id}}</pre>
-              <q-table dense :title="'Listado Venta '+ tipo[shop_id] " :rows-per-page-options="[20,50,100,0]" :rows="reporte" :columns="columna" :filter="productoFilter">
+              <q-table dense :title="'Listado Venta '+ tipo[shop_id - 1] " :rows-per-page-options="[20,50,100,0]" :rows="reporte" :columns="columna" :filter="productoFilter">
                 <template v-slot:top-right>
                   <q-input outlined dense debounce="300" v-model="productoFilter" placeholder="Buscar">
                     <template v-slot:append>
@@ -67,17 +67,20 @@ export default {
       ]
     }
   },
-  mounted () {
+  created () {
+    this.cargaDato()
     this.listuser()
-    this.$watch(
-      async () => this.$route.params,
-      (toParams) => {
-        // console.log(previousParams)
-        this.shop_id = parseInt(toParams.id)
-      }
-    )
   },
   methods: {
+    async cargaDato () {
+      await this.$watch(
+        () => this.$route.params,
+        async (toParams) => {
+          console.log(toParams)
+          this.shop_id = await parseInt(toParams.id)
+        }
+      )
+    },
     listuser () {
       this.users = [{ id: 0, label: 'TODOS' }]
       this.$api.get('user').then(res => {
@@ -87,6 +90,7 @@ export default {
           this.users.push(r)
         })
         this.user = this.users[0]
+        this.cargaDato()
       })
     },
     consultar () {

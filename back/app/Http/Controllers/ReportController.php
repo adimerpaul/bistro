@@ -77,8 +77,7 @@ class ReportController extends Controller
     public function resumenRF(Request $request){
         $cadena='';
         if($request->id!=0)  $cadena='and s.user_id=' .$request->id;
-        return DB::SELECT("
-        select
+        return DB::SELECT("SELECT
         (SELECT  sum(d.subTotal)
         from sales s inner join details d on s.id=d.sale_id
         where
@@ -126,8 +125,7 @@ class ReportController extends Controller
     public function resumen(Request $request){
         $cadena='';
         if($request->id!=0)  $cadena='and s.user_id=' .$request->id;
-        return DB::SELECT("
-        select
+        return DB::SELECT("SELECT
         (SELECT  sum(d.subTotal)
         from sales s inner join details d on s.id=d.sale_id
         where
@@ -169,7 +167,7 @@ class ReportController extends Controller
         ".$cadena."
         and s.tipo='$request->tipo'
         and s.siatAnulado=false
-        GROUP by  d.product_id");
+        GROUP by  d.product_id,d.descripcion");
     }
 
     public function cajaF(Request $request){
@@ -186,7 +184,7 @@ class ReportController extends Controller
 
         and s.cortesia='NO'
         and s.venta='F'
-        GROUP by  d.product_id");
+        GROUP by  d.product_id,d.descripcion");
     }
 
     public function cajaFefectivo(Request $request){
@@ -238,7 +236,7 @@ class ReportController extends Controller
 
         and s.cortesia='NO'
         and s.venta='R'
-        GROUP by  d.product_id");
+        GROUP by  d.product_id,d.descripcion");
         //and s.vip='NO'
 		//and s.credito='NO'
     }
@@ -254,7 +252,7 @@ class ReportController extends Controller
 
         and s.credito='NO'
         and s.vip='NO'
-        group by usuario;
+        group by  u.name;
         ");
     }
 }
