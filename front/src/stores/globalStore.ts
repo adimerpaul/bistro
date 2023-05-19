@@ -5,7 +5,7 @@ export const globalStore = defineStore('global', {
     counter: 0,
     user: {},
     eventNumber: 0,
-    isLoggedIn: !!localStorage.getItem('tokenBistro'),
+    isLoggedIn: !!localStorage.getItem('tokenBio'),
 
     booluser: false,
     boolcuis: false,
