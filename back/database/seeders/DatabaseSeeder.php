@@ -24,7 +24,7 @@ class DatabaseSeeder extends Seeder
             CategorySeeder::class,
             ProductSeeder::class,
             ActivitySeeder::class,
-            DocumentsectorSeeder::class,
+            DocumentSectorSeeder::class,
             DocumentSeeder::class,
             EventSeeder::class,
             LeyendaSeeder::class,
@@ -36,7 +36,7 @@ class DatabaseSeeder extends Seeder
             CuiSeeder::class,
             PermisoSeeder::class,
             Permiso_user::class
-            
+
         ]);
     }
 }

@@ -6,7 +6,7 @@ use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 
-class DocumentsectorSeeder extends Seeder
+class DocumentSectorSeeder extends Seeder
 {
     /**
      * Run the database seeds.
