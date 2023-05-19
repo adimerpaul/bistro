@@ -4,10 +4,9 @@
             <div class="col-2"><q-select dense outlined v-model="user" :options="users" label="Usuario" /></div>
             <div class="col-3"><q-input dense outlined v-model="ini" label="fecha ini" type="date" /></div>
             <div class="col-3"><q-input dense outlined v-model="fin" label="fecha fin" type="date" /></div>
-            <div class="col-2 flex flex-center"> <q-btn icon="check" color="green"  label="Consultar" @click="consultar"/></div>
-            <div class="col-2 flex flex-center"> <q-btn icon="print" color="info"  label="Imprimir" @click="impresion"/></div>
+            <div class="col-2 flex flex-center"> <q-btn icon="check" :loading="loading" color="green"  label="Consultar" @click="consultar"/></div>
+            <div class="col-2 flex flex-center"> <q-btn icon="print" :loading="loading" color="info"  label="Imprimir" @click="impresion"/></div>
             <div class="col-12">
-                <pre>{{shop_id}}</pre>
               <q-table dense :title="'Listado Venta '+ tipo[shop_id - 1] " :rows-per-page-options="[20,50,100,0]" :rows="reporte" :columns="columna" :filter="productoFilter">
                 <template v-slot:top-right>
                   <q-input outlined dense debounce="300" v-model="productoFilter" placeholder="Buscar">
@@ -54,7 +53,7 @@ export default {
       tcredito: 0,
       tefectivo: 0,
       total: 0,
-      shop_id: 0,
+      shop_id: this.$route.params.id,
       tipo: ['SABOR PERU', 'CAFE ITALIA', 'VACA FRIA'],
       columna: [
         { label: 'NOMBRE', field: 'descripcion', name: 'descripcion', sortable: true },
@@ -90,7 +89,7 @@ export default {
           this.users.push(r)
         })
         this.user = this.users[0]
-        this.cargaDato()
+        // this.cargaDato()
       })
     },
     consultar () {
@@ -102,7 +101,7 @@ export default {
         this.datosuser()
         this.datofactura()
         this.datorecibo()
-        this.loading = false
+        // this.loading = false
       })
     },
 

@@ -58,7 +58,7 @@
 </template>
 
 <script>
-import { globalStore } from 'stores/globalStore'
+// import { globalStore } from 'stores/globalStore'
 // import { Providers} from 'universal-social-auth'
 export default {
   name: 'LoginPage',
@@ -68,12 +68,11 @@ export default {
       password: '',
       remember: false,
       typePassword: true,
-      loading: false,
-      store: globalStore()
+      loading: false
     }
   },
   mounted () {
-    if (this.store.isLoggedIn) {
+    if (this.$store.isLoggedIn) {
       this.$router.push('/')
     }
   },
@@ -94,8 +93,8 @@ export default {
     //           position: 'top'
     //         })
     //         this.$router.push('/')
-    //         this.store.user=res.data.user
-    //         this.store.isLoggedIn=true
+    //         this.$store.user=res.data.user
+    //         this.$store.isLoggedIn=true
     //         this.$api.defaults.headers.common['Authorization'] = 'Bearer '+res.data.token
     //         localStorage.setItem('tokenMulti',res.data.token)
     //       }).catch(err => {
@@ -126,33 +125,33 @@ export default {
         })
         console.log(res.data)
         this.$router.push('/')
-        this.store.user = res.data.user
-        this.store.isLoggedIn = true
+        this.$store.user = res.data.user
+        this.$store.isLoggedIn = true
         res.data.user.permisos.forEach(r => {
-          if (r.id === 1) this.store.booluser = true
-          if (r.id === 2) this.store.boolcuis = true
-          if (r.id === 3) this.store.boolsincr = true
-          if (r.id === 4) this.store.boolcufd = true
-          if (r.id === 5) this.store.boolevento = true
-          if (r.id === 6) this.store.boolrubrosp = true
-          if (r.id === 7) this.store.boolrubroci = true
-          if (r.id === 8) this.store.boolrubrovf = true
-          if (r.id === 9) this.store.boolproductosp = true
-          if (r.id === 10) this.store.boolproductoci = true
-          if (r.id === 11) this.store.boolproductovf = true
-          if (r.id === 12) this.store.boolsabor = true
-          if (r.id === 13) this.store.boolcafe = true
-          if (r.id === 14) this.store.boolvaca = true
-          if (r.id === 15) this.store.boollistsabor = true
-          if (r.id === 16) this.store.boollistcafe = true
-          if (r.id === 17) this.store.boollistvaca = true
-          if (r.id === 18) this.store.boolcajasabor = true
-          if (r.id === 19) this.store.boolcajacafe = true
-          if (r.id === 20) this.store.boolcajavaca = true
-          if (r.id === 21) this.store.boolcliente = true
+          if (r.id === 1) this.$store.booluser = true
+          if (r.id === 2) this.$store.boolcuis = true
+          if (r.id === 3) this.$store.boolsincr = true
+          if (r.id === 4) this.$store.boolcufd = true
+          if (r.id === 5) this.$store.boolevento = true
+          if (r.id === 6) this.$store.boolrubrosp = true
+          if (r.id === 7) this.$store.boolrubroci = true
+          if (r.id === 8) this.$store.boolrubrovf = true
+          if (r.id === 9) this.$store.boolproductosp = true
+          if (r.id === 10) this.$store.boolproductoci = true
+          if (r.id === 11) this.$store.boolproductovf = true
+          if (r.id === 12) this.$store.boolsabor = true
+          if (r.id === 13) this.$store.boolcafe = true
+          if (r.id === 14) this.$store.boolvaca = true
+          if (r.id === 15) this.$store.boollistsabor = true
+          if (r.id === 16) this.$store.boollistcafe = true
+          if (r.id === 17) this.$store.boollistvaca = true
+          if (r.id === 18) this.$store.boolcajasabor = true
+          if (r.id === 19) this.$store.boolcajacafe = true
+          if (r.id === 20) this.$store.boolcajavaca = true
+          if (r.id === 21) this.$store.boolcliente = true
         })
         this.$api.defaults.headers.common.Authorization = 'Bearer ' + res.data.token
-        localStorage.setItem('tokenBistro', res.data.token)
+        localStorage.setItem('tokenBio', res.data.token)
       }).catch(error => {
         console.log(error)
         this.$q.notify({

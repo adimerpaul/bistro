@@ -6,60 +6,47 @@
     <municipio>Oruro</municipio>
     <telefono>5281290</telefono>
     <numeroFactura>1</numeroFactura>
-    <cuf>1BF79A259EA7AD7EB4DD2160798210B3C0B39E06A1131D9C8D1C8FD74</cuf>
-    <cufd>BQXlDcClvQUE=NzzlFN0MwMUIwRjY=Qnw2YUdYUkZYVUFcwNDEwNkJCMEYwQ</cufd>
+    <cuf>1BF79A259EA7ADDFEC912B7923C298B64ACB9E06A744F4A7039C8FD74</cuf>
+    <cufd>BQXlDcClvQUE=NzzlFN0MwMUIwRjY=QjkrWFFVVEZYVUFcwNDEwNkJCMEYwQ</cufd>
     <codigoSucursal>0</codigoSucursal>
     <direccion>AVENIDA TACNA ENTRE TOMAS FRIAS Y JAEN Nª2337 ZONA ESTE</direccion>
     <codigoPuntoVenta>0</codigoPuntoVenta>
-    <fechaEmision>2023-05-16T23:11:52.000</fechaEmision>
-    <nombreRazonSocial>LOPEZ</nombreRazonSocial>
-    <codigoTipoDocumentoIdentidad>5</codigoTipoDocumentoIdentidad>
-    <numeroDocumento>5769706016</numeroDocumento>
+    <fechaEmision>2023-05-18T20:29:59.000</fechaEmision>
+    <nombreRazonSocial>CHAMBI</nombreRazonSocial>
+    <codigoTipoDocumentoIdentidad>1</codigoTipoDocumentoIdentidad>
+    <numeroDocumento>77336199017</numeroDocumento>
     <complemento/>
-    <codigoCliente>1</codigoCliente>
+    <codigoCliente>15014</codigoCliente>
     <codigoMetodoPago>1</codigoMetodoPago>
     <numeroTarjeta xsi:nil="true"/>
-    <montoTotal>44.00</montoTotal>
-    <montoTotalSujetoIva>44.00</montoTotalSujetoIva>
+    <montoTotal>27.00</montoTotal>
+    <montoTotalSujetoIva>27.00</montoTotalSujetoIva>
     <codigoMoneda>1</codigoMoneda>
     <tipoCambio>1</tipoCambio>
-    <montoTotalMoneda>44.00</montoTotalMoneda>
+    <montoTotalMoneda>27.00</montoTotalMoneda>
     <montoGiftCard xsi:nil="true"/>
     <descuentoAdicional>0</descuentoAdicional>
-    <codigoExcepcion>1</codigoExcepcion>
+    <codigoExcepcion>0</codigoExcepcion>
     <cafc xsi:nil="true"/>
-    <leyenda>Ley N° 453: La interrupción del servicio debe comunicarse con anterioridad a las Autoridades que correspondan y a los usuarios afectados.</leyenda>
+    <leyenda>Ley N° 453: En caso de incumplimiento a lo ofertado o convenido, el proveedor debe reparar o sustituir el servicio.</leyenda>
     <usuario>Administrator</usuario>
     <codigoDocumentoSector>1</codigoDocumentoSector>
   </cabecera>
   <detalle>
     <actividadEconomica>561120</actividadEconomica>
     <codigoProductoSin>99100</codigoProductoSin>
-    <codigoProducto>1</codigoProducto>
-    <descripcion>LOMO SALTEADO</descripcion>
+    <codigoProducto>111</codigoProducto>
+    <descripcion>COPA CHOCOLATE IN RIO MEDIANO</descripcion>
     <cantidad>1</cantidad>
     <unidadMedida>62</unidadMedida>
-    <precioUnitario>35</precioUnitario>
+    <precioUnitario>27</precioUnitario>
     <montoDescuento>0</montoDescuento>
-    <subTotal>35</subTotal>
-    <numeroSerie xsi:nil="true"/>
-    <numeroImei xsi:nil="true"/>
-  </detalle>
-  <detalle>
-    <actividadEconomica>561120</actividadEconomica>
-    <codigoProductoSin>99100</codigoProductoSin>
-    <codigoProducto>17</codigoProducto>
-    <descripcion>SODA</descripcion>
-    <cantidad>1</cantidad>
-    <unidadMedida>62</unidadMedida>
-    <precioUnitario>9</precioUnitario>
-    <montoDescuento>0</montoDescuento>
-    <subTotal>9</subTotal>
+    <subTotal>27</subTotal>
     <numeroSerie xsi:nil="true"/>
     <numeroImei xsi:nil="true"/>
   </detalle>
 <ds:Signature xmlns:ds="http://www.w3.org/2000/09/xmldsig#">
   <ds:SignedInfo><ds:CanonicalizationMethod Algorithm="http://www.w3.org/2001/10/xml-exc-c14n#"/>
     <ds:SignatureMethod Algorithm="http://www.w3.org/2001/04/xmldsig-more#rsa-sha256"/>
-  <ds:Reference URI=""><ds:Transforms><ds:Transform Algorithm="http://www.w3.org/2000/09/xmldsig#enveloped-signature"/><ds:Transform Algorithm="http://www.w3.org/TR/2001/REC-xml-c14n-20010315#WithComments"/></ds:Transforms><ds:DigestMethod Algorithm="http://www.w3.org/2001/04/xmlenc#sha256"/><ds:DigestValue>yn4r9E5MRS0b8VlSTW4/i7x0SHHaST9qiGim+Yn/bf8=</ds:DigestValue></ds:Reference></ds:SignedInfo><ds:SignatureValue>kq+KFNb9TcswMzXE/ynKy0IgnDBNENpOg0UcNhPKm+FZo4tXeykY7NJKCgEKEPpfGaQDX+DCMsiNuYKWKYa9fvwEtEW+zqclgsJ6mLx47D7DseTJ+lKmAUh/uUL8A7qTTSRqlDNM5hN/pXnqO2F2F+bV2xGZ41hMmR0q2fLj8lStRdZdws9iBL7GeeysHRi7eCO3g8BnqTOVGxu6Ebnp38jtoT8MOv9XuH34ZrdcU1zpffcHoSE6FlaOlnCyKGvccspXc4ZLCxC8vDrFeGTp438AnxfD4wC/CtP1eggyp75l4XfKMoAu0J3ZtnjU/Wo7MxMNxT51kIcHm/RWjDsX/g==</ds:SignatureValue>
+  <ds:Reference URI=""><ds:Transforms><ds:Transform Algorithm="http://www.w3.org/2000/09/xmldsig#enveloped-signature"/><ds:Transform Algorithm="http://www.w3.org/TR/2001/REC-xml-c14n-20010315#WithComments"/></ds:Transforms><ds:DigestMethod Algorithm="http://www.w3.org/2001/04/xmlenc#sha256"/><ds:DigestValue>5FLEt9pjLn0o661MbGY4A8rF/nqE7DHGQNRuiDxIM5E=</ds:DigestValue></ds:Reference></ds:SignedInfo><ds:SignatureValue>aH+/NSJCrmC2uthLBw/OpzHD+hY8zSACGhP7jCFCD+vpamZA+4HYXgXgtMRB+2HpVWyFmrX3xSpQ5OmH/AMikvj2iYvuZruMN0H9RN7WVOqMlUPIP7+AUEIkn3o89jlpitaxcNjn8iXljHpKROVyygd11K79hVIinMNgA+2e+SgrNx+RAxZqok7T7JHu0FGTE3V8UGr2+2Xc4x1N3PKwdUuCskfrBchMlHtBRVR0WJhoP78Z6Dbt+DGiBoOJKr3toQfQr+RIyArVeIu1bgdl0JGhDCU+/CGDBaUzVX2q62FMMojd7Z1ZMvdcgFQurBYlc4oQ38x/eGOJ59SQ+WW/OA==</ds:SignatureValue>
 <ds:KeyInfo><ds:X509Data><ds:X509Certificate>MIIEtDCCA5ygAwIBAgIIMaXn+NfUKgAwDQYJKoZIhvcNAQEFBQAwgbUxCzAJBgNVBAYTAkJPMQ8wDQYDVQQIDAZMQSBQQVoxDzANBgNVBAcMBkxBIFBBWjEeMBwGA1UECgwVRW50aWRhZCBDZXJ0aWZpY2Fkb3JhMQwwCgYDVQQLDANVSUQxEzARBgNVBAMMCkFEU0lCIEZBS0UxJDAiBgkqhkiG9w0BCQEWFW5jb2FyaXRlQGFkc2liLmdvYi5ibzEbMBkGA1UEBRMSNzM1MjQyNDI0NDY0NjM0MjM0MB4XDTIzMDMyMDIyMTAwMloXDTI0MDMxOTIyMTAwMlowgeMxITAfBgNVBAMTGEVERFkgQ0FSTE9TIFBMQVpBIEdBUkNJQTEXMBUGA1UEChMOQklTVFJPRk9PRCBTUkwxEzARBgNVBAsTCkJJU1RST0ZPT0QxDzANBgNVBAwTBkJJU1RSTzELMAkGA1UEBhMCQk8xCzAJBgNVBC4TAkNJMRQwEgYHKwYBAQEBABMHMzUyMDIyNjERMA8GCgmSJomT8ixkAQETATExEjAQBgNVBAUTCTQwODc0MTAyNTEoMCYGCSqGSIb3DQEJARYZZWRkeXBsYXphZ2FyY2lhQGdtYWlsLmNvbTCCASIwDQYJKoZIhvcNAQEBBQADggEPADCCAQoCggEBANPF6d36pMAOqlKWyBzViUSCo4wpplfFxGu1H/uA3OVL5nXpLIqtGGODLeiQ0j+K5JNPe0ZD9eni8hOFIvBHh2EP1UzlOcYx/a37ZAGsLIexen4cFsVs3g51DvQWsRqhhhTNR5D0HxABJyUUu0VrADgSVLCTSjrjEizJuxovzT5ZykmAh2+Mu/iAnZ2ZOS/424LMcOS15qQZaDJXK0b2sDglYE1tkzERBvxJqxK/rEB5OqImGZMXQIcx8ijLBuO/w6fUOK0Fgr+UN8mQiUF/kD9E+BL5L6ZHRDaFO8m3VC84siBvNOKa2EoWHgX55TjFcUNaF3j/5ybWkv/w/jJgwLMCAwEAAaOBlzCBlDAMBgNVHRMEBTADAQH/MAsGA1UdDwQEAwIE8DAkBgNVHREEHTAbhhllZGR5cGxhemFnYXJjaWFAZ21haWwuY29tMFEGA1UdHwRKMEgwRqBEoEKGQGh0dHBzOi8vZGVzYXJyb2xsby5hZHNpYi5nb2IuYm8vZGVzYV9hZ2VuY2lhL2xpc3RfcmV2b2NhY2lvbi5jcmwwDQYJKoZIhvcNAQEFBQADggEBACi4Dd2Tnwc7IN0DrrgXlRcgOoyfQA1mIW/jAP1IrhSTyB4sapXIAJt+7A896WuFcSR6Hrt39ziMlh+uZ+IRo5LK8FA4BV3CatAFKmmlVWKRV6sopwfHWJkIq2nJ1sa5IEm4RBhymdhBqO8EzbNuI2iNJdnoKLMtD4FsPU5eDtor0drkrSopemYoqRTWo6OcT/fk52w2T8mveE/7MmuR2Y4PmPt6Qy1wTtKKkcYcu2W7Q2r3oI4fa4nPEP9ItiiscvTzD2fgZDQEZ9BuBQV2YbedOIIhvZQic8QHkAixQg3AjHpZ1UpW/96qkTbhJ8o/WmRewkaMd2uJiM4gC2lnxos=</ds:X509Certificate></ds:X509Data></ds:KeyInfo></ds:Signature></facturaElectronicaCompraVenta>

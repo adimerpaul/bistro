@@ -60,6 +60,7 @@ class UserController extends Controller
             'state' => 'required',
             'fechaLimite' => 'required',
         ]);
+        $validated['password']=Hash::make($validated['password']);
         $user = User::create($validated);
         $permisos= array();
         foreach ($request->permisos as $permiso){

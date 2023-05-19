@@ -130,7 +130,7 @@ export default {
     }
   },
   mounted () {
-    this.validar()
+    // this.validar()
     this.categoriesGet()
     this.$watch(() => this.$route.params,
       (toParams) => {
@@ -138,7 +138,7 @@ export default {
         this.shop_id = toParams.id
 
         this.categoriesGet()
-        this.validar()
+        // this.validar()
       }
     )
   },

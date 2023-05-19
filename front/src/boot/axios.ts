@@ -1,6 +1,5 @@
 import { boot } from 'quasar/wrappers'
 import axios from 'axios'
-import { useCounterStore } from 'stores/example-store'
 import { globalStore } from 'stores/globalStore'
 
 // Be careful when using SSR for cross-request state pollution
@@ -16,14 +15,14 @@ export default boot(({ app, router }) => {
 
   // app.config.globalProperties.$axios = axios
   app.config.globalProperties.$url = import.meta.env.VITE_API_BACK
-  app.config.globalProperties.$store = useCounterStore()
+  app.config.globalProperties.$store = globalStore()
   // ^ ^ ^ this will allow you to use this.$axios (for Vue Options API form)
   //       so you won't necessarily have to import axios in each vue file
 
   app.config.globalProperties.$api = api
   // ^ ^ ^ this will allow you to use this.$api (for Vue Options API form)
   //       so you can easily perform requests against your app's API
-  const token = localStorage.getItem('tokenBistro')
+  const token = localStorage.getItem('tokenBio')
   console.log(token)
   if (token) {
     api.defaults.headers.common.Authorization = `Bearer ${token}`
@@ -57,7 +56,7 @@ export default boot(({ app, router }) => {
     }).catch(() => {
       app.config.globalProperties.$api.defaults.headers.common.Authorization = ''
       globalStore().user = {}
-      localStorage.removeItem('tokenBistro')
+      localStorage.removeItem('tokenBio')
       globalStore().isLoggedIn = false
       globalStore().booluser = false
       globalStore().boolcuis = false
@@ -111,7 +110,7 @@ export default boot(({ app, router }) => {
     globalStore().boolcajacafe = false
     globalStore().boolcajavaca = false
     globalStore().boolcliente = false
-    localStorage.removeItem('tokenBistro')
+    localStorage.removeItem('tokenBio')
     globalStore().isLoggedIn = false
   }
 })
