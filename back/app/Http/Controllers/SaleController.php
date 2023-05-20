@@ -34,7 +34,7 @@ class SaleController extends Controller{
         else return 0;
 
     }
-    
+
     public function hexToStr($hex){
         $string='';
         for ($i=0; $i < strlen($hex)-1; $i+=2){
@@ -83,6 +83,7 @@ class SaleController extends Controller{
             return $this->insertarRecibo($request,$client);
         }
 
+ 
         if (sizeof($request->detalleVenta) > 0){
 
 

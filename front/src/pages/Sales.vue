@@ -339,7 +339,7 @@ export default {
       }
     },
     searchClient () {
-      if (this.client.numeroDocumento.length >= 4) {
+      if (this.client.numeroDocumento.length >= 1) {
         this.document = this.documents[0]
         this.client.nombreRazonSocial = ''
         this.client.email = ''
