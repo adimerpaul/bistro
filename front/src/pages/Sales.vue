@@ -451,6 +451,7 @@ export default {
     reset () {
       this.client = { complemento: '' }
       this.productsSale = []
+      this.efectivo = ''
       this.productsGet()
     },
     async printFactura (factura) {
