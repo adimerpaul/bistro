@@ -83,7 +83,7 @@ class SaleController extends Controller{
             return $this->insertarRecibo($request,$client);
         }
 
- 
+
         if (sizeof($request->detalleVenta) > 0){
 
 
@@ -650,5 +650,25 @@ class SaleController extends Controller{
     public function eventSearch(Request $request)
     {
         return Sale::where('siatEnviado',false)->where('siatAnulado',false)->count();
+    }
+
+    public function enviarCorreo(Request $request){
+
+        if ($request->client['email']!='' && $request->client['email']!=null ){
+            $details=[
+                "title"=>"Factura",
+                "body"=>"Gracias por su compra",
+                "anulado"=>false,
+                "cuf"=>"",
+                "numeroFactura"=>"",
+                "sale_id"=>$request->sale['id'],
+                "carpeta"=>"archivos",
+                "online"=>$request->sale['siatEnviado']
+            ];
+            Mail::to($request->client['email'])->send(new TestMail($details));
+            return true;
+        }
+        else
+            return false;
     }
 }

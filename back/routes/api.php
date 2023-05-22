@@ -60,4 +60,7 @@ Route::group(['middleware' => 'auth:sanctum'], function () {
     Route::post('caja', [\App\Http\Controllers\ReportController::class, 'caja']);
     Route::post('cajaF', [\App\Http\Controllers\ReportController::class, 'cajaF']);
     Route::post('cajaR', [\App\Http\Controllers\ReportController::class, 'cajaR']);
+
+    Route::post('enviarCorreo', [\App\Http\Controllers\SaleController::class,'enviarCorreo']);
+
 });

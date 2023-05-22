@@ -167,6 +167,17 @@ export default {
     this.cargarMotivo()
   },
   methods: {
+    correo (venta) {
+      console.log(venta)
+      this.$api.post('enviarCorreo', { client: venta.client, sale: venta }).then(res => {
+        if (res.data) {
+          this.$q.notify({
+            color: 'green',
+            textColor: 'white',
+            message: 'enviado al correo',
+          }) }
+      })
+    },
     encabezado () {
       this.$api.get('datocine/' + this.shop_id).then(res => {
         this.cine = res.data
