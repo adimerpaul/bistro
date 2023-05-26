@@ -221,7 +221,7 @@ export default {
       cadena3 += '</tbody></table>'
       if (this.tcajaR == null) this.tcajaR = 0
       if (this.tefectcajaR == null) this.tefectcajaR = 0
-      cadena3 += "<div style='text-align:right;'><span class='f-10 titulo3'>Total: </span> " + this.ventarecibo + " Bs</div><div style='text-align:right;'><span class='f-10 titulo3'>Total Efectivo: </span> " + this.tefectcajaR + " Bs</div><div style='text-align:right;'><span class='f-10 titulo3'>Total Tarjeta: </span> " + this.tcandyR + ' Bs</div>'
+      cadena3 += "<div style='text-align:right;'><span class='f-10 titulo3'>Total: </span> " + this.ventarecibo + " Bs</div><div style='text-align:right;'><span class='f-10 titulo3'>Total Efectivo: </span> " + this.tefectcajaR + " Bs</div><div style='text-align:right;'><span class='f-10 titulo3'>Total Tarjeta: </span> " + this.tcajaR + ' Bs</div>'
       document.getElementById('myelement').innerHTML = cadena3
       const d3 = new Printd()
       d3.print(document.getElementById('myelement'))
