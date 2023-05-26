@@ -48,7 +48,7 @@
     <q-dialog v-model="productShow">
       <q-card>
         <q-card-section class="row items-center q-pb-none">
-          <div class="text-h6">{{ productStatus== 'create' ? 'Crear Categoria' : 'Editar Categoria' }}</div>
+          <div class="text-h6">{{ productStatus== 'create' ? 'Crear Producto' : 'Editar Producto' }}</div>
           <q-space />
           <q-btn flat icon="close" v-close-popup />
         </q-card-section>
@@ -170,6 +170,7 @@ export default {
       this.productStatus = 'edit'
       this.productShow = true
       this.category = product.category
+      this.category.label = this.category.name
       this.product = product
     },
     productDelete (product) {
