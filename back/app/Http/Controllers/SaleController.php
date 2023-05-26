@@ -291,6 +291,7 @@ class SaleController extends Controller{
                 $sale->leyenda=$leyenda;
                 $sale->vip=$request->vip;
                 $sale->credito=$request->tarjeta;
+                $sale->venta="F";
                 $sale->save();
 
                 error_log("sale : ".json_encode($sale));
@@ -372,6 +373,7 @@ class SaleController extends Controller{
             $sale->leyenda=$leyenda;
             $sale->vip=$request->vip;
             $sale->credito=$request->tarjeta;
+            $sale->venta='F';
             $sale->save();
 
             if ($request->client['email']!='' && $request->client['email']!= null  ){

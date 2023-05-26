@@ -174,8 +174,9 @@ export default {
           this.$q.notify({
             color: 'green',
             textColor: 'white',
-            message: 'enviado al correo',
-          }) }
+            message: 'enviado al correo'
+          })
+        }
       })
     },
     encabezado () {

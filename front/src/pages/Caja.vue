@@ -170,9 +170,9 @@ export default {
       if (this.user.id === 0) {
         cadena += "<table class='table'><tr><th class='f-10'>USUARIO</th><th class='f-10'>TOTAL</th></tr>"
         this.infouser.forEach(r => {
-          cadena += "<tr><td class='f-10'>" + r.usuario + "</td> <td class='f-10'>" + r.total + "</td></tr>"
+          cadena += "<tr><td class='f-10'>" + r.usuario + "</td> <td class='f-10'>" + r.total + '</td></tr>'
         })
-        cadena += "</table>"
+        cadena += '</table>'
       }
 
       cadena += "<div style='text-align:right;'><span class='f-10 titulo3'>Total: </span> " + this.ventatotal + " Bs</div><div style='text-align:right;'><span class='f-10 titulo3'>Total VIP: </span> " + this.tvip + " Bs</div><div style='text-align:right;'><span class='f-10 titulo3'>Total Credito: </span> " + this.tcredito + " Bs</div><div style='text-align:right;'><span class='f-10 titulo3'>Total Efectivo: </span> " + this.tefectivo + ' Bs</div>'
@@ -191,13 +191,14 @@ export default {
         </style>\
         <div class='f-10 titulo' >BistroFood S.R.L.</div>\
         <div class='f-10 titulo' >ORURO - BOLIVIA</div>\
-        <div class='f-10 titulo' >VENTAS " + this.tipo[this.shop_id - 1] + " FACTURA</div><hr><div class='f-10'><span class='titulo2'>Fecha: </span> " + date.formatDate(new Date(), 'DD/MM/YYYY HH:mm:ss') + "</div><div class='f-10'><span class='titulo2'>Fecha Caja: </span> " + this.ini + " al " + this.fin + "</div><div class='f-10'><span  class='titulo2'>Usuario: </span> " + this.user.label + "</div><hr><table class='table'><thead><tr><th class='f-10'>DESCRIPCION</th><th class='f-10'>CANTIDAD</th><th class='f-10'>TOTAL</th></tr></thead><tbody>"
+        <div class='f-10 titulo' >VENTAS " + this.tipo[this.shop_id - 1] + " FACTURA</div><hr><div class='f-10'><span class='titulo2'>Fecha: </span> " + date.formatDate(new Date(), 'DD/MM/YYYY HH:mm:ss') + "</div><div class='f-10'><span class='titulo2'>Fecha Caja: </span> " + this.ini + ' al ' + this.fin + "</div><div class='f-10'><span  class='titulo2'>Usuario: </span> " + this.user.label + "</div><hr><table class='table'><thead><tr><th class='f-10'>DESCRIPCION</th><th class='f-10'>CANTIDAD</th><th class='f-10'>TOTAL</th></tr></thead><tbody>"
       this.reportef.forEach(r => {
-        cadena2 += "<tr><td class='f-10'>" + r.descripcion + "</td><td class='f-10'>" + r.cantidad + "</td><td class='f-10'>" + r.total + "</td></tr>"
+        cadena2 += "<tr><td class='f-10'>" + r.descripcion + "</td><td class='f-10'>" + r.cantidad + "</td><td class='f-10'>" + r.total + '</td></tr>'
       })
-      cadena2 += "</tbody></table>"
+      cadena2 += '</tbody></table>'
       if (this.tcajaF == null) this.tcajaF = 0
-      cadena2 += "<div style='text-align:right;'><span class='f-10 titulo3'>Total: </span> " + this.ventafactura + " Bs</div><div style='text-align:right;'><span class='f-10 titulo3'>Total Efectivo: </span> " + this.tefectcajaF + " Bs</div><div style='text-align:right;'><span class='f-10 titulo3'>Total Tarjeta: </span> " + this.tcajaF + " Bs</div>"
+      if (this.tefectcajaF == null) this.tefectcajaF = 0
+      cadena2 += "<div style='text-align:right;'><span class='f-10 titulo3'>Total: </span> " + this.ventafactura + " Bs</div><div style='text-align:right;'><span class='f-10 titulo3'>Total Efectivo: </span> " + this.tefectcajaF + " Bs</div><div style='text-align:right;'><span class='f-10 titulo3'>Total Tarjeta: </span> " + this.tcajaF + ' Bs</div>'
       document.getElementById('myelement').innerHTML = cadena2
       const d2 = new Printd()
       d2.print(document.getElementById('myelement'))
@@ -213,13 +214,14 @@ export default {
         </style>\
         <div class='f-10 titulo' >BistroFood S.R.L.</div>\
         <div class='f-10 titulo' >ORURO - BOLIVIA</div>\
-        <div class='f-10 titulo' >VENTAS " + this.tipo[this.shop_id - 1] + " RECIBO</div><hr><div class='f-10'><span class='titulo2'>Fecha: </span> " + date.formatDate(new Date(), 'DD/MM/YYYY HH:mm:ss') + "</div><div class='f-10'><span class='titulo2'>Fecha Caja: </span> " + this.ini + " al " + this.fin + "</div><div class='f-10'><span  class='titulo2'>Usuario: </span> " + this.user.label + "</div><hr><table class='table'><thead><tr><th class='f-10'>DESCRIPCION</th><th class='f-10'>CANTIDAD</th><th class='f-10'>TOTAL</th></tr></thead><tbody>"
+        <div class='f-10 titulo' >VENTAS " + this.tipo[this.shop_id - 1] + " RECIBO</div><hr><div class='f-10'><span class='titulo2'>Fecha: </span> " + date.formatDate(new Date(), 'DD/MM/YYYY HH:mm:ss') + "</div><div class='f-10'><span class='titulo2'>Fecha Caja: </span> " + this.ini + ' al ' + this.fin + "</div><div class='f-10'><span  class='titulo2'>Usuario: </span> " + this.user.label + "</div><hr><table class='table'><thead><tr><th class='f-10'>DESCRIPCION</th><th class='f-10'>CANTIDAD</th><th class='f-10'>TOTAL</th></tr></thead><tbody>"
       this.reporter.forEach(r => {
-        cadena3 += "<tr><td class='f-10'>" + r.descripcion + "</td><td class='f-10'>" + r.cantidad + "</td><td class='f-10'>" + r.total + "</td></tr>"
+        cadena3 += "<tr><td class='f-10'>" + r.descripcion + "</td><td class='f-10'>" + r.cantidad + "</td><td class='f-10'>" + r.total + '</td></tr>'
       })
-      cadena3 += "</tbody></table>"
+      cadena3 += '</tbody></table>'
       if (this.tcajaR == null) this.tcajaR = 0
-      cadena3 += "<div style='text-align:right;'><span class='f-10 titulo3'>Total: </span> " + this.ventarecibo + " Bs</div><div style='text-align:right;'><span class='f-10 titulo3'>Total Efectivo: </span> " + this.tefectcajaR + " Bs</div><div style='text-align:right;'><span class='f-10 titulo3'>Total Tarjeta: </span> " + this.tcandyR + " Bs</div>"
+      if (this.tefectcajaR == null) this.tefectcajaR = 0
+      cadena3 += "<div style='text-align:right;'><span class='f-10 titulo3'>Total: </span> " + this.ventarecibo + " Bs</div><div style='text-align:right;'><span class='f-10 titulo3'>Total Efectivo: </span> " + this.tefectcajaR + " Bs</div><div style='text-align:right;'><span class='f-10 titulo3'>Total Tarjeta: </span> " + this.tcandyR + ' Bs</div>'
       document.getElementById('myelement').innerHTML = cadena3
       const d3 = new Printd()
       d3.print(document.getElementById('myelement'))
