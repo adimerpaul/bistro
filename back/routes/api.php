@@ -19,6 +19,7 @@ use Illuminate\Support\Facades\Route;
 //});
 Route::post('login', [App\Http\Controllers\UserController::class, 'login']);
 Route::get('verificarComunicacion', [\App\Http\Controllers\ActivityController::class,'verificarComunicacion']);
+Route::post('upload/{type}/{id}', [\App\Http\Controllers\UploadController::class,'upload']);
 Route::group(['middleware' => 'auth:sanctum'], function () {
     Route::post('eventSearch', [\App\Http\Controllers\SaleController::class, 'eventSearch']);
 
@@ -31,7 +32,6 @@ Route::group(['middleware' => 'auth:sanctum'], function () {
     Route::apiResource('categories', \App\Http\Controllers\CategoryController::class);
     Route::apiResource('products', \App\Http\Controllers\ProductController::class);
     Route::get('productSFilter/{category_id}', [\App\Http\Controllers\ProductController::class,'productSFilter']);
-    Route::post('upload/{type}/{id}', [\App\Http\Controllers\UploadController::class,'upload']);
     Route::post('listado', [\App\Http\Controllers\ReportController::class,'listado']);
     Route::get('datocine/{id}', [\App\Http\Controllers\ReportController::class,'datocine']);
     Route::get('motivoanular', [\App\Http\Controllers\ReportController::class,'motivoanular']);
