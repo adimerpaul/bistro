@@ -11,8 +11,7 @@
           @click="leftDrawerOpen=!leftDrawerOpen"
         />
         <q-toolbar-title>
-          Bistro
-          <span class="text-accent "></span>
+          <q-badge class="text-white ">{{title}}</q-badge>
           {{ store.user.name }}
         </q-toolbar-title>
         <div>
@@ -152,14 +151,15 @@ export default defineComponent({
   },
   computed: {
     title () {
+      console.log(this.$route.path)
       if (this.$route.path === '/') {
-        setCssVar('primary', '#1976d2')
+        setCssVar('primary', '#770050')
         return ''
       } else if (this.$route.path === '/categories/1') {
         setCssVar('primary', '#8C131A')
         return 'Sabor peru'
       } else if (this.$route.path === '/categories/2') {
-        setCssVar('primary', '#009203')
+        setCssVar('primary', '#008B42')
         return 'Cafe italia'
       } else if (this.$route.path === '/categories/3') {
         setCssVar('primary', '#00538F')
@@ -168,7 +168,7 @@ export default defineComponent({
         setCssVar('primary', '#8C131A')
         return 'Sabor peru'
       } else if (this.$route.path === '/products/2') {
-        setCssVar('primary', '#009203')
+        setCssVar('primary', '#008B42')
         return 'Cafe italia'
       } else if (this.$route.path === '/products/3') {
         setCssVar('primary', '#00538F')
@@ -177,7 +177,7 @@ export default defineComponent({
         setCssVar('primary', '#8C131A')
         return 'Sabor peru'
       } else if (this.$route.path === '/sales/2') {
-        setCssVar('primary', '#009203')
+        setCssVar('primary', '#008B42')
         return 'Cafe italia'
       } else if (this.$route.path === '/sales/3') {
         setCssVar('primary', '#00538F')
@@ -186,7 +186,7 @@ export default defineComponent({
         setCssVar('primary', '#8C131A')
         return 'Sabor peru'
       } else if (this.$route.path === '/listado/2') {
-        setCssVar('primary', '#009203')
+        setCssVar('primary', '#008B42')
         return 'Cafe italia'
       } else if (this.$route.path === '/listado/3') {
         setCssVar('primary', '#00538F')
@@ -195,12 +195,13 @@ export default defineComponent({
         setCssVar('primary', '#8C131A')
         return 'Sabor peru'
       } else if (this.$route.path === '/caja/2') {
-        setCssVar('primary', '#009203')
+        setCssVar('primary', '#008B42')
         return 'Cafe italia'
       } else if (this.$route.path === '/caja/3') {
         setCssVar('primary', '#00538F')
         return 'Vaca fria'
       } else {
+        setCssVar('primary', '#770050')
         return ''
       }
     }

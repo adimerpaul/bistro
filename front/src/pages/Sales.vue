@@ -173,9 +173,9 @@
                   </div>
                   <div class="row col-3">
                     <q-checkbox v-model="boolcredito"  label="T Credito" dense/>
-                    <q-checkbox  v-model="booltarjeta"  label="T VIP" dense @click="verificar" v-if="shop_id!==3"/>
+                    <q-checkbox v-model="booltarjeta"  label="T VIP" dense @click="verificar" v-if="shop_id!=='3'"/>
                   </div>
-                  <div class="col-12" v-if="shop_id!==3">
+                  <div class="col-12" v-if="shop_id!=='3'">
                   <template v-if="booltarjeta" >
                       <q-form @submit.prevent="consultartarjeta">
                       <div class="row">
