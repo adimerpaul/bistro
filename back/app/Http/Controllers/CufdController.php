@@ -69,6 +69,7 @@ class CufdController extends Controller
                     "nit"=>env('NIT'),
                 ]
             ]);
+            error_log(json_encode($result));
             $cufd = new Cufd();
             $cufd->codigo = $result->RespuestaCufd->codigo;
             $cufd->codigoControl = $result->RespuestaCufd->codigoControl;
