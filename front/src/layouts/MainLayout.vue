@@ -43,7 +43,7 @@
           <q-item-section avatar><q-icon name="o_home" /></q-item-section>
           <q-item-section><q-item-label>Principal</q-item-label><q-item-label caption class="text-grey">Pagina principal</q-item-label></q-item-section>
       </q-item>
-        <q-expansion-item dense exact expand-separator icon="o_people" label="Usuarios" to="usuarios" expand-icon="null" v-if="store.booluser"/>
+        <q-expansion-item dense exact expand-separator icon="o_people" label="Usuarios" to="/usuarios" expand-icon="null" v-if="store.booluser"/>
         <q-expansion-item dense expand-separator icon="o_engineering" label="Siat" v-if="store.boolsiat||store.boolcuis||store.boolsincr||store.boolcufd||store.boolevento">
           <q-expansion-item dense exact :header-inset-level="1" expand-separator icon="o_psychology" label="Cuis" default-opened to="/cuis" hide-expand-icon  v-if="store.boolcuis"/>
           <q-expansion-item dense exact :header-inset-level="1" expand-separator icon="o_countertops" label="sincronizacion" default-opened to="/sincronizacion" hide-expand-icon  v-if="store.boolsincr"/>
