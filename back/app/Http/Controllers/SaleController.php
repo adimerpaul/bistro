@@ -641,7 +641,7 @@ class SaleController extends Controller{
         $cliente=$result->id;
         //$cliente=$client->id;
         DB::connection('tarjeta')->select("
-        INSERT INTO historial (fecha, lugar, monto, numero, cliente_id) VALUES ('$fecha', $tipoventa, $monto, $numero, $cliente)
+        INSERT INTO historial (fecha, lugar, monto, numero, cliente_id) VALUES ('$fecha', '$tipoventa', $monto, $numero, $cliente)
         ");
             return response()->json([
                 'sale' => $sale,
