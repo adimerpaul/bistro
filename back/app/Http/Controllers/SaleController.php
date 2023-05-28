@@ -36,12 +36,12 @@ class SaleController extends Controller{
     }
 
     public function hexToStr($hex){
-//        $string='';
-//        for ($i=0; $i < strlen($hex)-1; $i+=2){
-//            $string .= chr(hexdec($hex[$i].$hex[$i+1]));
-//        }
-//        return $string;
-        return $hex;
+        $string='';
+        for ($i=0; $i < strlen($hex)-1; $i+=2){
+            $string .= chr(hexdec($hex[$i].$hex[$i+1]));
+        }
+        return $string;
+//        return $hex;
     }
 
    public function store(StoreSaleRequest $request)
