@@ -320,7 +320,7 @@ class SaleController extends Controller{
                     $d=[
                         'actividadEconomica'=>"561120",
                         'codigoProductoSin'=>"99100",
-                        'cantidad'=>$detalle['cantidad'],
+                        'cantidad'=>$detalle['cantidadPedida'],
                         'precioUnitario'=>$detalle['precio'],
                         'subTotal'=>$detalle['subtotal'],
                         'sale_id'=>$sale->id,
@@ -398,7 +398,7 @@ class SaleController extends Controller{
                 $d=[
                     'actividadEconomica'=>"561120",
                     'codigoProductoSin'=>"99100",
-                    'cantidad'=>$detalle['cantidad'],
+                    'cantidad'=>$detalle['cantidadPedida'],
                     'precioUnitario'=>$detalle['precio'],
                     'subTotal'=>$detalle['subtotal'],
                     'sale_id'=>$sale->id,
@@ -548,7 +548,7 @@ class SaleController extends Controller{
             $d=[
                 'actividadEconomica'=>"561120",
                 'codigoProductoSin'=>"99100",
-                'cantidad'=>$detalle['cantidad'],
+                'cantidad'=>$detalle['cantidadPedida'],
                 'precioUnitario'=>$detalle['precio'],
                 'subTotal'=>$detalle['subtotal'],
                 'sale_id'=>$sale->id,
@@ -608,7 +608,7 @@ class SaleController extends Controller{
                 $d=[
                     'actividadEconomica'=>"561120",
                     'codigoProductoSin'=>"99100",
-                    'cantidad'=>$detalle['cantidad'],
+                    'cantidad'=>$detalle['cantidadPedida'],
                     'precioUnitario'=>$detalle['precio'],
                     'subTotal'=>$detalle['subtotal'],
                     'sale_id'=>$sale->id,
