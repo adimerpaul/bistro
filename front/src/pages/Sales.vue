@@ -584,7 +584,7 @@ export default {
         client: this.client,
         montoTotal: this.total,
         detalleVenta: this.productsSale,
-        tarjeta: this.credito ? 'SI' : 'NO',
+        tarjeta: this.boolcredito ? 'SI' : 'NO',
         codigoTarjeta: this.codigo,
         vip: this.booltarjeta ? 'SI' : 'NO',
         tipo: this.tipo[parseInt(this.shop_id) - 1]
