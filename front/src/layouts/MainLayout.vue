@@ -15,6 +15,7 @@
           {{ store.user.name }}
         </q-toolbar-title>
         <div>
+          <q-chip  color="red" v-if="store.eventNumber!=0" text-color="white" icon="warning_amber" :label="store.eventNumber+' Facturas no enviadas'" />
           <q-btn
             flat
             dense
@@ -99,6 +100,12 @@ export default defineComponent({
     this.eventSearch()
   },
   methods: {
+    eventSearch () {
+      this.$api.post('eventSearch').then(res => {
+        // console.log(res.data)
+        this.store.eventNumber = res.data
+      })
+    },
     logout () {
       this.$q.dialog({
         title: 'Cerrar sesión',
@@ -139,12 +146,7 @@ export default defineComponent({
       // eslint-disable-next-line @typescript-eslint/no-empty-function
       }).onCancel(() => {})
     },
-    eventSearch () {
-      // this.$api.post('eventSearch').then((res: { data: number }) => {
-      // console.log(res.data)
-      // this.store.eventNumber = res.data
-      // })
-    },
+
     toggleLeftDrawer () {
       this.leftDrawerOpen = !this.leftDrawerOpen
     }
