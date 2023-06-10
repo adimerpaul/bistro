@@ -404,6 +404,7 @@ class SaleController extends Controller{
                     'sale_id'=>$sale->id,
 //                    'programa_id'=>$detalle['programa_id'],
                     'descripcion'=>$detalle['nombre'],
+                    'product_id'=>$detalle['product_id'],
                 ];
                 array_push($dataDetail, $d);
             }
