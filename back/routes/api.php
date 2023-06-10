@@ -20,6 +20,8 @@ use Illuminate\Support\Facades\Route;
 Route::post('login', [App\Http\Controllers\UserController::class, 'login']);
 Route::get('verificarComunicacion', [\App\Http\Controllers\ActivityController::class,'verificarComunicacion']);
 Route::post('upload/{type}/{id}', [\App\Http\Controllers\UploadController::class,'upload']);
+Route::get('genXML/{id}', [\App\Http\Controllers\SaleController::class,'genXML']);
+
 Route::group(['middleware' => 'auth:sanctum'], function () {
     Route::post('eventSearch', [\App\Http\Controllers\SaleController::class, 'eventSearch']);
 
