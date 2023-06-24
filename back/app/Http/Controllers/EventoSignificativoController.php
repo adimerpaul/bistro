@@ -135,7 +135,7 @@ class EventoSignificativoController extends Controller
         $a->compress(Phar::GZ);
 
         // NOTE THAT BOTH FILES WILL EXISTS. SO IF YOU WANT YOU CAN UNLINK archive.tar
-//        unlink('archivos/archive.tar');
+        unlink('archivos/archive.tar');
         $firmar = new Firmar();
         $archivo=$firmar->getFileGzip("archivos/archive.tar.gz");
         $hashArchivo=hash('sha256', $archivo);
