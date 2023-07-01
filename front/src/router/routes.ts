@@ -12,6 +12,7 @@ import Sincronizacion from 'pages/Sincronizacion.vue'
 import Caja from 'pages/Caja.vue'
 import User from 'pages/User.vue'
 import Login from 'pages/Login.vue'
+import Factura from 'pages/Factura.vue'
 
 const routes: RouteRecordRaw[] = [
   {
@@ -28,7 +29,8 @@ const routes: RouteRecordRaw[] = [
       { path: 'eventoSignificativo', component: EventoSignificativo, meta: { requiresAuth: true } },
       { path: 'sincronizacion', component: Sincronizacion, meta: { requiresAuth: true } },
       { path: 'caja/:id', component: Caja, meta: { requiresAuth: true } },
-      { path: 'usuarios', component: User, meta: { requiresAuth: true } }
+      { path: 'usuarios', component: User, meta: { requiresAuth: true } },
+      { path: 'factura', component: Factura, meta: { requiresAuth: true } }
     ]
   },
   {
