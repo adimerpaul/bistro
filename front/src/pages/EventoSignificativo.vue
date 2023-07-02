@@ -1,64 +1,67 @@
 <template>
-<q-page>
-<div class="row">
-  <div class="col-12">
-    <q-table dense title="Control de eventos" :rows="eventoSignificativos" :columns="eventoSignificativoColumns">
-      <template v-slot:body-cell-Opciones="props">
-        <q-td :props="props" auto-width>
-          <q-btn @click="recepcionPaqueteFacturaClick(props.row)" label="Enviar a impuestos" color="primary" icon="send" size="10px" />
-          <q-btn class="q-ml-lg" v-if="props.row.codigoRecepcion!=null" @click="validarPaquete(props.row)" label="Validar" color="yellow-9" icon="send" size="10px" />
-        </q-td>
-      </template>
-    </q-table>
-  </div>
-</div>
-  <q-dialog v-model="eventoSignificativoDialog" full-width>
-    <q-card>
-      <q-card-section class="row items-center">
-        <div class="text-h6">
-          Datos que se enviaran a impuestos
-        </div>
-        <q-space/>
-        <q-btn @click="eventoSignificativoDialog = false" label="Cerrar" color="primary" icon="close" />
-      </q-card-section>
-      <q-card-section>
-        <div class="row">
-          <div class="col-12">
-            <q-table :rows="eventoSignificativosDatos" :columns="eventoDetalle">
-            </q-table>
+  <q-page>
+    <div class="row">
+      <div class="col-12">
+        <q-table dense title="Control de eventos" :rows="eventoSignificativos" :columns="eventoSignificativoColumns" :rows-per-page-options="[0,10]">
+          <template v-slot:body-cell-Opciones="props">
+            <q-td :props="props" style="width: 150px" >
+              <q-btn-group>
+                <q-btn no-caps @click="recepcionPaqueteFacturaClick(props.row)" label="Enviar a impuestos" color="primary" icon="send" size="10px" />
+                <q-btn no-caps v-if="props.row.codigoRecepcion!=null" @click="validarPaquete(props.row)" label="Validar" color="yellow-9" icon="send" size="10px" />
+              </q-btn-group>
+            </q-td>
+          </template>
+        </q-table>
+      </div>
+    </div>
+    <q-dialog v-model="eventoSignificativoDialog" full-width>
+      <q-card>
+        <q-card-section class="row items-center">
+          <div class="text-h6">
+            Datos que se enviaran a impuestos
           </div>
-        </div>
-        <div class="col-12">
-          <q-btn @click="recepcionPaqueteFactura"  :disable="eventoSignificativosDatos.length==0" label="Enviar" color="primary" icon="send" class="full-width" :loading="loading" />
-        </div>
-      </q-card-section>
-    </q-card>
-  </q-dialog>
-  <q-dialog v-model="recepcionPaqueteFacturaDialog">
-    <q-card >
-      <q-card-section class="row text-center">
-        <div class="text-h6">
-          RECEPCION DE PAQUETE
-        </div>
-        <q-space/>
-        <q-btn @click="recepcionPaqueteFacturaDialog = false" label="Cerrar" color="primary" icon="close" />
-      </q-card-section>
-      <q-card-section>
-        <pre>{{validarPaqueteRespuesta}}</pre>
-      </q-card-section>
-    </q-card>
-  </q-dialog>
-</q-page>
+          <q-space/>
+          <q-btn @click="eventoSignificativoDialog = false" label="Cerrar" color="primary" icon="close" />
+        </q-card-section>
+        <q-card-section>
+          <div class="row">
+            <div class="col-12">
+              <q-table :rows="eventoSignificativosDatos" :columns="eventoDetalle">
+              </q-table>
+            </div>
+          </div>
+          <div class="col-12">
+            <q-btn @click="recepcionPaqueteFactura"  :disable="eventoSignificativosDatos.length==0" label="Enviar" color="primary" icon="send" class="full-width" :loading="loading" />
+          </div>
+        </q-card-section>
+      </q-card>
+    </q-dialog>
+    <q-dialog v-model="recepcionPaqueteFacturaDialog">
+      <q-card >
+        <q-card-section class="row text-center">
+          <div class="text-h6">
+            RECEPCION DE PAQUETE
+          </div>
+          <q-space/>
+          <q-btn @click="recepcionPaqueteFacturaDialog = false" label="Cerrar" color="primary" icon="close" />
+        </q-card-section>
+        <q-card-section>
+          <pre>{{validarPaqueteRespuesta}}</pre>
+        </q-card-section>
+      </q-card>
+    </q-dialog>
+  </q-page>
 </template>
 
 <script>
-// import { globalStore } from 'stores/globalStore'
+// import { date } from 'quasar'
+import { globalStore } from 'stores/globalStore'
 
 export default {
   name: 'EventoSignificativo',
   data () {
     return {
-      // store: globalStore(),
+      store: globalStore(),
       loading: false,
       eventoSignificativoDialog: false,
       eventoSignificativos: [],
@@ -66,7 +69,7 @@ export default {
       eventoSignificativosDatos: [],
       eventoSignificativoColumns: [
         { label: 'Opciones', name: 'Opciones', field: 'Opciones' },
-        { label: 'codigoPuntoVenta', name: 'codigoPuntoVenta', field: 'codigoPuntoVenta' },
+        // { label: 'codigoPuntoVenta', name: 'codigoPuntoVenta', field: 'codigoPuntoVenta' },
         { label: 'codigoRecepcionEventoSignificativo', name: 'codigoRecepcionEventoSignificativo', field: 'codigoRecepcionEventoSignificativo' },
         { label: 'codigoRecepcion', name: 'codigoRecepcion', field: 'codigoRecepcion' },
         { label: 'codigoSucursal', name: 'codigoSucursal', field: 'codigoSucursal' },
@@ -93,6 +96,7 @@ export default {
   methods: {
     validarPaquete (evento) {
       // console.log(evento)
+      this.validarPaqueteRespuesta = ''
       this.recepcionPaqueteFacturaDialog = true
       this.$api.post('validarPaquete', {
         codigoRecepcion: evento.codigoRecepcion
@@ -100,17 +104,18 @@ export default {
         this.validarPaqueteRespuesta = res.data
       })
     },
-    /* eventSearch () {
+    eventSearch () {
       this.$api.post('eventSearch').then(res => {
         this.store.eventNumber = res.data
       })
-    }, */
+    },
     recepcionPaqueteFactura () {
       this.eventoSignificativo.datos = this.eventoSignificativosDatos
       this.loading = true
       this.$api.post('recepcionPaqueteFactura', this.eventoSignificativo).then(res => {
         console.log(res.data)
-        // this.eventSearch()
+        this.eventSearch()
+        this.eventoSignificativoGet()
         this.eventoSignificativoDialog = false
         this.loading = false
       }).catch(err => {
@@ -131,6 +136,7 @@ export default {
       }).then(res => {
         this.eventoSignificativosDatos = res.data
         this.eventoSignificativoDialog = true
+        // this.eventoSignificativoGet()
       })
     },
     eventoSignificativoGet () {

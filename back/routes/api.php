@@ -22,10 +22,14 @@ Route::get('verificarComunicacion', [\App\Http\Controllers\ActivityController::c
 Route::post('upload/{type}/{id}', [\App\Http\Controllers\UploadController::class,'upload']);
 Route::get('genXML/{id}', [\App\Http\Controllers\SaleController::class,'genXML']);
 
+Route::get('anularMasivo', [\App\Http\Controllers\FacturaController::class,'anularMasivo']);
 Route::group(['middleware' => 'auth:sanctum'], function () {
     Route::post('getYearMonthFacturas', [\App\Http\Controllers\FacturaController::class,'getYearMonthFacturas']);
     Route::post('import', [\App\Http\Controllers\FacturaController::class,'import']);
-    
+    Route::get('buscarFacturas',[App\Http\Controllers\FacturaController::class,'buscarFacturas']);
+    Route::post('getYearMonthFacturas', [\App\Http\Controllers\FacturaController::class,'getYearMonthFacturas']);
+    Route::post('import', [\App\Http\Controllers\FacturaController::class,'import']);
+
     Route::post('eventSearch', [\App\Http\Controllers\SaleController::class, 'eventSearch']);
 
     Route::post('me', [App\Http\Controllers\UserController::class, 'me']);

@@ -679,8 +679,8 @@ class SaleController extends Controller{
     public function genXML($id)
     {
 
-       $sale=Sale::find($id);
-       $details=Detail::where('sale_id',$id)->get();
+        $sale=Sale::find($id);
+        $details=Detail::where('sale_id',$id)->get();
         $client=Client::find($sale->client_id);
         $fechacuf=date("Y-m-d",strtotime($sale->fechaEmision));
 
@@ -694,8 +694,19 @@ class SaleController extends Controller{
 
         $codigoSucursal=0;
 
-        $cui=Cui::where('codigoPuntoVenta', $codigoPuntoVenta)->where('codigoSucursal', $codigoSucursal)->where('fechaVigencia','>=', now())->first();
+//        $cui=Cui::where('codigoPuntoVenta', $codigoPuntoVenta)->where('codigoSucursal', $codigoSucursal)->where('fechaVigencia','>=', now())->first();
         $cufd=Cufd::where('codigoPuntoVenta', $codigoPuntoVenta)->where('codigoSucursal', $codigoSucursal)->whereDate('fechaVigencia',$fechacuf)->first();
+
+
+        $cuf = new CUF();
+
+        $fechaCUF=date("YmdHis000",strtotime($sale->fechaEmision));
+
+        $cuf = $cuf->obtenerCUF(env('NIT'), $fechaCUF, $codigoSucursal, $codigoModalidad, $codigoEmision, $tipoFacturaDocumento, $codigoDocumentoSector, $sale->numeroFactura, $codigoPuntoVenta);
+        $cuf = $cuf.$cufd->codigoControl;
+        $sale->cuf=$cuf;
+        $sale->siatEnviado=false;
+        $sale->save();
 
         $detalleFactura="";
         foreach ($details as $detalle){
@@ -714,9 +725,9 @@ class SaleController extends Controller{
             </detalle>";
         }
         $fechaEnvio=date("Y-m-d\TH:i:s.000",strtotime($sale->fechaEmision));
-        //$cuf = new CUF();
-        //$cuf = $cuf->obtenerCUF(env('NIT'), date("YmdHis000",strtotime($sale->fechaEmision)), $codigoSucursal, $codigoModalidad, $codigoEmision, $tipoFacturaDocumento, $codigoDocumentoSector, $sale->numeroFactura, $codigoPuntoVenta);
-        //$cuf=$cuf.$cufd->codigoControl;
+//        $cuf = new CUF();
+//        $cuf = $cuf->obtenerCUF(env('NIT'), date("YmdHis000",strtotime($sale->fechaEmision)), $codigoSucursal, $codigoModalidad, $codigoEmision, $tipoFacturaDocumento, $codigoDocumentoSector, $sale->numeroFactura, $codigoPuntoVenta);
+//        $cuf=$cuf.$cufd->codigoControl;
 
         $text="<?xml version='1.0' encoding='UTF-8' standalone='yes'?>
         <facturaElectronicaCompraVenta xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance' xsi:noNamespaceSchemaLocation='facturaElectronicaCompraVenta.xsd'>

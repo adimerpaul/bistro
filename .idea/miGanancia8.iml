@@ -8,6 +8,7 @@
       <sourceFolder url="file://$MODULE_DIR$/back/tests" isTestSource="true" packagePrefix="Tests\" />
       <sourceFolder url="file://$MODULE_DIR$/back/tests/Feature" isTestSource="true" />
       <sourceFolder url="file://$MODULE_DIR$/back/tests/Unit" isTestSource="true" />
+      <sourceFolder url="file://$MODULE_DIR$/back/spec" isTestSource="true" />
       <excludeFolder url="file://$MODULE_DIR$/back/vendor/nette/schema" />
       <excludeFolder url="file://$MODULE_DIR$/back/vendor/nette/utils" />
       <excludeFolder url="file://$MODULE_DIR$/back/vendor/webmozart/assert" />
@@ -126,6 +127,13 @@
       <excludeFolder url="file://$MODULE_DIR$/back/vendor/bacon/bacon-qr-code" />
       <excludeFolder url="file://$MODULE_DIR$/back/vendor/dompdf/dompdf" />
       <excludeFolder url="file://$MODULE_DIR$/back/vendor/simplesoftwareio/simple-qrcode" />
+      <excludeFolder url="file://$MODULE_DIR$/back/vendor/ezyang/htmlpurifier" />
+      <excludeFolder url="file://$MODULE_DIR$/back/vendor/league/flysystem-local" />
+      <excludeFolder url="file://$MODULE_DIR$/back/vendor/maatwebsite/excel" />
+      <excludeFolder url="file://$MODULE_DIR$/back/vendor/maennchen/zipstream-php" />
+      <excludeFolder url="file://$MODULE_DIR$/back/vendor/markbaker/complex" />
+      <excludeFolder url="file://$MODULE_DIR$/back/vendor/markbaker/matrix" />
+      <excludeFolder url="file://$MODULE_DIR$/back/vendor/phpoffice/phpspreadsheet" />
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
