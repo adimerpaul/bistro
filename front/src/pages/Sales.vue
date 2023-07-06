@@ -594,6 +594,7 @@ export default {
           this.printFactura(res.data.sale)
         }
         this.printComanda(res.data.sale)
+        this.printComanda(res.data.sale)
         this.icon = false
         // console.log(res.data)
         this.loading = false
