@@ -457,6 +457,13 @@ class SaleController extends Controller{
 
 //        try {
             //return 'llega';
+            $sale=Sale::find($request->sale['id']);
+            if($sale->venta=='R'){
+            $sale->siatAnulado=1;
+            $sale->save();
+                return true;
+        }
+            
             $client = new \SoapClient(env("URL_SIAT")."ServicioFacturacionCompraVenta?WSDL",  [
                 'stream_context' => stream_context_create([
                     'http' => [
