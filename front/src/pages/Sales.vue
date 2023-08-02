@@ -375,12 +375,14 @@ export default {
       this.productsGet()
     },
     addProductsSale (p) {
-      p.cantidadPedida++
+      // p.cantidadPedida++
+      // p.cantidadVenta++
       p.cantidad--
       const productSale = p
       const producto = this.productsSale.find(pv => pv.id === p.id)
       if (producto === undefined) {
         productSale.cantidadVenta = 1
+        productSale.cantidadPedida = 1
         productSale.precioVenta = p.price
         productSale.product_id = p.id
         productSale.nombre = p.name
@@ -389,8 +391,9 @@ export default {
         productSale.cantidad = 1
         this.productsSale.push(p)
       } else {
-        producto.cantidad++
+        // producto.cantidad++
         producto.cantidadVenta++
+        producto.cantidadPedida++
         producto.subtotal = producto.cantidadVenta * producto.precio
       }
     },
