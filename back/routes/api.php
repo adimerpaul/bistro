@@ -21,7 +21,7 @@ Route::post('login', [App\Http\Controllers\UserController::class, 'login']);
 Route::get('verificarComunicacion', [\App\Http\Controllers\ActivityController::class,'verificarComunicacion']);
 Route::post('upload/{type}/{id}', [\App\Http\Controllers\UploadController::class,'upload']);
 Route::get('genXML/{id}', [\App\Http\Controllers\SaleController::class,'genXML']);
-
+Route::post('anularCuf', [\App\Http\Controllers\SaleController::class,'anularCuf']);
 Route::get('anularMasivo', [\App\Http\Controllers\FacturaController::class,'anularMasivo']);
 Route::group(['middleware' => 'auth:sanctum'], function () {
     Route::post('getYearMonthFacturas', [\App\Http\Controllers\FacturaController::class,'getYearMonthFacturas']);
