@@ -16,6 +16,7 @@ return new class extends Migration
             $table->date('fecha');
             $table->time('hora');
             $table->integer('mesa')->comment('Numero de la mesa');
+            $table->integer('reimprimir')->default(0)->comment('0: No, 1: Si');
             $table->string('status')->default('PENDIENTE')->comment('[PENDIENTE, REALIZADO, CANCELADO]');
             $table->integer('sale_id')->nullable()->comment('Id de la venta');
             $table->timestamps();
