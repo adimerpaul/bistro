@@ -23,6 +23,9 @@ Route::post('upload/{type}/{id}', [\App\Http\Controllers\UploadController::class
 Route::get('genXML/{id}', [\App\Http\Controllers\SaleController::class,'genXML']);
 Route::post('anularCuf', [\App\Http\Controllers\SaleController::class,'anularCuf']);
 Route::get('anularMasivo', [\App\Http\Controllers\FacturaController::class,'anularMasivo']);
+
+Route::get('import', [\App\Http\Controllers\MovilCafeController::class,'import']);
+
 Route::group(['middleware' => 'auth:sanctum'], function () {
     Route::post('getYearMonthFacturas', [\App\Http\Controllers\FacturaController::class,'getYearMonthFacturas']);
     Route::post('import', [\App\Http\Controllers\FacturaController::class,'import']);
