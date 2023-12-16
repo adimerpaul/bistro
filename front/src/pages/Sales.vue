@@ -57,9 +57,9 @@
     <q-table dense :rows="orders" :columns="columnsOrder" row-key="name" >
       <template v-slot:body-cell-op="props">
         <q-td :props="props" auto-width>
-          <q-btn flat dense color="green" icon="fact_check" v-if="props.row.status=='PENDIENTE'" @click="datoPedido(props.row)"/>
-          <q-btn flat dense color="info" icon="print" v-if="props.row.status=='PENDIENTE'" @click="printOrder(props.row)"/>
-          <q-btn flat dense color="red" icon="cancel" v-if="props.row.status=='PENDIENTE'"/>
+          <q-btn flat dense color="green" icon="fact_check" v-if="props.row.status=='PENDIENTE'" @click="datoPedido(props.row)"> <q-tooltip>Realizar Venta</q-tooltip></q-btn>
+          <q-btn flat dense color="info" icon="print" v-if="props.row.status=='PENDIENTE'" @click="printOrder(props.row)"> <q-tooltip>Reimpresion</q-tooltip></q-btn>
+          <q-btn flat dense color="red" icon="cancel" v-if="props.row.status=='PENDIENTE'"> <q-tooltip>Cancelar Pedido</q-tooltip></q-btn>
         </q-td>
       </template>
       <template v-slot:body-cell-status="props">
@@ -84,7 +84,7 @@
         <q-card-section class="q-pa-none q-ma-none ">
           <div class="row">
             <div class="col-4 text-h6 q-pt-xs q-pl-lg">Canasta</div>
-            <div class="col-4 text-h6 q-pt-xs q-pl-lg"> <q-btn outline @click="cargarPedido"  color="light-green-10" :label="'PEDIDOS:'+ numpedido " v-if="shop_id==2"/>
+            <div class="col-4 text-h6 q-pt-xs q-pl-lg"> <q-btn outline @click="cargarPedido"  color="light-green-10" :label="'PEDIDOS:'+ pedidoTotal " v-if="shop_id==2"/>
             </div>
             <div class="col-4 text-right"><q-btn class="text-subtitle1 text-blue-10 text-bold" style="text-decoration: underline;" label="Vaciar canasta" @click="vaciarCanasta" no-caps flat outline/></div>
           </div>
@@ -318,22 +318,23 @@ export default {
         this.categoriesGet()
       }
     )
+    this.consultarOrder()
   },
   methods: {
     datoPedido (pedido) {
-      this.productSale = []
+      this.productsSale = []
       console.log(pedido)
       pedido.detailorders.forEach(e => {
-        this.productsSale.push({
-          cantidadVenta: e.cantidad,
-          cantidadPedida: e.cantidad,
-          precioVenta: e.precio,
-          product_id: e.product_id,
-          nombre: e.producto,
-          precio: e.precio,
-          subtotal: parseFloat(e.precio) * parseFloat(e.cantidad),
-          cantidad: e.cantidad
-        })
+        const producto = e.product
+        producto.cantidadVenta = e.cantidad
+        producto.cantidadPedida = e.cantidad
+        producto.precioVenta = e.precio
+        producto.product_id = e.product_id
+        producto.nombre = e.producto
+        producto.precio = e.precio
+        producto.subtotal = parseFloat(e.precio) * parseFloat(e.cantidad)
+        producto.cantidad = e.cantidad
+        this.productsSale.push(producto)
       })
     },
     cargarPedido () {
@@ -758,6 +759,15 @@ export default {
     }
   },
   computed: {
+    pedidoTotal () {
+      let total = 0
+      this.orders.forEach(r => {
+        if (r.status === 'PENDIENTE') {
+          total++
+        }
+      })
+      return total
+    },
     cambio () {
       const cambio = parseFloat(this.efectivo === '' ? 0 : this.efectivo) - parseFloat(this.total)
       return Math.round(cambio * 100) / 100
