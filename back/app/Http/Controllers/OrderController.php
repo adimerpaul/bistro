@@ -10,6 +10,10 @@ class OrderController extends Controller
 {
     public function store(Request $request)
     {
+        error_log(json_decode($request->getContent(), true)); // Mostrará los datos en el log
+
+        $detailArray = json_decode($request->detail, true); // Decodificar la cadena JSON
+
         $order = Order::create([
             'fecha' => date('Y-m-d'), // date('Y-m-d H:i:s'
             'hora' => date('H:i:s'),
@@ -18,21 +22,27 @@ class OrderController extends Controller
             'sale_id' => null
         ]);
 
-        foreach ($request->detail as $detail) {
-            DetailOrder::create([
-                'cantidad' => $detail['cantidad'],
-                'precio' => $detail['precio'],
-                'producto' => $detail['producto'],
+        $detailData = [];
+
+        foreach ($detailArray as $detail) {
+            $detailData[] = [
+                'cantidad' => $detail['cantidadCarrito'],
+                'precio' => $detail['price'],
+                'producto' => $detail['name'],
                 'order_id' => $order->id,
-                'product_id' => $detail['product_id'],
-            ]);
+                'product_id' => $detail['id'],
+            ];
         }
 
+        DetailOrder::insert($detailData);
+
         return response()->json([
-            'message' => 'Orden creada con exito',
+            'message' => 'Orden creada con éxito',
             'order' => $order,
         ], 201);
     }
+
+
 
     public function buscarOrder(Request $request){
         return Order::with('detailorders')->whereDate('fecha',$request->fecha)->get();
