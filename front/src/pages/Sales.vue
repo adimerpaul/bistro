@@ -42,12 +42,51 @@
         </div>
     </div>
     </div>
+    <q-dialog v-model="dialog_pedido">
+    <q-card style="width: 700px; max-width: 80vw;">
+    <q-card-section>
+    <div class="text-h6">PEDIDOS</div>
+      <q-form @submit="consultarOrder" class="q-gutter-md" >
+        <div class="row">
+          <div class="col-6"><q-input dense  type='date' outlined="" v-model="fecha" label="Fecha" lazy-rules :rules="[ val => val && val.length > 0 || 'ingrese Fecha']" /></div>
+          <div class="col-6"><q-btn dense label="Buscar" type="submit" color="primary" icon="search"/></div>
+          </div>
+      </q-form>
+        </q-card-section>
+    <q-card-section>
+    <q-table dense :rows="orders" :columns="columnsOrder" row-key="name" >
+      <template v-slot:body-cell-op="props">
+        <q-td :props="props" auto-width>
+          <q-btn flat dense color="green" icon="fact_check" v-if="props.row.status=='PENDIENTE'" @click="datoPedido(props.row)"/>
+          <q-btn flat dense color="info" icon="print" v-if="props.row.status=='PENDIENTE'"/>
+          <q-btn flat dense color="red" icon="cancel" v-if="props.row.status=='PENDIENTE'"/>
+        </q-td>
+      </template>
+      <template v-slot:body-cell-status="props">
+        <q-td :props="props" auto-width>
+          <q-badge :color="props.row.status=='PENDIENTE'?'amber-9':props.row.status=='REALIZADO'?'green':'red'"  :label="props.row.status" />
+        </q-td>
+      </template>
+      <template v-slot:body-cell-detalle="props">
+        <q-td :props="props" auto-width>
+          <span v-for="d in props.row.detailorders " :key="d">{{d.cantidad}} {{d.producto}} ;</span>
+        </q-td>
+      </template>
+    </q-table>
+    </q-card-section>
+    <q-card-actions align="right">
+    <q-btn flat label="OK" color="primary" v-close-popup />
+    </q-card-actions>
+    </q-card>
+    </q-dialog>
     <div class="col-12 col-sm-5">
       <q-card>
         <q-card-section class="q-pa-none q-ma-none ">
           <div class="row">
-            <div class="col-6 text-h6 q-pt-xs q-pl-lg">Canasta</div>
-            <div class="col-6 text-right"><q-btn class="text-subtitle1 text-blue-10 text-bold" style="text-decoration: underline;" label="Vaciar canasta" @click="vaciarCanasta" no-caps flat outline/></div>
+            <div class="col-4 text-h6 q-pt-xs q-pl-lg">Canasta</div>
+            <div class="col-4 text-h6 q-pt-xs q-pl-lg"> <q-btn outline @click="cargarPedido"  color="light-green-10" :label="'PEDIDOS:'+ numpedido " v-if="shop_id==2"/>
+            </div>
+            <div class="col-4 text-right"><q-btn class="text-subtitle1 text-blue-10 text-bold" style="text-decoration: underline;" label="Vaciar canasta" @click="vaciarCanasta" no-caps flat outline/></div>
           </div>
         </q-card-section>
         <q-separator></q-separator>
@@ -204,12 +243,16 @@
 import { Printd } from 'printd'
 import conversor from 'conversor-numero-a-letras-es-ar'
 import QRCode from 'qrcode'
+import { date } from 'quasar'
 export default {
   name: 'SalesPage',
   data () {
     return {
+      orders: [],
+      dialog_pedido: false,
+      fecha: date.formatDate(new Date(), 'YYYY-MM-DD'),
+      numpedido: 0,
       opts: {
-
         errorCorrectionLevel: 'M',
         type: 'png',
         quality: 0.95,
@@ -246,6 +289,12 @@ export default {
         { label: 'borrar', field: 'borrar', name: 'borrar', align: 'left' },
         { label: 'nombre', field: 'nombre', name: 'nombre', align: 'left' },
         { label: 'cantidadVenta', field: 'cantidadVenta', name: 'cantidadVenta' }
+      ],
+      columnsOrder: [
+        { label: 'OP', field: 'op', name: 'op', align: 'left' },
+        { label: 'MESA', field: 'mesa', name: 'mesa', align: 'left' },
+        { label: 'ESTADO', field: 'status', name: 'status', align: 'left' },
+        { label: 'DETALLE', field: 'detalle', name: 'detalle', align: 'left' }
       ]
     }
   },
@@ -271,6 +320,35 @@ export default {
     )
   },
   methods: {
+    datoPedido (pedido) {
+      this.productSale = []
+      console.log(pedido)
+      pedido.detailorders.forEach(e => {
+        this.productsSale.push({
+          cantidadVenta: e.cantidad,
+          cantidadPedida: e.cantidad,
+          precioVenta: e.precio,
+          product_id: e.product_id,
+          nombre: e.producto,
+          precio: e.precio,
+          subtotal: parseFloat(e.precio) * parseFloat(e.cantidad),
+          cantidad: e.cantidad
+        })
+      })
+    },
+    cargarPedido () {
+      this.fecha = date.formatDate(new Date(), 'YYYY-MM-DD')
+      this.$api.post('buscarOrder', { fecha: this.fecha }).then(res => {
+        console.log(res.data)
+        this.orders = res.data
+        this.dialog_pedido = true
+      })
+    },
+    consultarOrder () {
+      this.$api.post('buscarOrder', { fecha: this.fecha }).then(res => {
+        this.orders = res.data
+      })
+    },
     consultartarjeta () {
       if (this.codigo !== '' || this.codigo !== undefined) {
         this.nombresaldo = ''

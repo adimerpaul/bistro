@@ -75,5 +75,8 @@ Route::group(['middleware' => 'auth:sanctum'], function () {
 
     Route::post('enviarCorreo', [\App\Http\Controllers\SaleController::class,'enviarCorreo']);
     Route::post('eventSearch', [\App\Http\Controllers\SaleController::class, 'eventSearch']);
+    Route::post('buscarOrder', [\App\Http\Controllers\OrderController::class, 'buscarOrder']);
+
+
 
 });

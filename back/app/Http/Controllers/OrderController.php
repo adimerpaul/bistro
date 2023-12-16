@@ -33,4 +33,8 @@ class OrderController extends Controller
             'order' => $order,
         ], 201);
     }
+
+    public function buscarOrder(Request $request){
+        return Order::with('detailorders')->whereDate('fecha',$request->fecha)->get();
+    }
 }

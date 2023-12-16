@@ -9,4 +9,8 @@ class Order extends Model
 {
     use HasFactory;
     protected $fillable=['fecha','hora','mesa','status','sale_id'];
+
+    public function detailorders(){
+        return $this->hasMany(Detailorder::class);
+    }
 }
