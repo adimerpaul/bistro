@@ -10,9 +10,7 @@ class OrderController extends Controller
 {
     public function store(Request $request)
     {
-        error_log(json_decode($request->getContent(), true)); // Mostrará los datos en el log
-
-        $detailArray = json_decode($request->detail, true); // Decodificar la cadena JSON
+//        error_log(json_decode($request->getContent(), true)); // Mostrará los datos en el log
 
         $order = Order::create([
             'fecha' => date('Y-m-d'), // date('Y-m-d H:i:s'
@@ -23,18 +21,22 @@ class OrderController extends Controller
         ]);
 
         $detailData = [];
+//        exit;
 
-        foreach ($detailArray as $detail) {
-            $detailData[] = [
-                'cantidad' => $detail['cantidadCarrito'],
-                'precio' => $detail['price'],
-                'producto' => $detail['name'],
-                'order_id' => $order->id,
-                'product_id' => $detail['id'],
-            ];
+        if ($request->detail != null) {
+            $detailArray = json_decode($request->detail, true); // Decodificar la cadena JSON
+            foreach ($detailArray as $detail) {
+                $detailData[] = [
+                    'cantidad' => $detail['cantidadCarrito'],
+                    'precio' => $detail['price'],
+                    'producto' => $detail['name'],
+                    'order_id' => $order->id,
+                    'product_id' => $detail['id'],
+                ];
+            }
+            DetailOrder::insert($detailData);
         }
-
-        DetailOrder::insert($detailData);
+        $this->soketIO('order', ['order' => $order]);
 
         return response()->json([
             'message' => 'Orden creada con éxito',
@@ -54,5 +56,5 @@ class OrderController extends Controller
         $order->save();
     }
 
-    
+
 }
