@@ -240,6 +240,8 @@
 </template>
 
 <script>
+import { io } from 'socket.io-client'
+const socket = io(import.meta.env.VITE_API_SOCKET)
 import { Printd } from 'printd'
 import conversor from 'conversor-numero-a-letras-es-ar'
 import QRCode from 'qrcode'
@@ -299,6 +301,22 @@ export default {
     }
   },
   created () {
+    // this.$store.boolSocket = true
+    console.log('boolSocket: ', this.$store.boolSocket)
+    console.log('url_socket: ', import.meta.env.VITE_API_SOCKET)
+    if (this.$store.boolSocket !== true) {
+      socket.on('connect', () => {
+        console.log('conectado')
+      })
+      socket.on('disconnect', () => {
+        console.log('desconectado')
+      })
+      socket.on('order', (data) => {
+        console.log(data)
+        // this.consultarOrder()
+      })
+      this.$store.boolSocket = true
+    }
     this.encabezado()
     this.cargarLeyenda()
     this.$api.get('document').then(res => {

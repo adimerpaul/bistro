@@ -1,21 +1,23 @@
 const express = require('express');
-const { createServer } = require('node:http');
-const { join } = require('node:path');
-const { Server } = require('socket.io');
-
 const app = express();
-const server = createServer(app);
-const io = new Server(server);
-
-app.get('/', (req, res) => {
-    res.sendFile(join(__dirname, 'index.html'));
+require("dotenv").config();
+const httpServer = require("http").createServer(app);
+const io = require("socket.io")(httpServer, {
+    cors: {
+        origin: "*",
+    },
 });
-
-io.on('connection', (socket) => {
+app.get('/', (req, res) => {
+    res.sendFile(__dirname + '/index.html');
+});
+io.on("connection", (socket) => {
     socket.on('order', (msg) => {
         io.emit('order', msg);
     });
 });
-server.listen(3000, () => {
-    console.log('server running at http://localhost:3000');
-});
+
+const PORT = process.env.PORT || 3000;
+
+httpServer.listen(PORT, () =>
+    console.log(`server listening at http://localhost:${PORT}`)
+);
