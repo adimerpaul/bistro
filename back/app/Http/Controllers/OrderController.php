@@ -36,7 +36,7 @@ class OrderController extends Controller
             }
             DetailOrder::insert($detailData);
         }
-        $this->soketIO('order', ['order' => $order]);
+        $this->soketIO('order', ['order' => Order::where('id', $order->id)->with('detailorders')->first()]);
 
         return response()->json([
             'message' => 'Orden creada con éxito',

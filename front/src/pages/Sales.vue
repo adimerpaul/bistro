@@ -57,14 +57,21 @@
     <q-table dense :rows="orders" :columns="columnsOrder" row-key="name" >
       <template v-slot:body-cell-op="props">
         <q-td :props="props" auto-width>
-          <q-btn flat dense color="green" icon="fact_check" v-if="props.row.status=='PENDIENTE'" @click="datoPedido(props.row)"> <q-tooltip>Realizar Venta</q-tooltip></q-btn>
-          <q-btn flat dense color="info" icon="print" v-if="props.row.status=='PENDIENTE'" @click="printOrder(props.row)"> <q-tooltip>Reimpresion</q-tooltip></q-btn>
-          <q-btn flat dense color="red" icon="cancel" v-if="props.row.status=='PENDIENTE'"> <q-tooltip>Cancelar Pedido</q-tooltip></q-btn>
+          <q-btn-group>
+            <q-btn flat dense color="green" icon="fact_check" v-if="props.row.status=='PENDIENTE'" @click="datoPedido(props.row)" label="Vent" no-caps> <q-tooltip>Realizar Venta</q-tooltip></q-btn>
+            <q-btn flat dense color="info" icon="print" v-if="props.row.status=='PENDIENTE'" @click="printOrder(props.row)" label="Impr" no-caps> <q-tooltip>Reimpresion</q-tooltip></q-btn>
+            <q-btn flat dense color="red" icon="cancel" v-if="props.row.status=='PENDIENTE'" label="Can" no-caps> <q-tooltip>Cancelar Pedido</q-tooltip></q-btn>
+          </q-btn-group>
         </q-td>
       </template>
       <template v-slot:body-cell-status="props">
         <q-td :props="props" auto-width>
           <q-badge :color="props.row.status=='PENDIENTE'?'amber-9':props.row.status=='REALIZADO'?'green':'red'"  :label="props.row.status" />
+        </q-td>
+      </template>
+      <template v-slot:body-cell-mesa="props">
+        <q-td :props="props" auto-width>
+          <q-badge :label="props.row.mesa" />
         </q-td>
       </template>
       <template v-slot:body-cell-detalle="props">
@@ -84,7 +91,10 @@
         <q-card-section class="q-pa-none q-ma-none ">
           <div class="row">
             <div class="col-4 text-h6 q-pt-xs q-pl-lg">Canasta</div>
-            <div class="col-4 text-h6 q-pt-xs q-pl-lg"> <q-btn outline @click="cargarPedido"  color="light-green-10" :label="'PEDIDOS:'+ pedidoTotal " v-if="shop_id==2"/>
+            <div class="col-4 text-h6 q-pt-xs q-pl-lg">
+              <q-btn outline @click="cargarPedido"  color="light-green-10" :label="'PEDIDOS:'+ pedidoTotal " v-if="shop_id==2">
+                <q-badge color="red" floating>{{pedidoTotal}}</q-badge>
+              </q-btn>
             </div>
             <div class="col-4 text-right"><q-btn class="text-subtitle1 text-blue-10 text-bold" style="text-decoration: underline;" label="Vaciar canasta" @click="vaciarCanasta" no-caps flat outline/></div>
           </div>
@@ -302,8 +312,8 @@ export default {
   },
   created () {
     // this.$store.boolSocket = true
-    console.log('boolSocket: ', this.$store.boolSocket)
-    console.log('url_socket: ', import.meta.env.VITE_API_SOCKET)
+    // console.log('boolSocket: ', this.$store.boolSocket)
+    // console.log('url_socket: ', import.meta.env.VITE_API_SOCKET)
     if (this.$store.boolSocket !== true) {
       socket.on('connect', () => {
         console.log('conectado')
@@ -313,7 +323,16 @@ export default {
       })
       socket.on('order', (data) => {
         console.log(data)
+        console.log('nuevo pedido')
         // this.consultarOrder()
+        this.$q.notify({
+          message: 'Pedido nuevo',
+          color: 'teal',
+          icon: 'info',
+          position: 'top-right'
+        })
+        this.consultarOrder()
+        this.printOrder(data.order)
       })
       this.$store.boolSocket = true
     }
@@ -617,6 +636,8 @@ export default {
       d.print(document.getElementById('myelement'))
     },
     async printOrder (order) {
+      // console.log(order)
+      console.log(order.detailorders)
       let total = 0
       const ClaseConversor = conversor.conversorNumerosALetras
       const miConversor = new ClaseConversor()
