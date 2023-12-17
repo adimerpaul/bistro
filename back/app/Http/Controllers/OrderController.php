@@ -48,5 +48,11 @@ class OrderController extends Controller
         return Order::with('detailorders')->whereDate('fecha',$request->fecha)->get();
     }
 
+    public function cancelOrder($id){
+        $order = Order::find($id);
+        $order->status='CANCELADO';
+        $order->save();
+    }
+
     
 }
