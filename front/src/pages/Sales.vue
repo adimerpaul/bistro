@@ -323,7 +323,6 @@ export default {
   methods: {
     datoPedido (pedido) {
       this.productsSale = []
-      console.log(pedido)
       pedido.detailorders.forEach(e => {
         const producto = e.product
         producto.cantidadVenta = e.cantidad
@@ -336,21 +335,20 @@ export default {
         producto.cantidad = e.cantidad
         this.productsSale.push(producto)
       })
+      this.icon = true
+      this.tienerebaja = false
+      this.booltarjeta = false
+      this.booltarjeta = false
     },
     cargarPedido () {
       this.fecha = date.formatDate(new Date(), 'YYYY-MM-DD')
-      this.$api.post('buscarOrder', { fecha: this.fecha }).then(res => {
-        console.log(res.data)
-        this.orders = res.data
-        this.dialog_pedido = true
-      })
+      this.consultarOrder()
+      this.dialog_pedido = true
     },
     consultarOrder () {
       this.$api.post('buscarOrder', { fecha: this.fecha }).then(res => {
         this.orders = res.data
-        const m = this.orders.find((ord) => ord.reimprimir === 0)
-        this.printOrder(m)
-        console.log(m)
+        // const m = this.orders.find((ord) => ord.reimprimir === 0)
       })
     },
     consultartarjeta () {
@@ -540,7 +538,7 @@ export default {
       this.productsGet()
     },
     async printFactura (factura) {
-      console.log(factura)
+      // console.log(factura)
       this.facturadetalle = factura
       const ClaseConversor = conversor.conversorNumerosALetras
       const miConversor = new ClaseConversor()
