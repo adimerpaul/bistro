@@ -332,7 +332,9 @@ export default {
           position: 'top-right'
         })
         this.consultarOrder()
-        this.printOrder(data.order)
+        if (this.shop_id === 2) {
+          this.printOrder(data.order)
+        }
       })
       this.$store.boolSocket = true
     }

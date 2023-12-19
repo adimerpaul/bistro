@@ -160,12 +160,13 @@ class SaleController extends Controller{
 //            return "nuevo";
         }
 
-        if($request->npedido > 0 && $request->npedido!=null)
+       /* if($request->npedido > 0 && $request->npedido!=null)
         {
             $ped = Order::find();
             $ped->status = 'CANCELADO';
             $ped->save();
-        }
+        }*/
+
         if ($request->vip=="SI"){
             return $this->insertarVip($request,$client);
         }
