@@ -376,8 +376,10 @@ export default {
       this.tienerebaja = false
       this.booltarjeta = false
       this.booltarjeta = false
+      this.numpedido = pedido.id
     },
     cargarPedido () {
+      this.numpedido = 0
       this.fecha = date.formatDate(new Date(), 'YYYY-MM-DD')
       this.consultarOrder()
       this.dialog_pedido = true
@@ -488,6 +490,7 @@ export default {
       })
     },
     vaciarCanasta () {
+      this.numpedido = 0
       this.productsSale = []
       this.productsGet()
     },
@@ -572,6 +575,7 @@ export default {
       this.client = { complemento: '' }
       this.productsSale = []
       this.efectivo = ''
+      this.numpedido = 0
       this.productsGet()
     },
     async printFactura (factura) {
@@ -771,7 +775,8 @@ export default {
         tarjeta: this.boolcredito ? 'SI' : 'NO',
         codigoTarjeta: this.codigo,
         vip: this.booltarjeta ? 'SI' : 'NO',
-        tipo: this.tipo[parseInt(this.shop_id) - 1]
+        tipo: this.tipo[parseInt(this.shop_id) - 1],
+        npedido: this.numpedido
       }).then(res => {
         this.reset()
         if (res.data.sale.siatEnviado === 1) {

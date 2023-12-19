@@ -12,6 +12,7 @@ use App\Models\Detail;
 use App\Models\Leyenda;
 use App\Http\Requests\StoreSaleRequest;
 use App\Http\Requests\UpdateSaleRequest;
+use App\Models\Order;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Mail;
@@ -159,6 +160,12 @@ class SaleController extends Controller{
 //            return "nuevo";
         }
 
+        if($request->npedido > 0 && $request->npedido!=null)
+        {
+            $ped = Order::find();
+            $ped->status = 'CANCELADO';
+            $ped->save();
+        }
         if ($request->vip=="SI"){
             return $this->insertarVip($request,$client);
         }
@@ -546,7 +553,7 @@ class SaleController extends Controller{
             $sale->save();
                 return true;
         }
-            
+
             $client = new \SoapClient(env("URL_SIAT")."ServicioFacturacionCompraVenta?WSDL",  [
                 'stream_context' => stream_context_create([
                     'http' => [
