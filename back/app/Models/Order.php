@@ -11,6 +11,6 @@ class Order extends Model
     protected $fillable=['fecha','hora','mesa','status','sale_id'];
 
     public function detailorders(){
-        return $this->hasMany(Detailorder::class)->with('product');
+        return $this->hasMany(DetailOrder::class)->with('product');
     }
 }
