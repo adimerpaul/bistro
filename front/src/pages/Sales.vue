@@ -700,7 +700,7 @@ export default {
       // eslint-disable-next-line no-multi-str
       cadena += "</tbody></table><hr>\
       <table style='font-size: 8px;'>\
-      <tr><td class='titder'>TOTAL Bs</td><td class='conte2'>" + parseFloat(total).toFixed(2) + '</td></tr> </table><br> <div>Son ' + a + (parseFloat(total).toFixed(2) - Math.floor(parseFloat(total).toFixed(2))) * 100 + ' /100 Bolivianos</div><div>Mesa: ' + order.mesa + '</div>'
+      <tr><td class='titder'>TOTAL Bs</td><td class='conte2'>" + parseFloat(total).toFixed(2) + '</td></tr> </table><br> <div>Son ' + a + (parseFloat(total).toFixed(2) - Math.floor(parseFloat(total).toFixed(2))) * 100 + ' /100 Bolivianos</div><div>Mesa: <b style="font-size:24px;">' + order.mesa + '</b></div>'
       document.getElementById('myelement').innerHTML = cadena
       const d = new Printd()
       d.print(document.getElementById('myelement'))
