@@ -16,6 +16,7 @@ return new class extends Migration
             $table->integer('cantidad');
             $table->decimal('precio', 8, 2);
             $table->string('producto');
+            $table->string('llevar')->default('NO')->comment('[NO, SI]');
             //$table->integer('order_id')->comment('Id de la orden');
             $table->unsignedBigInteger("order_id")->nullable();
             $table->foreign("order_id")->references("id")->on("orders");
