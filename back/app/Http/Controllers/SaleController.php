@@ -12,6 +12,7 @@ use App\Models\Detail;
 use App\Models\Leyenda;
 use App\Http\Requests\StoreSaleRequest;
 use App\Http\Requests\UpdateSaleRequest;
+use App\Models\Order;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Mail;
@@ -158,6 +159,13 @@ class SaleController extends Controller{
             $client->save();
 //            return "nuevo";
         }
+
+       /* if($request->npedido > 0 && $request->npedido!=null)
+        {
+            $ped = Order::find();
+            $ped->status = 'CANCELADO';
+            $ped->save();
+        }*/
 
         if ($request->vip=="SI"){
             return $this->insertarVip($request,$client);
@@ -377,7 +385,13 @@ class SaleController extends Controller{
                 $sale->credito=$request->tarjeta;
                 $sale->venta="F";
                 $sale->save();
-
+                if($request->npedido > 0 && $request->npedido!=null)
+                {
+                    $ped = Order::find($request->npedido);
+                    $ped->status = 'CANCELADO';
+                    $ped->sale_id=$request->npedido;
+                    $ped->save();
+                }
                 error_log("sale : ".json_encode($sale));
 
                 try {
@@ -459,7 +473,13 @@ class SaleController extends Controller{
             $sale->credito=$request->tarjeta;
             $sale->venta='F';
             $sale->save();
-
+            if($request->npedido > 0 && $request->npedido!=null)
+            {
+                $ped = Order::find($request->npedido);
+                $ped->status = 'CANCELADO';
+                $ped->sale_id=$request->npedido;
+                $ped->save();
+            }
             if ($request->client['email']!='' && $request->client['email']!= null  ){
                 $details=[
                     "title"=>"Factura",
@@ -546,7 +566,7 @@ class SaleController extends Controller{
             $sale->save();
                 return true;
         }
-            
+
             $client = new \SoapClient(env("URL_SIAT")."ServicioFacturacionCompraVenta?WSDL",  [
                 'stream_context' => stream_context_create([
                     'http' => [
@@ -633,6 +653,13 @@ class SaleController extends Controller{
         $sale->credito=$request->tarjeta;
         $sale->save();
 
+        if($request->npedido > 0 && $request->npedido!=null)
+        {
+            $ped = Order::find($request->npedido);
+            $ped->status = 'CANCELADO';
+            $ped->sale_id=$request->npedido;
+            $ped->save();
+        }
 
         $dataDetail=[];
         foreach ($request->detalleVenta as $detalle){
@@ -693,6 +720,13 @@ class SaleController extends Controller{
             $sale->credito=$request->tarjeta;
             $sale->venta="R";
             $sale->save();
+            if($request->npedido > 0 && $request->npedido!=null)
+            {
+                $ped = Order::find($request->npedido);
+                $ped->status = 'CANCELADO';
+                $ped->sale_id=$request->npedido;
+                $ped->save();
+            }
             $tipoventa=$request->tipo;
             $dataDetail=[];
             foreach ($request->detalleVenta as $detalle){

@@ -332,7 +332,9 @@ export default {
           position: 'top-right'
         })
         this.consultarOrder()
-        this.printOrder(data.order)
+        if (this.shop_id === 2) {
+          this.printOrder(data.order)
+        }
       })
       this.$store.boolSocket = true
     }
@@ -376,8 +378,10 @@ export default {
       this.tienerebaja = false
       this.booltarjeta = false
       this.booltarjeta = false
+      this.numpedido = pedido.id
     },
     cargarPedido () {
+      this.numpedido = 0
       this.fecha = date.formatDate(new Date(), 'YYYY-MM-DD')
       this.consultarOrder()
       this.dialog_pedido = true
@@ -488,6 +492,7 @@ export default {
       })
     },
     vaciarCanasta () {
+      this.numpedido = 0
       this.productsSale = []
       this.productsGet()
     },
@@ -572,6 +577,7 @@ export default {
       this.client = { complemento: '' }
       this.productsSale = []
       this.efectivo = ''
+      this.numpedido = 0
       this.productsGet()
     },
     async printFactura (factura) {
@@ -694,7 +700,7 @@ export default {
       // eslint-disable-next-line no-multi-str
       cadena += "</tbody></table><hr>\
       <table style='font-size: 8px;'>\
-      <tr><td class='titder'>TOTAL Bs</td><td class='conte2'>" + parseFloat(total).toFixed(2) + '</td></tr> </table><br> <div>Son ' + a + (parseFloat(total).toFixed(2) - Math.floor(parseFloat(total).toFixed(2))) * 100 + ' /100 Bolivianos</div><div>Mesa: ' + order.mesa + '</div>'
+      <tr><td class='titder'>TOTAL Bs</td><td class='conte2'>" + parseFloat(total).toFixed(2) + '</td></tr> </table><br> <div>Son ' + a + (parseFloat(total).toFixed(2) - Math.floor(parseFloat(total).toFixed(2))) * 100 + ' /100 Bolivianos</div><div>Mesa: <b style="font-size:24px;">' + order.mesa + '</b></div>'
       document.getElementById('myelement').innerHTML = cadena
       const d = new Printd()
       d.print(document.getElementById('myelement'))
@@ -771,7 +777,8 @@ export default {
         tarjeta: this.boolcredito ? 'SI' : 'NO',
         codigoTarjeta: this.codigo,
         vip: this.booltarjeta ? 'SI' : 'NO',
-        tipo: this.tipo[parseInt(this.shop_id) - 1]
+        tipo: this.tipo[parseInt(this.shop_id) - 1],
+        npedido: this.numpedido
       }).then(res => {
         this.reset()
         if (res.data.sale.siatEnviado === 1) {

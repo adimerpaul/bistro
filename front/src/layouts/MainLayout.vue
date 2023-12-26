@@ -75,7 +75,7 @@
           <q-expansion-item dense expand-separator :header-inset-level="1"  icon="point_of_sale" label="Cafe italia" to="/caja/2" hide-expand-icon  v-if="store.boolcajacafe"/>
           <q-expansion-item dense expand-separator :header-inset-level="1"  icon="point_of_sale" label="Vaca fria" to="/caja/3" hide-expand-icon  v-if="store.boolcajavaca"/>
         </q-expansion-item>
-        <q-item clickable dense to="/factura" exact active-class="bg-primary text-white">
+        <q-item clickable dense to="/factura" exact active-class="bg-primary text-white" v-if="store.booluser">
           <q-item-section avatar><q-icon name="o_print" /></q-item-section>
           <q-item-section><q-item-label>Factura</q-item-label><q-item-label caption class="text-grey">Pagina factura</q-item-label></q-item-section>
         </q-item>
