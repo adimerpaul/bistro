@@ -10,7 +10,10 @@ class OrderController extends Controller
 {
     public function orderPending()
     {
-        $orders= Order::where('status', 'PENDIENTE')->get();
+        $orders= Order::where('status', 'PENDIENTE')
+            ->whereDate('fecha',date('Y-m-d'))
+            ->orderBy('id','desc')
+            ->get();
 //        $orders->forEach(function ($order){
 //            $order->TextProducts = '';
 //            $order->detailorders->forEach(function ($detailorder) use ($order){
@@ -65,11 +68,44 @@ class OrderController extends Controller
             'order' => $order,
         ], 201);
     }
+    public function AumentarPedido(Request $request){
+        $order = Order::find($request->id);
+//        $order->total = $order->total + $request->total;
+//        $order->save();
+        $detailData = [];
+        $total = 0;
+        if ($request->detail != null) {
+            $detailArray = json_decode($request->detail, true); // Decodificar la cadena JSON
+            foreach ($detailArray as $detail) {
+                $total += $detail['cantidadCarrito'] * $detail['price'];
+                $detailData[] = [
+                    'cantidad' => $detail['cantidadCarrito'],
+                    'precio' => $detail['price'],
+                    'producto' => $detail['name'],
+                    'order_id' => $order->id,
+                    'product_id' => $detail['id'],
+                    'llevar' => $detail['llevar'],
+                    'subtotal' => $detail['cantidadCarrito'] * $detail['price'],
+                ];
+            }
+            $order->total = $order->total + $total;
+            $order->save();
+            DetailOrder::insert($detailData);
+        }
+        $this->soketIO('order', [
+            'order' => Order::where('id', $order->id)->first(),
+            'detailArray' => $detailArray,
+        ]);
+        return response()->json([
+            'message' => 'Orden creada con éxito',
+            'order' => $order,
+        ], 201);
+    }
 
 
 
     public function buscarOrder(Request $request){
-        return Order::with('detailorders')->whereDate('fecha',$request->fecha)->get();
+        return Order::with('detailorders')->whereDate('fecha',$request->fecha)->orderBy('id','desc')->get();
     }
 
     public function cancelOrder($id){

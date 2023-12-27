@@ -48,19 +48,20 @@
     <div class="text-h6">PEDIDOS</div>
       <q-form @submit="consultarOrder" class="q-gutter-md" >
         <div class="row">
-          <div class="col-6"><q-input dense  type='date' outlined="" v-model="fecha" label="Fecha" lazy-rules :rules="[ val => val && val.length > 0 || 'ingrese Fecha']" /></div>
-          <div class="col-6"><q-btn dense label="Buscar" type="submit" color="primary" icon="search"/></div>
+          <div class="col-8"><q-input dense  type='date' outlined="" v-model="fecha" label="Fecha" lazy-rules :rules="[ val => val && val.length > 0 || 'ingrese Fecha']" /></div>
+          <div class="col-4 text-center"><q-btn dense label="Buscar" type="submit" color="info" icon="search"/></div>
           </div>
       </q-form>
         </q-card-section>
     <q-card-section>
-    <q-table dense :rows="orders" :columns="columnsOrder" row-key="name" >
+    <q-table dense :rows="orders" :columns="columnsOrder" row-key="name" :rows-per-page-options="[0]" wrap-cells>
       <template v-slot:body-cell-op="props">
-        <q-td :props="props" auto-width>
+        <q-td :props="props" auto-width >
           <q-btn-group>
-            <q-btn flat dense color="green" icon="fact_check" v-if="props.row.status=='PENDIENTE'" @click="datoPedido(props.row)" label="Vent" no-caps> <q-tooltip>Realizar Venta</q-tooltip></q-btn>
-            <q-btn flat dense color="info" icon="print" v-if="props.row.status=='PENDIENTE'" @click="printOrder(props.row)" label="Impr" no-caps> <q-tooltip>Reimpresion</q-tooltip></q-btn>
-            <q-btn flat dense color="red" icon="cancel" v-if="props.row.status=='PENDIENTE'" label="Can" no-caps @click="cancelOrder(props.row)"> <q-tooltip>Cancelar Pedido</q-tooltip></q-btn>
+            <span class="text-grey">{{props.row.id}}</span>
+            <q-btn dense color="green" icon="fact_check" v-if="props.row.status=='PENDIENTE'" @click="datoPedido(props.row)" label="Vent" no-caps> <q-tooltip>Realizar Venta</q-tooltip></q-btn>
+            <q-btn dense color="info" icon="print" v-if="props.row.status=='PENDIENTE'" @click="printOrder(props.row)" label="Impr" no-caps> <q-tooltip>Reimpresion</q-tooltip></q-btn>
+            <q-btn dense color="red" icon="cancel" v-if="props.row.status=='PENDIENTE'" label="Can" no-caps @click="cancelOrder(props.row)"> <q-tooltip>Cancelar Pedido</q-tooltip></q-btn>
           </q-btn-group>
         </q-td>
       </template>
@@ -327,14 +328,25 @@ export default {
         // // this.consultarOrder()
         // console.log('shop_id: ', this.shop_id)
         if (parseInt(this.shop_id) === 2) {
-          this.printOrder(data.order)
-          this.$q.notify({
-            message: 'Pedido nuevo',
-            color: 'teal',
-            icon: 'info',
-            position: 'top-right'
-          })
-          this.consultarOrder()
+          if (data.detailArray !== undefined) {
+            this.printOrder(data.order)
+            this.$q.notify({
+              message: 'Pedido nuevo',
+              color: 'teal',
+              icon: 'info',
+              position: 'top-right'
+            })
+            this.consultarOrder()
+          } else {
+            // this.printOrderAummentado(data.order, data.detailArray)
+            this.$q.notify({
+              message: 'Pedido Aumentado',
+              color: 'red',
+              icon: 'info',
+              position: 'top-right'
+            })
+            this.consultarOrder()
+          }
         }
       })
       this.$store.boolSocket = true
@@ -809,6 +821,7 @@ export default {
         this.icon = false
         // console.log(res.data)
         this.loading = false
+        this.consultarOrder()
       }).catch(err => {
         console.log(err)
         this.loading = false
