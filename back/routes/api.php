@@ -26,6 +26,7 @@ Route::get('anularMasivo', [\App\Http\Controllers\FacturaController::class,'anul
 
 Route::get('import', [\App\Http\Controllers\MovilCafeController::class,'import']);
 Route::post('order', [\App\Http\Controllers\OrderController::class,'store']);
+Route::get('orderPending', [\App\Http\Controllers\OrderController::class,'orderPending']);
 
 Route::group(['middleware' => 'auth:sanctum'], function () {
     Route::post('getYearMonthFacturas', [\App\Http\Controllers\FacturaController::class,'getYearMonthFacturas']);
@@ -77,7 +78,8 @@ Route::group(['middleware' => 'auth:sanctum'], function () {
     Route::post('enviarCorreo', [\App\Http\Controllers\SaleController::class,'enviarCorreo']);
     Route::post('eventSearch', [\App\Http\Controllers\SaleController::class, 'eventSearch']);
     Route::post('buscarOrder', [\App\Http\Controllers\OrderController::class, 'buscarOrder']);
-
+//    cancelOrder
+    Route::get('cancelOrder/{id}', [\App\Http\Controllers\OrderController::class, 'cancelOrder']);
 
 
 });

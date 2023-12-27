@@ -60,7 +60,7 @@
           <q-btn-group>
             <q-btn flat dense color="green" icon="fact_check" v-if="props.row.status=='PENDIENTE'" @click="datoPedido(props.row)" label="Vent" no-caps> <q-tooltip>Realizar Venta</q-tooltip></q-btn>
             <q-btn flat dense color="info" icon="print" v-if="props.row.status=='PENDIENTE'" @click="printOrder(props.row)" label="Impr" no-caps> <q-tooltip>Reimpresion</q-tooltip></q-btn>
-            <q-btn flat dense color="red" icon="cancel" v-if="props.row.status=='PENDIENTE'" label="Can" no-caps> <q-tooltip>Cancelar Pedido</q-tooltip></q-btn>
+            <q-btn flat dense color="red" icon="cancel" v-if="props.row.status=='PENDIENTE'" label="Can" no-caps @click="cancelOrder(props.row)"> <q-tooltip>Cancelar Pedido</q-tooltip></q-btn>
           </q-btn-group>
         </q-td>
       </template>
@@ -303,10 +303,10 @@ export default {
         { label: 'cantidadVenta', field: 'cantidadVenta', name: 'cantidadVenta' }
       ],
       columnsOrder: [
-        { label: 'OP', field: 'op', name: 'op', align: 'left' },
-        { label: 'MESA', field: 'mesa', name: 'mesa', align: 'left' },
-        { label: 'ESTADO', field: 'status', name: 'status', align: 'left' },
-        { label: 'DETALLE', field: 'detalle', name: 'detalle', align: 'left' }
+        { label: 'Opciones', field: 'op', name: 'op', align: 'left' },
+        { label: 'Mesa', field: 'mesa', name: 'mesa', align: 'left' },
+        { label: 'Estado', field: 'status', name: 'status', align: 'left' },
+        { label: 'Detalle', field: 'detalle', name: 'detalle', align: 'left' }
       ]
     }
   },
@@ -322,18 +322,19 @@ export default {
         console.log('desconectado')
       })
       socket.on('order', (data) => {
-        console.log(data)
-        console.log('nuevo pedido')
-        // this.consultarOrder()
-        this.$q.notify({
-          message: 'Pedido nuevo',
-          color: 'teal',
-          icon: 'info',
-          position: 'top-right'
-        })
-        this.consultarOrder()
-        if (this.shop_id === 2) {
+        // console.log(data)
+        // console.log('nuevo pedido')
+        // // this.consultarOrder()
+        // console.log('shop_id: ', this.shop_id)
+        if (parseInt(this.shop_id) === 2) {
           this.printOrder(data.order)
+          this.$q.notify({
+            message: 'Pedido nuevo',
+            color: 'teal',
+            icon: 'info',
+            position: 'top-right'
+          })
+          this.consultarOrder()
         }
       })
       this.$store.boolSocket = true
@@ -640,6 +641,25 @@ export default {
       document.getElementById('myelement').innerHTML = cadena
       const d = new Printd()
       d.print(document.getElementById('myelement'))
+    },
+    cancelOrder (order) {
+      this.$q.dialog({
+        title: 'Cancelar Pedido',
+        message: '¿Está seguro de cancelar el pedido?',
+        cancel: true,
+        persistent: true
+      }).onOk(() => {
+        this.$api.get('cancelOrder/' + order.id).then(res => {
+          console.log(res.data)
+          this.$q.notify({
+            message: 'Pedido cancelado',
+            color: 'teal',
+            icon: 'info',
+            position: 'top-right'
+          })
+          this.consultarOrder()
+        })
+      })
     },
     async printOrder (order) {
       // console.log(order)

@@ -22,6 +22,7 @@ return new class extends Migration
             $table->foreign("order_id")->references("id")->on("orders");
             $table->unsignedBigInteger("product_id")->nullable();
             $table->foreign("product_id")->references("id")->on("products");
+            $table->double('subtotal', 8, 2)->default(0)->comment('Subtotal de la venta');
             //$table->integer('product_id')->comment('Id del producto');
             $table->timestamps();
         });
