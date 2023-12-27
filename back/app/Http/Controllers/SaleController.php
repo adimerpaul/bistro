@@ -388,7 +388,7 @@ class SaleController extends Controller{
                 if($request->npedido > 0 && $request->npedido!=null)
                 {
                     $ped = Order::find($request->npedido);
-                    $ped->status = 'CANCELADO';
+                    $ped->status = 'REALIZADO';
                     $ped->sale_id=$request->npedido;
                     $ped->save();
                 }
@@ -476,7 +476,7 @@ class SaleController extends Controller{
             if($request->npedido > 0 && $request->npedido!=null)
             {
                 $ped = Order::find($request->npedido);
-                $ped->status = 'CANCELADO';
+                $ped->status = 'REALIZADO';
                 $ped->sale_id=$request->npedido;
                 $ped->save();
             }
@@ -656,7 +656,7 @@ class SaleController extends Controller{
         if($request->npedido > 0 && $request->npedido!=null)
         {
             $ped = Order::find($request->npedido);
-            $ped->status = 'CANCELADO';
+            $ped->status = 'REALIZADO';
             $ped->sale_id=$request->npedido;
             $ped->save();
         }
@@ -723,7 +723,7 @@ class SaleController extends Controller{
             if($request->npedido > 0 && $request->npedido!=null)
             {
                 $ped = Order::find($request->npedido);
-                $ped->status = 'CANCELADO';
+                $ped->status = 'REALIZADO';
                 $ped->sale_id=$request->npedido;
                 $ped->save();
             }
