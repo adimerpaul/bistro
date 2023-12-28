@@ -338,7 +338,7 @@ export default {
             })
             this.consultarOrder()
           } else {
-            // this.printOrderAummentado(data.order, data.detailArray)
+            this.printOrderAummentado(data.order, data.detailArray)
             this.$q.notify({
               message: 'Pedido Aumentado',
               color: 'red',
@@ -724,15 +724,83 @@ export default {
     <div id='myelement'>\
       <div class='titulo2'>" + this.cine.razon + "<br> Oruro </div> <hr> <table><tr><td class='titder'>FECHA :</td><td class='contenido'>" + order.fecha + "</td></tr></table> <hr> <div class='titulo'>DETALLE</div> <table style='font-size: 10px;'><thead><tr><th>CANT</th><th>PROD</th><th>P.U.</th><th>SubT</th></tr></thead><tbody>"
       order.detailorders.forEach(r => {
+        let ped = ''
+        if (r.llevar === 'SI') ped = '-P'
         const subt = parseFloat(r.cantidad) * parseFloat(r.precio)
-        cadena += "<tr><td class='campotd'>" + r.cantidad + "</td><td class='campotd'>  " + r.producto + "</td><td class='campotd'>" + parseFloat(r.precio).toFixed(2) + " </td><td class='campotd'>" + parseFloat(subt).toFixed(2) + '</td></tr>'
+        cadena += "<tr><td class='campotd'>" + r.cantidad + ped + "</td><td class='campotd'>  " + r.producto + "</td><td class='campotd'>" + parseFloat(r.precio).toFixed(2) + " </td><td class='campotd'>" + parseFloat(subt).toFixed(2) + '</td></tr>'
         total += parseFloat(subt)
       })
       const a = miConversor.convertToText(parseInt(total))
       // eslint-disable-next-line no-multi-str
       cadena += "</tbody></table><hr>\
       <table style='font-size: 8px;'>\
-      <tr><td class='titder'>TOTAL Bs</td><td class='conte2'>" + parseFloat(total).toFixed(2) + '</td></tr> </table><br> <div>Son ' + a + (parseFloat(total).toFixed(2) - Math.floor(parseFloat(total).toFixed(2))) * 100 + ' /100 Bolivianos</div><div>Mesa: <b style="font-size:24px;">' + order.mesa + '</b></div>'
+      <tr><td class='titder'>TOTAL Bs</td><td class='conte2'>" + parseFloat(total).toFixed(2) + '</td></tr> </table><br> <div>Son ' + a + ' ' + (parseFloat(total).toFixed(2) - Math.floor(parseFloat(total).toFixed(2))) * 100 + ' /100 Bolivianos</div><div>Mesa: <b style="font-size:24px; text-align: center">' + order.mesa + '</b></div>'
+      document.getElementById('myelement').innerHTML = cadena
+      const d = new Printd()
+      d.print(document.getElementById('myelement'))
+    },
+    async printOrderAummentado (order, detalle) {
+      // console.log(order)
+      // console.log(order.detailorders)
+      let total = 0
+      const ClaseConversor = conversor.conversorNumerosALetras
+      const miConversor = new ClaseConversor()
+      // eslint-disable-next-line no-multi-str
+      let cadena = "<style>\
+      .titulo{\
+      font-size: 12px;\
+      text-align: center;\
+      font-weight: bold;\
+      }\
+      .titulo2{\
+      font-size: 10px;\
+      text-align: center;\
+      }\
+            .titulo3{\
+      font-size: 10px;\
+      text-align: center;\
+      width:70%;\
+      }\
+            .contenido{\
+      font-size: 10px;\
+      text-align: left;\
+      }\
+      .conte2{\
+      font-size: 10px;\
+      text-align: right;\
+      }\
+      .campotd{\
+      text-align: center;\
+      }\
+      .titder{\
+      font-size: 12px;\
+      text-align: right;\
+      font-weight: bold;\
+      }\
+      hr{\
+  border-top: 1px dashed   ;\
+}\
+  table{\
+    width:100%\
+  }\
+  h1 {\
+    color: black;\
+    font-family: sans-serif;\
+  }</style>\
+    <div id='myelement'>\
+      <div class='titulo2'>" + this.cine.razon + "<br> Oruro </div> <hr> <table><tr><td class='titder'>FECHA :</td><td class='contenido'>" + order.fecha + "</td></tr></table> <hr> <div class='titulo'>DETALLE</div> <table style='font-size: 10px;'><thead><tr><th>CANT</th><th>PROD</th><th>P.U.</th><th>SubT</th></tr></thead><tbody>"
+      detalle.forEach(r => {
+        let ped = ''
+        if (r.llevar === 'SI') ped = '-P'
+        const subt = parseFloat(r.cantidad) * parseFloat(r.precio)
+        cadena += "<tr><td class='campotd'>" + r.cantidad + ped + "</td><td class='campotd'>  " + r.producto + "</td><td class='campotd'>" + parseFloat(r.precio).toFixed(2) + " </td><td class='campotd'>" + parseFloat(subt).toFixed(2) + '</td></tr>'
+        total += parseFloat(subt)
+      })
+      const a = miConversor.convertToText(parseInt(total))
+      // eslint-disable-next-line no-multi-str
+      cadena += "</tbody></table><hr>\
+      <table style='font-size: 8px;'>\
+      <tr><td class='titder'>TOTAL Bs</td><td class='conte2'>" + parseFloat(total).toFixed(2) + '</td></tr> </table><br> <div>Son ' + a + ' ' + (parseFloat(total).toFixed(2) - Math.floor(parseFloat(total).toFixed(2))) * 100 + ' /100 Bolivianos</div><div>Mesa: <b style="font-size:24px; text-align: center">' + order.mesa + '</b></div><div><b>AGREGADO AL PEDIDO</b></div>'
       document.getElementById('myelement').innerHTML = cadena
       const d = new Printd()
       d.print(document.getElementById('myelement'))
