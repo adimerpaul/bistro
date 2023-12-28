@@ -27,6 +27,8 @@ Route::get('anularMasivo', [\App\Http\Controllers\FacturaController::class,'anul
 Route::get('import', [\App\Http\Controllers\MovilCafeController::class,'import']);
 Route::post('order', [\App\Http\Controllers\OrderController::class,'store']);
 Route::get('orderPending', [\App\Http\Controllers\OrderController::class,'orderPending']);
+//aumentarPedido
+Route::post('aumentarPedido', [\App\Http\Controllers\OrderController::class,'aumentarPedido']);
 
 Route::group(['middleware' => 'auth:sanctum'], function () {
     Route::post('getYearMonthFacturas', [\App\Http\Controllers\FacturaController::class,'getYearMonthFacturas']);

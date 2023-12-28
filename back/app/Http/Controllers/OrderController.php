@@ -68,7 +68,7 @@ class OrderController extends Controller
             'order' => $order,
         ], 201);
     }
-    public function AumentarPedido(Request $request){
+    public function aumentarPedido(Request $request){
         $order = Order::find($request->id);
 //        $order->total = $order->total + $request->total;
 //        $order->save();
