@@ -323,12 +323,12 @@ export default {
         console.log('desconectado')
       })
       socket.on('order', (data) => {
-        // console.log(data)
+        console.log(data)
         // console.log('nuevo pedido')
         // // this.consultarOrder()
         // console.log('shop_id: ', this.shop_id)
         if (parseInt(this.shop_id) === 2) {
-          if (data.detailArray !== undefined) {
+          if (data.detailArray === undefined) {
             this.printOrder(data.order)
             this.$q.notify({
               message: 'Pedido nuevo',
@@ -741,7 +741,7 @@ export default {
     },
     async printOrderAummentado (order, detalle) {
       // console.log(order)
-      // console.log(order.detailorders)
+      // console.log(detalle)
       let total = 0
       const ClaseConversor = conversor.conversorNumerosALetras
       const miConversor = new ClaseConversor()
@@ -792,8 +792,8 @@ export default {
       detalle.forEach(r => {
         let ped = ''
         if (r.llevar === 'SI') ped = '-P'
-        const subt = parseFloat(r.cantidad) * parseFloat(r.precio)
-        cadena += "<tr><td class='campotd'>" + r.cantidad + ped + "</td><td class='campotd'>  " + r.producto + "</td><td class='campotd'>" + parseFloat(r.precio).toFixed(2) + " </td><td class='campotd'>" + parseFloat(subt).toFixed(2) + '</td></tr>'
+        const subt = parseFloat(r.cantidadCarrito) * parseFloat(r.price)
+        cadena += "<tr><td class='campotd'>" + r.cantidadCarrito + '' + ped + "</td><td class='campotd'>  " + r.name + "</td><td class='campotd'>" + parseFloat(r.price).toFixed(2) + " </td><td class='campotd'>" + parseFloat(subt).toFixed(2) + '</td></tr>'
         total += parseFloat(subt)
       })
       const a = miConversor.convertToText(parseInt(total))
