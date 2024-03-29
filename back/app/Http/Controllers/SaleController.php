@@ -344,6 +344,7 @@ class SaleController extends Controller{
                 'trace' => 1,
                 'use' => SOAP_LITERAL,
                 'style' => SOAP_DOCUMENT,
+                'connection_timeout' => 15,
             ]);
             $result= $clientSoap->recepcionFactura([
                 "SolicitudServicioRecepcionFactura"=>[
