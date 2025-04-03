@@ -830,6 +830,7 @@ class SaleController extends Controller{
         $cuf = $cuf->obtenerCUF(env('NIT'), $fechaCUF, $codigoSucursal, $codigoModalidad, $codigoEmision, $tipoFacturaDocumento, $codigoDocumentoSector, $sale->numeroFactura, $codigoPuntoVenta);
         $cuf = $cuf.$cufd->codigoControl;
         $sale->cuf=$cuf;
+        $sale->cufd=$cufd->codigo;
         $sale->siatEnviado=false;
         $sale->save();
 
