@@ -198,7 +198,7 @@
               >
                 <div class="row">
                   <div class="col-2">
-                    <q-input required @keyup="searchClient" outlined v-model="client.numeroDocumento" label="CI / NIT *"  hint="Carnet o nit" lazy-rules :rules="[ val => val && val.length > 0 || 'Dato obligatorio']" />
+                    <q-input required @keyup="searchClient" debounce="300" outlined v-model="client.numeroDocumento" label="CI / NIT *"  hint="Carnet o nit" lazy-rules :rules="[ val => val && val.length > 0 || 'Dato obligatorio']" />
                   </div>
                   <div class="col-2">
                     <q-input @keyup="searchClient" outlined v-model="client.complemento" label="COMPLEMENTO" />
