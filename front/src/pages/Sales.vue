@@ -198,10 +198,10 @@
               >
                 <div class="row">
                   <div class="col-2">
-                    <q-input required @update:model-value="searchClient" debounce="300" outlined v-model="client.numeroDocumento" label="CI / NIT *"  hint="Carnet o nit" lazy-rules :rules="[ val => val && val.length > 0 || 'Dato obligatorio']" />
+                    <q-input required  outlined v-model="client.numeroDocumento" label="CI / NIT *"  hint="Carnet o nit" lazy-rules :rules="[ val => val && val.length > 0 || 'Dato obligatorio']" @update:model-value="searchClient" debounce="300"/>
                   </div>
                   <div class="col-2">
-                    <q-input @update:model-value="searchClient" debounce="300" outlined v-model="client.complemento" label="COMPLEMENTO" />
+                    <q-input  outlined v-model="client.complemento" label="COMPLEMENTO"  @update:model-value="searchClient" debounce="300" />
                   </div>
                   <div class="col-3">
                     <q-input required outlined v-model="client.nombreRazonSocial" label="Nombre y razon *" hint="Razon social" style="text-transform: uppercase" lazy-rules :rules="[ val => val && val.length > 0 || 'Dato obligatorio']" />
@@ -257,6 +257,8 @@ import { Printd } from 'printd'
 import conversor from 'conversor-numero-a-letras-es-ar'
 import QRCode from 'qrcode'
 import { date } from 'quasar'
+import debounce from 'lodash/debounce'
+
 export default {
   name: 'SalesPage',
   data () {
@@ -312,6 +314,8 @@ export default {
     }
   },
   created () {
+    this.debouncedSearchClient = debounce(this.searchClient, 400)
+
     // this.$store.boolSocket = true
     // console.log('boolSocket: ', this.$store.boolSocket)
     // console.log('url_socket: ', import.meta.env.VITE_API_SOCKET)
