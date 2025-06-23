@@ -26,6 +26,7 @@ Route::get('anularMasivo', [\App\Http\Controllers\FacturaController::class,'anul
 
 Route::get('import', [\App\Http\Controllers\MovilCafeController::class,'import']);
 Route::post('order', [\App\Http\Controllers\OrderController::class,'store']);
+Route::get('ordertest', [\App\Http\Controllers\OrderController::class,'ordertest']);
 Route::get('orderPending', [\App\Http\Controllers\OrderController::class,'orderPending']);
 //aumentarPedido
 Route::post('aumentarPedido', [\App\Http\Controllers\OrderController::class,'aumentarPedido']);
