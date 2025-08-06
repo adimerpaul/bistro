@@ -147,7 +147,8 @@ export default {
         { name: 'montoTotal', label: 'montoTotal', field: 'montoTotal', sortable: true },
         { name: 'siatAnulado', label: 'siatAnulado', field: 'siatAnulado', sortable: true },
         { name: 'id', label: 'id', field: 'id', sortable: true },
-        { name: 'cuf', label: 'cuf', field: 'cuf', sortable: true }
+        { name: 'cuf', label: 'cuf', field: 'cuf', sortable: true },
+        { name: 'credito', label: 'tarjeta', field: 'credito', sortable: true }
       ]
     }
   },
