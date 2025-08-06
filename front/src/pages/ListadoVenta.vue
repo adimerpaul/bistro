@@ -148,7 +148,7 @@ export default {
         { name: 'siatAnulado', label: 'siatAnulado', field: 'siatAnulado', sortable: true },
         { name: 'id', label: 'id', field: 'id', sortable: true },
         { name: 'cuf', label: 'cuf', field: 'cuf', sortable: true },
-        { name: 'credito', label: 'tar', field: 'credito', sortable: true }
+        { name: 'credito', label: 'tarjeta', field: 'credito', sortable: true }
       ]
     }
   },
