@@ -8,6 +8,14 @@ use Illuminate\Http\Request;
 
 class OrderController extends Controller
 {
+    function ordertest(){
+        $order5000 = 5000;
+        $this->soketIO('order', ['order' => Order::where('id', $order5000)->with('detailorders')->first()]);
+        return response()->json([
+            'message' => 'Orden enviada con éxito',
+            'order' => Order::where('id', $order5000)->with('detailorders')->first(),
+        ], 201);
+    }
     public function orderPending()
     {
         $orders= Order::where('status', 'PENDIENTE')
