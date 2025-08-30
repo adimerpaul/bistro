@@ -2,6 +2,7 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\AnulacionController;
 
 /*
 |--------------------------------------------------------------------------
@@ -30,8 +31,16 @@ Route::get('ordertest', [\App\Http\Controllers\OrderController::class,'ordertest
 Route::get('orderPending', [\App\Http\Controllers\OrderController::class,'orderPending']);
 //aumentarPedido
 Route::post('aumentarPedido', [\App\Http\Controllers\OrderController::class,'aumentarPedido']);
+Route::get('anulaciones/{anulacion}/pdf', [AnulacionController::class, 'pdf'])->name('anulaciones.pdf');
 
 Route::group(['middleware' => 'auth:sanctum'], function () {
+    Route::get('anulaciones', [AnulacionController::class, 'index']);
+    Route::post('anulaciones', [AnulacionController::class, 'store']);
+
+    Route::post('anulaciones/{anulacion}/autorizar', [AnulacionController::class, 'autorizar']);
+    Route::post('anulaciones/{anulacion}/anular',     [AnulacionController::class, 'anular']);
+    Route::post('anulaciones/{anulacion}/rechazar',   [AnulacionController::class, 'rechazar']);
+
     Route::post('getYearMonthFacturas', [\App\Http\Controllers\FacturaController::class,'getYearMonthFacturas']);
     Route::post('import', [\App\Http\Controllers\FacturaController::class,'import']);
     Route::get('buscarFacturas',[App\Http\Controllers\FacturaController::class,'buscarFacturas']);

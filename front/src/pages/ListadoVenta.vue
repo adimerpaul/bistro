@@ -45,11 +45,18 @@
                             <q-btn icon="list" color="green" class="full-width" label="Comanda" no-caps @click="printComanda(props.row)" v-if="props.row.siatAnulado==0"/>
                           </q-item-section>
                         </q-item>
-                        <q-item clickable v-close-popup v-if="props.row.siatAnulado==0">
+                        <!--<q-item clickable v-close-popup v-if="props.row.siatAnulado==0">
                           <q-item-section>
                             <q-btn icon="cancel_presentation" color="red" class="full-width" label="Anular" no-caps @click="anularSale(props.row)" v-if="props.row.siatAnulado==0"/>
                           </q-item-section>
-                        </q-item>
+                        </q-item>-->
+                   <q-item clickable v-close-popup v-if="props.row.siatAnulado==0 ">
+                    <q-item-section>
+                      <q-btn icon="assignment" color="deep-orange" class="full-width"
+                             label="Formulario de Anulación" no-caps dense
+                             @click="openFormularioAnulacion(props.row)"/>
+                    </q-item-section>
+                  </q-item>
                         <q-item clickable v-close-popup>
                           <q-item-section>
                             <q-btn type="a" label="Imp Impuestos " class="full-width" color="info" target="_blank" :href="`${cine.url2}consulta/QR?nit=${cine.nit}&cuf=${props.row.cuf}&numero=${props.row.numeroFactura }&t=2`" />
@@ -85,6 +92,54 @@
           </q-card-actions>
         </q-card>
       </q-dialog>
+          <q-dialog v-model="dialogFormAnulacion" persistent full-width>
+      <q-card class="form-card">
+        <q-card-section class="row items-center q-pb-xs">
+          <div class="text-h6">FORMULARIO DE ANULACIÓN</div>
+          <q-space/>
+          <q-btn icon="close" flat round dense v-close-popup/>
+        </q-card-section>
+
+        <q-separator/>
+
+        <q-card-section class="q-pt-sm">
+          <q-form @submit.prevent="enviarFormularioAnulacion">
+            <!-- Motivos (checkboxes) -->
+            <div class="row q-col-gutter-sm q-mt-sm">
+              <div class="col-12">
+                <div class="line-label">MOTIVO:</div>
+                <div class="row q-col-gutter-sm">
+                  <div class="col-auto">
+                    <q-checkbox dense v-model="formAnu.motivos.errorCajero" label="Error de cajero"/>
+                  </div>
+                  <div class="col-auto">
+                    <q-checkbox dense v-model="formAnu.motivos.errorCliente" label="Error de cliente"/>
+                  </div>
+                  <div class="col-auto">
+                    <q-checkbox dense v-model="formAnu.motivos.errorSistema" label="Error de Sistema"/>
+                  </div>
+                  <div class="col-auto">
+                    <q-checkbox dense v-model="formAnu.motivos.ventaDuplicada" label="Venta Duplicada"/>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!-- Detalle -->
+            <div class="row q-mt-sm">
+              <div class="col-12">
+                <div class="line-label">DETALLE:</div>
+                <q-input dense outlined type="textarea" autogrow :rows="3" v-model="formAnu.detalle"
+                         placeholder="Se ingresó la venta de 6 butacas, pero al momento de imprimir solo salieron 2..."/>
+              </div>
+            </div>
+            <div class="q-mt-md">
+              <q-btn type="submit" color="deep-orange" icon="assignment_turned_in" label="Enviar solicitud de anulación" :loading="loading" no-caps dense/>
+              <q-btn flat color="primary" label="Cancelar" class="q-ml-sm" v-close-popup dense/>
+            </div>
+          </q-form>
+        </q-card-section>
+      </q-card>
+    </q-dialog>
     <div id="myelement" class="hidden"></div>
       </div>
     </q-page>
@@ -96,6 +151,8 @@ import conversor from 'conversor-numero-a-letras-es-ar'
 import QRCode from 'qrcode'
 import xlsx from 'json-as-xlsx'
 import { date } from 'quasar'
+import moment from 'moment'
+
 // const conversor = require.context('conversor-numero-a-letras-es-ar')
 // const QRCode = require.context('qrcode')
 
@@ -103,6 +160,7 @@ export default {
   name: 'ListadoPage',
   data () {
     return {
+      dialogFormAnulacion: false,
       opts: {
         errorCorrectionLevel: 'M',
         type: 'png',
@@ -149,7 +207,19 @@ export default {
         { name: 'id', label: 'id', field: 'id', sortable: true },
         { name: 'cuf', label: 'cuf', field: 'cuf', sortable: true },
         { name: 'credito', label: 'tarjeta', field: 'credito', sortable: true }
-      ]
+      ],
+      formAnu: {
+        sale_id: null,
+        fecha: moment().format('YYYY-MM-DD'),
+        codigo: '',
+        monto: null,
+        cajero: '',
+        seccion: 'Boletería',
+        motivos: { errorCajero: false, errorCliente: false, errorSistema: false, ventaDuplicada: false },
+        detalle: '',
+        autorizadoPor: '',
+        modificadoPor: ''
+      }
     }
   },
   created () {
@@ -168,6 +238,45 @@ export default {
     this.cargarMotivo()
   },
   methods: {
+    openFormularioAnulacion (venta) {
+      console.log(venta)
+      this.formAnu.sale_id = venta.id
+      this.formAnu.fecha = venta.fechaEmision ? venta.fechaEmision.substring(0, 10) : moment().format('YYYY-MM-DD')
+      this.formAnu.codigo = venta.numeroFactura ? `N${venta.numeroFactura}` : String(venta.id)
+      this.formAnu.monto = Number(venta.montoTotal || 0).toFixed(2)
+      this.formAnu.cajero = (venta.user && venta.user.name) ? venta.user.name : ''
+      this.formAnu.seccion = this.titulo
+      this.formAnu.motivos = { errorCajero: false, errorCliente: false, errorSistema: false, ventaDuplicada: false }
+      this.formAnu.detalle = ''
+      this.dialogFormAnulacion = true
+    },
+    enviarFormularioAnulacion () {
+      // construir motivo como en el papel
+      const seleccionados = []
+      if (this.formAnu.motivos.errorCajero) seleccionados.push('Error de cajero')
+      if (this.formAnu.motivos.errorCliente) seleccionados.push('Error de cliente')
+      if (this.formAnu.motivos.errorSistema) seleccionados.push('Error de Sistema')
+      if (this.formAnu.motivos.ventaDuplicada) seleccionados.push('Venta Duplicada')
+      const motivoStr = seleccionados.join(', ') || null
+
+      const payload = {
+        // fecha: this.formAnu.fecha,
+        // cajero: this.formAnu.cajero,
+        // monto: this.formAnu.monto,
+        seccion: this.titulo,
+        motivo: motivoStr,
+        detalle: this.formAnu.detalle,
+        sale_id: this.formAnu.sale_id
+      }
+
+      this.loading = true
+      this.$api.post('anulaciones', payload)
+        .then(() => {
+          this.$q.notify({ message: 'Solicitud de anulación enviada (Pendiente)', color: 'deep-orange', icon: 'assignment_turned_in' })
+          this.dialogFormAnulacion = false
+        })
+        .finally(() => { this.loading = false })
+    },
     correo (venta) {
       console.log(venta)
       this.$api.post('enviarCorreo', { client: venta.client, sale: venta }).then(res => {

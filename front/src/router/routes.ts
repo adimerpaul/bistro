@@ -13,6 +13,7 @@ import Caja from 'pages/Caja.vue'
 import User from 'pages/User.vue'
 import Login from 'pages/Login.vue'
 import Factura from 'pages/Factura.vue'
+import Anulacion from 'pages/Anulaciones.vue'
 
 const routes: RouteRecordRaw[] = [
   {
@@ -30,7 +31,8 @@ const routes: RouteRecordRaw[] = [
       { path: 'sincronizacion', component: Sincronizacion, meta: { requiresAuth: true } },
       { path: 'caja/:id', component: Caja, meta: { requiresAuth: true } },
       { path: 'usuarios', component: User, meta: { requiresAuth: true } },
-      { path: 'factura', component: Factura, meta: { requiresAuth: true } }
+      { path: 'factura', component: Factura, meta: { requiresAuth: true } },
+      { path: 'anulaciones', component: Anulacion, meta: { requiresAuth: true } }
     ]
   },
   {
