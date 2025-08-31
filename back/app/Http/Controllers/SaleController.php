@@ -10,6 +10,7 @@ use App\Models\Cufd;
 use App\Models\Cui;
 use App\Models\Detail;
 use App\Models\Leyenda;
+use App\Models\Anulacion;
 use App\Http\Requests\StoreSaleRequest;
 use App\Http\Requests\UpdateSaleRequest;
 use App\Models\Order;
@@ -618,6 +619,12 @@ class SaleController extends Controller{
                     Mail::to($client->email)->send(new TestMail($details));
                 }
 
+            }
+            $anulacion = Anulacion::where('sale_id', $request->sale['id'])->first();
+            if ($anulacion) {
+                $anulacion->estado = 'Anulado';
+                $anulacion->user_anulacion_id = $request->user()->id;
+                $anulacion->save();
             }
             return $result;
 
