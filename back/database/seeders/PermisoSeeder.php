@@ -36,6 +36,9 @@ class PermisoSeeder extends Seeder
             ['id'=>19,'nombre'=>'Caja Cafe Italia'],
             ['id'=>20,'nombre'=>'Caja Vaca Fria'],
             ['id'=>21,'nombre'=>'Clientes'],
+            ['id'=>22,'nombre'=>'Solicitud Anulacion'],
+            ['id'=>23,'nombre'=>'Autorizar Anulacion'],
+            ['id'=>24,'nombre'=>'Aprobar Anulacion'],
 
         ]);
     }

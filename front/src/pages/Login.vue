@@ -149,6 +149,9 @@ export default {
           if (r.id === 19) this.$store.boolcajacafe = true
           if (r.id === 20) this.$store.boolcajavaca = true
           if (r.id === 21) this.$store.boolcliente = true
+          if (r.id === 22) this.$store.boolsolicitud = true
+          if (r.id === 23) this.$store.boolautorizar = true
+          if (r.id === 24) this.$store.boolaprobar = true
         })
         this.$api.defaults.headers.common.Authorization = 'Bearer ' + res.data.token
         localStorage.setItem('tokenBio', res.data.token)

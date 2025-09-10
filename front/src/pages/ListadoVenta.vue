@@ -50,7 +50,7 @@
                             <q-btn icon="cancel_presentation" color="red" class="full-width" label="Anular" no-caps @click="anularSale(props.row)" v-if="props.row.siatAnulado==0"/>
                           </q-item-section>
                         </q-item>
-                   <!--<q-item clickable v-close-popup v-if="props.row.siatAnulado==0 ">
+                   <!--<q-item clickable v-close-popup v-if="props.row.siatAnulado==0 && store.boolsolicitud">
                     <q-item-section>
                       <q-btn icon="assignment" color="deep-orange" class="full-width"
                              label="Formulario de Anulación" no-caps dense
@@ -160,6 +160,7 @@ export default {
   name: 'ListadoPage',
   data () {
     return {
+      store: this.$store,
       dialogFormAnulacion: false,
       opts: {
         errorCorrectionLevel: 'M',

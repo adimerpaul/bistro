@@ -52,6 +52,9 @@ export default boot(({ app, router }) => {
         if (r.id === 19) globalStore().boolcajacafe = true
         if (r.id === 20) globalStore().boolcajavaca = true
         if (r.id === 21) globalStore().boolcliente = true
+        if (r.id === 22) globalStore().boolsolicitud = true
+        if (r.id === 23) globalStore().boolautorizar = true
+        if (r.id === 24) globalStore().boolaprobar = true
       })
     }).catch(() => {
       app.config.globalProperties.$api.defaults.headers.common.Authorization = ''
@@ -79,10 +82,14 @@ export default boot(({ app, router }) => {
       globalStore().boolcajacafe = false
       globalStore().boolcajavaca = false
       globalStore().boolcliente = false
+      globalStore().boolsolicitud = false
+      globalStore().boolautorizar = false
+      globalStore().boolaprobar = false
+
       router.push('/login')
     })
   } else {
-    console.log('no tokrn')
+    console.log('no token')
     console.log(router)
     // router.push('/login')
     router.push('/login')
@@ -110,6 +117,9 @@ export default boot(({ app, router }) => {
     globalStore().boolcajacafe = false
     globalStore().boolcajavaca = false
     globalStore().boolcliente = false
+    globalStore().boolsolicitud = false
+    globalStore().boolautorizar = false
+    globalStore().boolaprobar = false
     localStorage.removeItem('tokenBio')
     globalStore().isLoggedIn = false
   }
