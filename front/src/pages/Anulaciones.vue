@@ -65,21 +65,21 @@
                 </q-item-section>
               </q-item>
 
-              <q-item v-if="props.row == 'Pendiente' && store.boolautorizar" clickable v-close-popup @click="onAutorizar(props.row)">
+              <q-item v-if="props.row.estado == 'Pendiente' && store.boolautorizar" clickable v-close-popup @click="onAutorizar(props.row)">
                 <q-item-section avatar><q-icon name="check_circle" /></q-item-section>
                 <q-item-section>
                   <q-item-label>Autorizar</q-item-label>
                 </q-item-section>
               </q-item>
 
-              <q-item v-if="props.row == 'Pendiente' && store.boolautorizar" clickable v-close-popup @click="onRechazar(props.row)">
+              <q-item v-if="props.row.estado == 'Pendiente' && store.boolautorizar" clickable v-close-popup @click="onRechazar(props.row)">
                 <q-item-section avatar><q-icon name="cancel" /></q-item-section>
                 <q-item-section>
                   <q-item-label>Rechazar</q-item-label>
                 </q-item-section>
               </q-item>
 
-              <q-item v-if="props.row=='Autorizado' && store.boolaprobar" clickable v-close-popup @click="onAnular(props.row)">
+              <q-item v-if="props.row.estado=='Autorizado' && store.boolaprobar" clickable v-close-popup @click="onAnular(props.row)">
                 <q-item-section avatar><q-icon name="delete_forever" /></q-item-section>
                 <q-item-section><q-item-label>Anular</q-item-label></q-item-section>
               </q-item>
@@ -146,11 +146,13 @@
 
 <script>
 import moment from 'moment'
+import { globalStore } from '../stores/globalStore'
 
 export default {
   name: 'AnulacionesPage',
   data () {
     return {
+      store: globalStore(),
       rows: [],
       filter: '',
       estados: ['Pendiente', 'Autorizado', 'Anulado', 'Rechazado'],
