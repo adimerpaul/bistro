@@ -152,7 +152,7 @@ import QRCode from 'qrcode'
 import xlsx from 'json-as-xlsx'
 import { date } from 'quasar'
 import moment from 'moment'
-
+import { globalStore } from '../stores/globalStore'
 // const conversor = require.context('conversor-numero-a-letras-es-ar')
 // const QRCode = require.context('qrcode')
 
@@ -160,7 +160,7 @@ export default {
   name: 'ListadoPage',
   data () {
     return {
-      store: this.$store,
+      store: globalStore(),
       dialogFormAnulacion: false,
       opts: {
         errorCorrectionLevel: 'M',
