@@ -55,6 +55,7 @@ export default boot(({ app, router }) => {
         if (r.id === 22) globalStore().boolsolicitud = true
         if (r.id === 23) globalStore().boolautorizar = true
         if (r.id === 24) globalStore().boolaprobar = true
+        if (r.id === 25) globalStore().boolvertodo = true
       })
     }).catch(() => {
       app.config.globalProperties.$api.defaults.headers.common.Authorization = ''
@@ -85,7 +86,7 @@ export default boot(({ app, router }) => {
       globalStore().boolsolicitud = false
       globalStore().boolautorizar = false
       globalStore().boolaprobar = false
-
+      globalStore().boolvertodo = false
       router.push('/login')
     })
   } else {
@@ -120,6 +121,7 @@ export default boot(({ app, router }) => {
     globalStore().boolsolicitud = false
     globalStore().boolautorizar = false
     globalStore().boolaprobar = false
+    globalStore().boolvertodo = false
     localStorage.removeItem('tokenBio')
     globalStore().isLoggedIn = false
   }

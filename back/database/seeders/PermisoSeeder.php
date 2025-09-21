@@ -39,6 +39,8 @@ class PermisoSeeder extends Seeder
             ['id'=>22,'nombre'=>'Solicitud Anulacion'],
             ['id'=>23,'nombre'=>'Autorizar Anulacion'],
             ['id'=>24,'nombre'=>'Aprobar Anulacion'],
+            ['id'=>25,'nombre'=>'Ver Todo Venta'],
+
 
         ]);
     }

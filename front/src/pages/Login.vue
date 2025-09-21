@@ -152,6 +152,7 @@ export default {
           if (r.id === 22) this.$store.boolsolicitud = true
           if (r.id === 23) this.$store.boolautorizar = true
           if (r.id === 24) this.$store.boolaprobar = true
+          if (r.id === 25) this.$store.boolvertodo = true
         })
         this.$api.defaults.headers.common.Authorization = 'Bearer ' + res.data.token
         localStorage.setItem('tokenBio', res.data.token)

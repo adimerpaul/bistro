@@ -518,7 +518,7 @@ export default {
     listadoGet () {
       this.titulo = this.opt[this.shop_id - 1]
       this.loading = true
-      this.$api.post('listado', { ini: this.fechaIni, fin: this.fechaFin, tipo: this.titulo }).then((response) => {
+      this.$api.post('listado', { ini: this.fechaIni, fin: this.fechaFin, tipo: this.titulo, todo: this.store.boolvertodo }).then((response) => {
         this.listado = response.data
         console.log(this.listado)
       }).finally(() => {
