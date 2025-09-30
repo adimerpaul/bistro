@@ -183,7 +183,7 @@ export default {
   },
   created () {
     // si tienes /user con sanctum:
-    this.$api.get('user').then(r => { this.authUser = r.data }).catch(() => (this.authUser = { id: 0 }))
+    // this.$api.get('user').then(r => { this.authUser = r.data }).catch(() => (this.authUser = { id: 0 }))
     this.fetchRows()
     this.cargarMotivo()
   },
@@ -192,7 +192,7 @@ export default {
     enviarAnular () {
       // this.$q.loading.show()
       this.loading = true
-      this.$api.post('anularSale', { sale: this.factura, motivo: this.motivo }).then(res => {
+      this.$api.post('anularSale', { sale: this.factura, motivo: this.motivo }).then(() => {
         // console.log(res.data)
         // this.$q.loading.hide()
         this.fetchRows()
@@ -228,7 +228,10 @@ export default {
 
       this.$q.loading.show()
       this.$api.get('anulaciones', { params })
-        .then(res => { this.rows = res.data })
+        .then(res => {
+          console.log(res.data)
+          this.rows = res.data
+        })
         .finally(() => this.$q.loading.hide())
     },
     openDetail (row) {
@@ -247,14 +250,29 @@ export default {
       this.$q.dialog({
         title: 'Autorizar anulación',
         message: '¿Confirmas autorizar esta solicitud?',
-        prompt: { model: '', type: 'text', label: 'Motivo (opcional)' },
+        prompt: {
+          model: '',
+          type: 'text', // 👈 aquí puede ir 'password'
+          label: 'Confirma tu contraseña',
+          isValid: val => !!val, // opcional: fuerza que no esté vacío
+          inputClass: 'password-mask'
+        },
         cancel: true,
         persistent: true
-      }).onOk(motivo => {
+      }).onOk(password => {
         this.$q.loading.show()
-        this.$api.post(`anulaciones/${row.id}/autorizar`, { motivo })
-          .then(res => this.replaceRow(res.data))
-          .finally(() => this.$q.loading.hide())
+        this.$api.post(`anulaciones/${row.id}/autorizar`, { password })
+          .then(() => {
+            this.fetchRows()
+          })
+          .catch(err => {
+            this.$q.notify({ message: err.response?.data?.message || 'Error', color: 'negative', icon: 'error' })
+          })
+          .finally(() => {
+            this.$q.loading.hide()
+          })
+      }).onCancel(() => {
+        // console.log('Autorización cancelada')
       })
     },
     onRechazar (row) {
@@ -268,7 +286,15 @@ export default {
         this.$q.loading.show()
         this.$api.post(`anulaciones/${row.id}/rechazar`, { motivo })
           .then(res => this.replaceRow(res.data))
-          .finally(() => this.$q.loading.hide())
+          .catch(err => {
+            this.$q.notify({ message: err.response?.data?.message || 'Error', color: 'negative', icon: 'error' })
+          })
+          .finally(() => {
+            this.$q.loading.hide()
+            this.fetchRows()
+          })
+      }).onCancel(() => {
+        // console.log('Rechazo cancelado')
       })
     },
     onAnular (row) {
@@ -283,3 +309,9 @@ export default {
   }
 }
 </script>
+<style >
+.password-mask {
+  -webkit-text-security: disc; /* Safari/Chrome */
+  text-security: disc;         /* Otros navegadores que lo soporten */
+}
+</style>

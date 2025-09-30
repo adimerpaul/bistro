@@ -3,10 +3,12 @@
 namespace App\Http\Controllers;
 
 use App\Models\Anulacion;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Hash;
 class AnulacionController extends Controller{
     public function pdf(Anulacion $anulacion){
         $anulacion->load(['user', 'userAutoriza', 'userAnulacion', 'sale']);
@@ -72,6 +74,14 @@ class AnulacionController extends Controller{
         return $q->paginate($perPage);
     }
 
+    public function reportAnulacion(Request $request){
+        return Anulacion::whereDate('fecha', '>=', $request->ini)
+            ->whereDate('fecha', '<=', $request->fin)
+            ->where('estado', 'Anulado')
+            ->with(['userAutoriza', 'userAnulacion'])
+            ->get();
+    }
+
     public function store(Request $request)
     {
         $data = $request->validate([
@@ -100,6 +110,14 @@ class AnulacionController extends Controller{
 
     public function autorizar(Request $request, Anulacion $anulacion)
     {
+        //RECIBE SU CONTRASEÑA DE USUARIO Y VERIFICA SI ES CORRECTA
+        $request->validate([
+            'password' => ['required', 'string'],
+        ]);
+        $user = User::find($request->user()->id);
+        if (!$user || !Hash::check($request->input('password'), $user->password)) {
+            return response()->json(['message' => 'Contraseña incorrecta.'], 422);
+        }   
         if ($anulacion->estado !== 'Pendiente') {
             return response()->json(['message' => 'Solo se pueden autorizar registros en estado Pendiente'], 422);
         }
@@ -107,14 +125,10 @@ class AnulacionController extends Controller{
 //            return response()->json(['message' => 'Quien solicita no puede autorizar su propia anulación'], 422);
 //        }
 
-        $request->validate([
-            'motivo' => ['nullable', 'string', 'max:255'],
-        ]);
 
         $anulacion->update([
             'estado' => 'Autorizado',
             'user_autoriza_id' => $request->user()->id,
-            'motivo' => $anulacion->motivo . ' ' . $request->input('motivo', ''),
         ]);
 
         return $anulacion->load(['user', 'userAutoriza', 'userAnulacion', 'sale']);

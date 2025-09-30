@@ -259,7 +259,6 @@ class ReportController extends Controller
         and date(s.fechaEmision)<='$request->fin'
         and s.tipo='$request->tipo'
         and s.siatAnulado=false
-
         and s.credito='NO'
         and s.vip='NO'
         group by  u.name;
