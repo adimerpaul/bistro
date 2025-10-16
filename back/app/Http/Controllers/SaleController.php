@@ -565,7 +565,15 @@ class SaleController extends Controller{
             $sale=Sale::find($request->sale['id']);
             if($sale->venta=='R'){
             $sale->siatAnulado=1;
+
             $sale->save();
+
+            $anulacion = Anulacion::where('sale_id', $request->sale['id'])->first();
+            if ($anulacion) {
+                $anulacion->estado = 'Anulado';
+                $anulacion->user_anulacion_id = $request->user()->id;
+                $anulacion->save();
+            }
                 return true;
         }
 
