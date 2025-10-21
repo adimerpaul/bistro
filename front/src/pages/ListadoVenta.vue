@@ -37,7 +37,7 @@
                       <q-list>
                         <q-item clickable v-close-popup v-if="props.row.siatAnulado==0">
                           <q-item-section>
-                            <q-btn icon="print" color="primary" class="full-width" label="Imprimir" no-caps @click="printFactura(props.row)" v-if="props.row.siatAnulado==0"/>
+                            <q-btn icon="print" color="primary" class="full-width" label="Imprimir" no-caps @click="printFactura(props.row)" v-if="props.row.siatAnulado==0 && store.boolimprimir"/>
                           </q-item-section>
                         </q-item>
                         <q-item clickable v-close-popup v-if="props.row.siatAnulado==0">
