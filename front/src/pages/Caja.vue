@@ -34,6 +34,7 @@ export default {
   name: 'CajaPage',
   data () {
     return {
+      anulados: [],
       productoFilter: '',
       ini: date.formatDate(new Date(), 'YYYY-MM-DD'),
       fin: date.formatDate(new Date(), 'YYYY-MM-DD'),
@@ -101,10 +102,18 @@ export default {
         this.datosuser()
         this.datofactura()
         this.datorecibo()
+        this.getAnulados()
         // this.loading = false
       })
     },
-
+    getAnulados () {
+      this.loading = true
+      this.$api.post('reportGenAnulacion', { ini: this.ini, fin: this.fin, tipo: this.tipo[this.shop_id - 1] }).then(res => {
+        console.log(res.data)
+        this.anulados = res.data
+        this.loading = false
+      })
+    },
     datosuser () {
       this.loading = true
       this.$api.post('usercaja', { ini: this.ini, fin: this.fin, tipo: this.tipo[this.shop_id - 1] }).then(res => {
@@ -154,6 +163,7 @@ export default {
       // eslint-disable-next-line no-multi-str
       let cadena = "<style>\
         .f-10{font-size:10px;}\
+        .centro{text-align:center;}\
         .titulo{text-align:center;\
             font-weight:bold;}\
         .titulo2{font-weight:bold;}\
@@ -173,6 +183,12 @@ export default {
           cadena += "<tr><td class='f-10'>" + r.usuario + "</td> <td class='f-10'>" + r.total + '</td></tr>'
         })
         cadena += '</table>'
+        if (this.anulados.length > 0) {
+          cadena += "<table class='table'><tr><th class='f-10'>USUARIO</th><th class='f-10'>TOTAL ANULADO </th><th class='f-10'>MONTO</th></tr>"
+          this.anulados.forEach(r => {
+            cadena += "<tr><td class='f-10 centro'>" + r.usuario + "</td> <td class='f-10 centro'>" + r.total + '</td><td class="f-10 centro">' + r.monto + '</tr>'
+          })
+        }
       }
 
       cadena += "<div style='text-align:right;'><span class='f-10 titulo3'>Total: </span> " + this.ventatotal + " Bs</div><div style='text-align:right;'><span class='f-10 titulo3'>Total VIP: </span> " + this.tvip + " Bs</div><div style='text-align:right;'><span class='f-10 titulo3'>Total Credito: </span> " + this.tcredito + " Bs</div><div style='text-align:right;'><span class='f-10 titulo3'>Total Efectivo: </span> " + this.tefectivo + ' Bs</div>'

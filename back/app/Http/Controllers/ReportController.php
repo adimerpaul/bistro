@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\Sale;
 use App\Models\Shop;
 use App\Models\Motivo;
+use App\Models\Anulacion;
 use Illuminate\Support\Facades\DB;
 
 class ReportController extends Controller
@@ -262,6 +263,18 @@ class ReportController extends Controller
         and s.credito='NO'
         and s.vip='NO'
         group by  u.name;
+        ");
+    }
+
+        public function reportGenAnulacion(Request $request){
+        return DB::SELECT("SELECT u.name usuario, COUNT(*) total, SUM(a.monto) monto
+        from anulaciones a inner join users u on a.user_id=u.id
+        inner join sales s on a.sale_id=s.id
+        where date(a.fecha)>='$request->ini'
+        and date(a.fecha)<='$request->fin'
+        and a.estado='Anulado'
+        and s.tipo='$request->tipo'
+        group by  u.name
         ");
     }
 }
