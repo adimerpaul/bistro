@@ -22,6 +22,9 @@
     <!-- Tabla -->
     <q-table title="Gestionar Anulaciones" flat bordered dense wrap-cells :rows="rows" :columns="columns" row-key="id"
       :rows-per-page-options="[0]" :filter="filter" separator="cell">
+          <template v-slot:top-right>
+        <q-btn color="green"  label="EXCEL"   @click="exportar"/>
+    </template>
       <!-- fecha -->
       <template #body-cell-fecha="props">
         <q-td :props="props">{{ props.row.fecha }}</q-td>
@@ -147,7 +150,7 @@
 <script>
 import moment from 'moment'
 import { globalStore } from '../stores/globalStore'
-
+import xlsx from 'json-as-xlsx'
 export default {
   name: 'AnulacionesPage',
   data () {
@@ -188,7 +191,36 @@ export default {
     this.cargarMotivo()
   },
   methods: {
+    exportar () {
+      if (this.rows.length === 0) return
+      const data = [
+        {
+          sheet: 'Anulados',
+          columns: [
+            { label: 'id', value: 'id' },
+            { label: 'fecha', value: 'fecha' },
+            { label: 'cajero', value: 'cajero' },
+            { label: 'monto', value: 'monto' },
+            { label: 'seccion', value: 'seccion' },
+            { label: 'motivo', value: 'motivo' },
+            { label: 'detalle', value: 'detalle' },
+            { label: 'estado', value: 'estado' }
+            // { label: "Age", value: (row) => row.age + " years" }, // Custom format
+            // { label: "Phone", value: (row) => (row.more ? row.more.phone || "" : "") }, // Run functions
+          ],
+          content: this.rows
+        }
+      ]
 
+      const settings = {
+        fileName: 'Anulados' + moment().format('YYYY-MM-DD'), // Name of the resulting spreadsheet
+        // extraLength: 3, // A bigger number means that columns will be wider
+        // writeMode: "writeFile", // The available parameters are 'WriteFile' and 'write'. This setting is optional. Useful in such cases https://docs.sheetjs.com/docs/solutions/output#example-remote-file
+        writeOptions: {} // Style options from https://docs.sheetjs.com/docs/api/write-options
+        // RTL: true, // Display the columns from right-to-left (the default value is false)
+      }
+      xlsx(data, settings) // Will download the excel file
+    },
     enviarAnular () {
       // this.$q.loading.show()
       this.loading = true
