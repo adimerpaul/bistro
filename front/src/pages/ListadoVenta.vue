@@ -34,7 +34,13 @@
                 <template v-slot:body-cell-Opciones="props">
                   <q-td :props="props" auto-width>
                     <q-btn-dropdown color="primary" label="Opciones">
+
                       <q-list>
+                        <q-item clickable v-close-popup v-if="props.row.siatAnulado==0 && validarFecha(props.row.fechaEmision) && store.booltipopago" >
+                          <q-item-section>
+                            <q-btn icon="paid" color="purple" class="full-width" label="Tipo Pago" no-caps @click="cambioPago(props.row)" v-if="props.row.siatAnulado==0 "/>
+                          </q-item-section>
+                        </q-item>
                         <q-item clickable v-close-popup v-if="props.row.siatAnulado==0">
                           <q-item-section>
                             <q-btn icon="print" color="primary" class="full-width" label="Imprimir" no-caps @click="printFactura(props.row)" v-if="props.row.siatAnulado==0 && store.boolimprimir"/>
@@ -140,6 +146,28 @@
         </q-card-section>
       </q-card>
     </q-dialog>
+        <q-dialog v-model="dialogCambioPago">
+    <q-card>
+    <q-card-section>
+    <div class="text-h6">Actualizar Tipo Pago</div>
+    </q-card-section>
+    <q-card-section>
+    <q-toggle
+      v-model="sale.credito"
+      true-label="Tarjeta"
+      false-label="Efectivo"
+      true-value="SI"
+      false-value="NO"
+      color="primary"
+      :label="sale.credito=='SI'?'Tarjeta':'Efectivo'"
+    />
+    </q-card-section>
+    <q-card-actions align="right">
+    <q-btn flat label="ACTUALIZAR" color="green" @click="actualizarTipoPago" />
+    <q-btn flat label="cerrar" color="red" @click="dialogCambioPago=false; listadoGet()" />
+    </q-card-actions>
+    </q-card>
+    </q-dialog>
     <div id="myelement" class="hidden"></div>
       </div>
     </q-page>
@@ -220,7 +248,9 @@ export default {
         detalle: '',
         autorizadoPor: '',
         modificadoPor: ''
-      }
+      },
+      dialogCambioPago: false,
+      sale: {}
     }
   },
   created () {
@@ -239,6 +269,23 @@ export default {
     this.cargarMotivo()
   },
   methods: {
+    actualizarTipoPago () {
+      this.$api.post('cambioPago', this.sale).then(res => {
+        this.dialogCambioPago = false
+        this.$q.notify({ message: 'Tipo de Pago Actualizado', color: 'green', icon: 'check' })
+        this.listadoGet()
+      })
+    },
+    cambioPago (r) {
+      this.sale = r
+      this.dialogCambioPago = true
+    },
+    validarFecha (fecha) {
+      if (moment(fecha).format('YYYY-MM-DD') === moment().format('YYYY-MM-DD')) {
+        return true
+      }
+      return false
+    },
     openFormularioAnulacion (venta) {
       console.log(venta)
       this.formAnu.sale_id = venta.id

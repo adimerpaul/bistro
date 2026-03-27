@@ -93,4 +93,6 @@ Route::group(['middleware' => 'auth:sanctum'], function () {
 //    cancelOrder
     Route::get('cancelOrder/{id}', [\App\Http\Controllers\OrderController::class, 'cancelOrder']);
     Route::post('reportGenAnulacion', [\App\Http\Controllers\ReportController::class, 'reportGenAnulacion']);
+    Route::post('cambioPago', [\App\Http\Controllers\SaleController::class, 'cambioPago']);
+
 });

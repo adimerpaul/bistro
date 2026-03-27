@@ -154,6 +154,7 @@ export default {
           if (r.id === 24) this.$store.boolaprobar = true
           if (r.id === 25) this.$store.boolvertodo = true
           if (r.id === 26) this.$store.boolimprimir = true
+          if (r.id === 27) this.$store.booltipopago = true
         })
         this.$api.defaults.headers.common.Authorization = 'Bearer ' + res.data.token
         localStorage.setItem('tokenBio', res.data.token)

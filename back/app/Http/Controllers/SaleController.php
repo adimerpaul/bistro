@@ -946,4 +946,12 @@ class SaleController extends Controller{
         ], 200);
     }
 
+    public function cambioPago(Request $request)
+    {
+        $sale = Sale::find($request->id);
+        $sale->credito = $request->credito;
+        $sale->save();
+        return $sale;
+    }
+
 }
