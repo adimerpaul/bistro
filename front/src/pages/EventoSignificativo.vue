@@ -119,6 +119,7 @@ export default {
         this.eventoSignificativoDialog = false
         this.loading = false
       }).catch(err => {
+        console.log(err)
         this.$q.notify({
           color: 'red-6',
           textColor: 'white',
