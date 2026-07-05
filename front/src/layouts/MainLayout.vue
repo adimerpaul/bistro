@@ -80,6 +80,10 @@
           <q-item-section avatar><q-icon name="o_print" /></q-item-section>
           <q-item-section><q-item-label>Factura</q-item-label><q-item-label caption class="text-grey">Pagina factura</q-item-label></q-item-section>
         </q-item>
+        <q-item clickable dense to="/pagosqr" exact active-class="bg-primary text-white" v-if="store.booluser">
+          <q-item-section avatar><q-icon name="qr_code_2" /></q-item-section>
+          <q-item-section><q-item-label>Pagos QR</q-item-label><q-item-label caption class="text-grey">Listado de transferencias QR</q-item-label></q-item-section>
+        </q-item>
       </q-list>
     </q-drawer>
     <q-page-container>
@@ -207,6 +211,9 @@ export default defineComponent({
       } else if (this.$route.path === '/caja/3') {
         setCssVar('primary', '#00538F')
         return 'Vaca fria'
+      } else if (this.$route.path === '/pagosqr') {
+        setCssVar('primary', '#770050')
+        return 'Pagos QR'
       } else {
         setCssVar('primary', '#770050')
         return ''

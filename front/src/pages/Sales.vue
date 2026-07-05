@@ -224,6 +224,7 @@
                   <div class="row col-3">
                     <q-checkbox v-model="boolcredito"  label="T Credito" dense/>
                     <q-checkbox v-model="booltarjeta"  label="T VIP" dense @click="verificar" v-if="shop_id!=='3'"/>
+                    <q-checkbox v-model="boolQr" label="Pagar QR" dense @click="onToggleQr"/>
                   </div>
                   <div class="col-12" v-if="shop_id!=='3'">
                   <template v-if="booltarjeta" >
@@ -237,13 +238,30 @@
                 </div>
               </div>
                 <div>
-                  <q-btn  label="venta" :loading="loading" icon="send" type="submit" color="positive" :disable="btn"/>
+                  <q-btn  label="venta" :loading="loading" icon="send" type="submit" color="positive" :disable="btn || boolQr"/>
                   <q-btn label="Cerrar" :loading="loading" type="button" size="md" icon="delete" color="negative" class="q-ml-sm" @click="cancelarVenta" />
                 </div>
               </q-form>
             </div>
           </div>
         </q-card-section>
+      </q-card>
+    </q-dialog>
+
+    <q-dialog v-model="dialogPagoQr" persistent>
+      <q-card style="width: 350px;">
+        <q-card-section class="row items-center q-pa-xs bg-primary text-white">
+          <div class="text-h6"><q-icon name="qr_code_2"/> Pago con QR</div>
+        </q-card-section>
+        <q-card-section class="text-center">
+          <div class="text-h6 q-mb-sm">Bs {{ total }}</div>
+          <q-spinner v-if="!banecoQrImage" color="primary" size="4em" />
+          <img v-else :src="banecoQrImage" style="width: 250px; height: 250px;" />
+          <div class="q-mt-sm text-grey-8">{{ banecoQrEstadoMsg }}</div>
+        </q-card-section>
+        <q-card-actions align="right">
+          <q-btn flat label="Cancelar" color="negative" @click="cerrarPagoQr" />
+        </q-card-actions>
       </q-card>
     </q-dialog>
     <div id="myelement" class="hidden"></div>
@@ -281,6 +299,12 @@ export default {
       tienerebaja: false,
       boolcredito: false,
       booltarjeta: false,
+      boolQr: false,
+      dialogPagoQr: false,
+      banecoQrImage: '',
+      banecoQrId: '',
+      banecoQrEstadoMsg: 'Generando código QR...',
+      banecoQrInterval: null,
       nombresaldo: {},
       loading: false,
       btn: false,
@@ -376,6 +400,11 @@ export default {
     )
     this.consultarOrder()
   },
+  beforeUnmount () {
+    if (this.banecoQrInterval) {
+      clearInterval(this.banecoQrInterval)
+    }
+  },
   methods: {
     datoPedido (pedido) {
       this.productsSale = []
@@ -461,6 +490,69 @@ export default {
       this.nombresaldo = {}
       this.icon = false
       this.verificar()
+      this.cerrarPagoQr()
+    },
+    onToggleQr () {
+      if (this.boolQr) {
+        this.boolcredito = false
+        this.booltarjeta = false
+        this.generarPagoQr()
+      } else {
+        this.cerrarPagoQr()
+      }
+    },
+    generarPagoQr () {
+      this.banecoQrImage = ''
+      this.banecoQrId = ''
+      this.banecoQrEstadoMsg = 'Generando código QR...'
+      this.dialogPagoQr = true
+      this.$api.post('baneco/qr/generar', {
+        monto: this.total,
+        descripcion: 'Venta ' + this.tipo[parseInt(this.shop_id) - 1]
+      }).then(res => {
+        this.banecoQrImage = res.data.qrImage
+        this.banecoQrId = res.data.qrId
+        this.banecoQrEstadoMsg = 'Escanea el código QR con tu app bancaria...'
+        this.banecoQrInterval = setInterval(this.verificarPagoQr, 3000)
+      }).catch(err => {
+        this.dialogPagoQr = false
+        this.boolQr = false
+        this.$q.notify({
+          color: 'negative',
+          textColor: 'white',
+          message: (err.response && err.response.data && err.response.data.message) || 'No se pudo generar el QR',
+          position: 'top'
+        })
+      })
+    },
+    verificarPagoQr () {
+      if (!this.banecoQrId) return
+      this.$api.get('baneco/qr/estado/' + this.banecoQrId).then(res => {
+        if (res.data.pagado) {
+          clearInterval(this.banecoQrInterval)
+          this.banecoQrInterval = null
+          this.dialogPagoQr = false
+          this.$q.notify({ color: 'green', textColor: 'white', icon: 'check_circle', message: 'Pago QR confirmado', position: 'top' })
+          this.saleInsert()
+        } else if (res.data.anulado) {
+          clearInterval(this.banecoQrInterval)
+          this.banecoQrInterval = null
+          this.banecoQrEstadoMsg = 'El código QR fue anulado'
+        }
+      })
+    },
+    cerrarPagoQr () {
+      if (this.banecoQrInterval) {
+        clearInterval(this.banecoQrInterval)
+        this.banecoQrInterval = null
+      }
+      if (this.banecoQrId) {
+        this.$api.delete('baneco/qr/cancelar/' + this.banecoQrId).catch(() => { /* best-effort */ })
+      }
+      this.dialogPagoQr = false
+      this.banecoQrImage = ''
+      this.banecoQrId = ''
+      this.boolQr = false
     },
     verificar () {
       // this.codigo = ''
@@ -595,6 +687,9 @@ export default {
       this.productsSale = []
       this.efectivo = ''
       this.numpedido = 0
+      this.boolQr = false
+      this.banecoQrImage = ''
+      this.banecoQrId = ''
       this.productsGet()
     },
     async printFactura (factura) {
@@ -881,6 +976,8 @@ export default {
         tarjeta: this.boolcredito ? 'SI' : 'NO',
         codigoTarjeta: this.codigo,
         vip: this.booltarjeta ? 'SI' : 'NO',
+        qr: this.boolQr ? 'SI' : 'NO',
+        qrId: this.boolQr ? this.banecoQrId : null,
         tipo: this.tipo[parseInt(this.shop_id) - 1],
         npedido: this.numpedido
       }).then(res => {

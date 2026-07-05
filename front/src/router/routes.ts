@@ -14,6 +14,7 @@ import User from 'pages/User.vue'
 import Login from 'pages/Login.vue'
 import Factura from 'pages/Factura.vue'
 import Anulacion from 'pages/Anulaciones.vue'
+import PagosQr from 'pages/PagosQr.vue'
 
 const routes: RouteRecordRaw[] = [
   {
@@ -32,7 +33,8 @@ const routes: RouteRecordRaw[] = [
       { path: 'caja/:id', component: Caja, meta: { requiresAuth: true } },
       { path: 'usuarios', component: User, meta: { requiresAuth: true } },
       { path: 'factura', component: Factura, meta: { requiresAuth: true } },
-      { path: 'anulaciones', component: Anulacion, meta: { requiresAuth: true } }
+      { path: 'anulaciones', component: Anulacion, meta: { requiresAuth: true } },
+      { path: 'pagosqr', component: PagosQr, meta: { requiresAuth: true } }
     ]
   },
   {

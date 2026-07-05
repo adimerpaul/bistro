@@ -95,4 +95,9 @@ Route::group(['middleware' => 'auth:sanctum'], function () {
     Route::post('reportGenAnulacion', [\App\Http\Controllers\ReportController::class, 'reportGenAnulacion']);
     Route::post('cambioPago', [\App\Http\Controllers\SaleController::class, 'cambioPago']);
 
+    Route::post('baneco/qr/generar', [\App\Http\Controllers\BanecoQrController::class, 'generar']);
+    Route::get('baneco/qr/estado/{qrId}', [\App\Http\Controllers\BanecoQrController::class, 'estado']);
+    Route::delete('baneco/qr/cancelar/{qrId}', [\App\Http\Controllers\BanecoQrController::class, 'cancelar']);
+    Route::post('baneco/qr/pagados', [\App\Http\Controllers\BanecoQrController::class, 'pagados']);
+
 });

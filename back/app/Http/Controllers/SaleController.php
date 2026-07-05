@@ -385,6 +385,8 @@ class SaleController extends Controller{
                 $sale->leyenda=$leyenda;
                 $sale->vip=$request->vip;
                 $sale->credito=$request->tarjeta;
+                $sale->qr=($request->qr=="SI"?"SI":"NO");
+                $sale->qrId=$request->qrId;
                 $sale->venta="F";
                 $sale->save();
                 if($request->npedido > 0 && $request->npedido!=null)
@@ -473,6 +475,8 @@ class SaleController extends Controller{
             $sale->leyenda=$leyenda;
             $sale->vip=$request->vip;
             $sale->credito=$request->tarjeta;
+            $sale->qr=($request->qr=="SI"?"SI":"NO");
+            $sale->qrId=$request->qrId;
             $sale->venta='F';
             $sale->save();
             if($request->npedido > 0 && $request->npedido!=null)
@@ -667,6 +671,8 @@ class SaleController extends Controller{
         $sale->venta="R";
         $sale->vip=$request->vip;
         $sale->credito=$request->tarjeta;
+        $sale->qr=($request->qr=="SI"?"SI":"NO");
+        $sale->qrId=$request->qrId;
         $sale->save();
 
         if($request->npedido > 0 && $request->npedido!=null)
@@ -734,6 +740,8 @@ class SaleController extends Controller{
             $sale->leyenda="";
             $sale->vip=$request->vip;
             $sale->credito=$request->tarjeta;
+            $sale->qr=($request->qr=="SI"?"SI":"NO");
+            $sale->qrId=$request->qrId;
             $sale->venta="R";
             $sale->save();
             if($request->npedido > 0 && $request->npedido!=null)
