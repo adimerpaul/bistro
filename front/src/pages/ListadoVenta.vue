@@ -51,11 +51,11 @@
                             <q-btn icon="list" color="green" class="full-width" label="Comanda" no-caps @click="printComanda(props.row)" v-if="props.row.siatAnulado==0"/>
                           </q-item-section>
                         </q-item>
-                       <q-item clickable v-close-popup v-if="props.row.siatAnulado==0">
+                       <!--<q-item clickable v-close-popup v-if="props.row.siatAnulado==0">
                           <q-item-section>
                             <q-btn icon="cancel_presentation" color="red" class="full-width" label="Anular" no-caps @click="anularSale(props.row)" v-if="props.row.siatAnulado==0"/>
                           </q-item-section>
-                        </q-item>
+                        </q-item>-->
                    <q-item clickable v-close-popup v-if="props.row.siatAnulado==0 && store.boolsolicitud">
                     <q-item-section>
                       <q-btn icon="assignment" color="deep-orange" class="full-width"
