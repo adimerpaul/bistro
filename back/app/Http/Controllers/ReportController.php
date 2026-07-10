@@ -108,8 +108,18 @@ class ReportController extends Controller
         and s.siatAnulado=false
         and s.vip='NO'
 		and s.credito='NO'
+        and s.qr='NO'
         and s.cortesia='NO'
         and s.venta='R') as efectivoR,
+        (SELECT sum(d.subTotal)
+        from sales s inner join details d on s.id=d.sale_id
+        where date(s.fechaEmision)>='$request->ini'
+        and date(s.fechaEmision)<='$request->fin'
+        ".$cadena."
+        and s.tipo='$request->tipo'
+        and s.siatAnulado=false
+        and s.qr='SI'
+        and s.venta='R') as qrR,
         (SELECT  sum(d.subTotal)
         from sales s inner join details d on s.id=d.sale_id
         where
@@ -129,8 +139,18 @@ class ReportController extends Controller
         and s.siatAnulado=false
         and s.vip='NO'
 		and s.credito='NO'
+        and s.qr='NO'
         and s.cortesia='NO'
-        and s.venta='F') as efectivoF ");
+        and s.venta='F') as efectivoF,
+        (SELECT sum(d.subTotal)
+        from sales s inner join details d on s.id=d.sale_id
+        where date(s.fechaEmision)>='$request->ini'
+        and date(s.fechaEmision)<='$request->fin'
+        ".$cadena."
+        and s.tipo='$request->tipo'
+        and s.siatAnulado=false
+        and s.qr='SI'
+        and s.venta='F') as qrF ");
     }
 
     public function resumen(Request $request){
@@ -164,7 +184,17 @@ class ReportController extends Controller
         and s.tipo='$request->tipo'
         and s.siatAnulado=false
         and s.vip='NO'
-		and s.credito='NO') as efectivo ");
+		and s.credito='NO'
+        and s.qr='NO') as efectivo,
+        (SELECT  sum(d.subTotal)
+        from sales s inner join details d on s.id=d.sale_id
+        where
+        date(s.fechaEmision) >='$request->ini'
+        and date(s.fechaEmision) <='$request->fin'
+        ".$cadena."
+        and s.tipo='$request->tipo'
+        and s.siatAnulado=false
+        and s.qr='SI') as qr ");
     }
 
     public function caja(Request $request){

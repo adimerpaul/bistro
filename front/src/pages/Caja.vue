@@ -49,6 +49,9 @@ export default {
       tcajaF: 0,
       tefectcajaR: 0,
       tefectcajaF: 0,
+      tqr: 0,
+      tqrcajaR: 0,
+      tqrcajaF: 0,
       store: globalStore(),
       tvip: 0,
       tcredito: 0,
@@ -145,11 +148,14 @@ export default {
         this.tcredito = res.data[0].tarjeta == null ? 0 : res.data[0].tarjeta
         this.tvip = res.data[0].vip == null ? 0 : res.data[0].vip
         this.tefectivo = res.data[0].efectivo == null ? 0 : res.data[0].efectivo
+        this.tqr = res.data[0].qr == null ? 0 : res.data[0].qr
         this.$api.post('resumenRF', { ini: this.ini, fin: this.fin, id: this.user.id, tipo: this.tipo[this.shop_id - 1] }).then(res => {
           this.tcajaF = res.data[0].tarjetaF
           this.tcajaR = res.data[0].tarjetaR
           this.tefectcajaR = res.data[0].efectivoR
           this.tefectcajaF = res.data[0].efectivoF
+          this.tqrcajaR = res.data[0].qrR == null ? 0 : res.data[0].qrR
+          this.tqrcajaF = res.data[0].qrF == null ? 0 : res.data[0].qrF
           this.loading = false
         })
       })
@@ -191,7 +197,7 @@ export default {
         }
       }
 
-      cadena += "<div style='text-align:right;'><span class='f-10 titulo3'>Total: </span> " + this.ventatotal + " Bs</div><div style='text-align:right;'><span class='f-10 titulo3'>Total VIP: </span> " + this.tvip + " Bs</div><div style='text-align:right;'><span class='f-10 titulo3'>Total Credito: </span> " + this.tcredito + " Bs</div><div style='text-align:right;'><span class='f-10 titulo3'>Total Efectivo: </span> " + this.tefectivo + ' Bs</div>'
+      cadena += "<div style='text-align:right;'><span class='f-10 titulo3'>Total: </span> " + this.ventatotal + " Bs</div><div style='text-align:right;'><span class='f-10 titulo3'>Total VIP: </span> " + this.tvip + " Bs</div><div style='text-align:right;'><span class='f-10 titulo3'>Total Credito: </span> " + this.tcredito + " Bs</div><div style='text-align:right;'><span class='f-10 titulo3'>Total QR: </span> " + this.tqr + " Bs</div><div style='text-align:right;'><span class='f-10 titulo3'>Total Efectivo: </span> " + this.tefectivo + ' Bs</div>'
       document.getElementById('myelement').innerHTML = cadena
       const d = new Printd()
       d.print(document.getElementById('myelement'))
@@ -214,7 +220,8 @@ export default {
       cadena2 += '</tbody></table>'
       if (this.tcajaF == null) this.tcajaF = 0
       if (this.tefectcajaF == null) this.tefectcajaF = 0
-      cadena2 += "<div style='text-align:right;'><span class='f-10 titulo3'>Total: </span> " + this.ventafactura + " Bs</div><div style='text-align:right;'><span class='f-10 titulo3'>Total Efectivo: </span> " + this.tefectcajaF + " Bs</div><div style='text-align:right;'><span class='f-10 titulo3'>Total Tarjeta: </span> " + this.tcajaF + ' Bs</div>'
+      if (this.tqrcajaF == null) this.tqrcajaF = 0
+      cadena2 += "<div style='text-align:right;'><span class='f-10 titulo3'>Total: </span> " + this.ventafactura + " Bs</div><div style='text-align:right;'><span class='f-10 titulo3'>Total Efectivo: </span> " + this.tefectcajaF + " Bs</div><div style='text-align:right;'><span class='f-10 titulo3'>Total QR: </span> " + this.tqrcajaF + " Bs</div><div style='text-align:right;'><span class='f-10 titulo3'>Total Tarjeta: </span> " + this.tcajaF + ' Bs</div>'
       document.getElementById('myelement').innerHTML = cadena2
       const d2 = new Printd()
       d2.print(document.getElementById('myelement'))
@@ -237,7 +244,8 @@ export default {
       cadena3 += '</tbody></table>'
       if (this.tcajaR == null) this.tcajaR = 0
       if (this.tefectcajaR == null) this.tefectcajaR = 0
-      cadena3 += "<div style='text-align:right;'><span class='f-10 titulo3'>Total: </span> " + this.ventarecibo + " Bs</div><div style='text-align:right;'><span class='f-10 titulo3'>Total Efectivo: </span> " + this.tefectcajaR + " Bs</div><div style='text-align:right;'><span class='f-10 titulo3'>Total Tarjeta: </span> " + this.tcajaR + ' Bs</div>'
+      if (this.tqrcajaR == null) this.tqrcajaR = 0
+      cadena3 += "<div style='text-align:right;'><span class='f-10 titulo3'>Total: </span> " + this.ventarecibo + " Bs</div><div style='text-align:right;'><span class='f-10 titulo3'>Total Efectivo: </span> " + this.tefectcajaR + " Bs</div><div style='text-align:right;'><span class='f-10 titulo3'>Total QR: </span> " + this.tqrcajaR + " Bs</div><div style='text-align:right;'><span class='f-10 titulo3'>Total Tarjeta: </span> " + this.tcajaR + ' Bs</div>'
       document.getElementById('myelement').innerHTML = cadena3
       const d3 = new Printd()
       d3.print(document.getElementById('myelement'))
