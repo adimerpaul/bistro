@@ -99,5 +99,8 @@ Route::group(['middleware' => 'auth:sanctum'], function () {
     Route::get('baneco/qr/estado/{qrId}', [\App\Http\Controllers\BanecoQrController::class, 'estado']);
     Route::delete('baneco/qr/cancelar/{qrId}', [\App\Http\Controllers\BanecoQrController::class, 'cancelar']);
     Route::post('baneco/qr/pagados', [\App\Http\Controllers\BanecoQrController::class, 'pagados']);
+    Route::post('baneco/qr/ventas', [\App\Http\Controllers\BanecoQrController::class, 'ventasParaVincular']);
+    Route::post('baneco/qr/vincular', [\App\Http\Controllers\BanecoQrController::class, 'vincular']);
+    Route::post('baneco/qr/desvincular', [\App\Http\Controllers\BanecoQrController::class, 'desvincular']);
 
 });

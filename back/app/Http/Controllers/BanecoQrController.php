@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Sale;
 use App\Services\BanecoQrService;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -84,9 +85,73 @@ class BanecoQrController extends Controller
                 }
             }
 
+            $qrIds = array_values(array_filter(array_map(fn ($p) => $p['qrId'] ?? null, $pagos)));
+            $sales = Sale::whereIn('qrId', $qrIds)->get()->keyBy('qrId');
+
+            foreach ($pagos as &$pago) {
+                $sale = $sales[$pago['qrId'] ?? ''] ?? null;
+                $pago['sale'] = $sale ? [
+                    'id' => $sale->id,
+                    'tipo' => $sale->tipo,
+                    'montoTotal' => $sale->montoTotal,
+                    'usuario' => $sale->usuario,
+                    'fechaEmision' => $sale->fechaEmision,
+                    'venta' => $sale->venta,
+                ] : null;
+            }
+            unset($pago);
+
             return response()->json($pagos);
         } catch (Throwable $e) {
             return response()->json(['message' => $e->getMessage()], 400);
         }
+    }
+
+    public function ventasParaVincular(Request $request)
+    {
+        $request->validate([
+            'fecha' => 'required|date',
+            'tipo' => 'required|string',
+        ]);
+
+        return Sale::whereDate('fechaEmision', $request->fecha)
+            ->where('tipo', $request->tipo)
+            ->where('siatAnulado', false)
+            ->whereNull('qrId')
+            ->orderByDesc('fechaEmision')
+            ->get(['id', 'fechaEmision', 'montoTotal', 'usuario', 'venta', 'tipo']);
+    }
+
+    public function vincular(Request $request)
+    {
+        $request->validate([
+            'qrId' => 'required|string',
+            'sale_id' => 'required|integer|exists:sales,id',
+        ]);
+
+        if (Sale::where('qrId', $request->qrId)->where('id', '!=', $request->sale_id)->exists()) {
+            return response()->json(['message' => 'Este QR ya está vinculado a otra venta.'], 422);
+        }
+
+        $sale = Sale::findOrFail($request->sale_id);
+        $sale->qr = 'SI';
+        $sale->qrId = $request->qrId;
+        $sale->save();
+
+        return response()->json($sale);
+    }
+
+    public function desvincular(Request $request)
+    {
+        $request->validate([
+            'sale_id' => 'required|integer|exists:sales,id',
+        ]);
+
+        $sale = Sale::findOrFail($request->sale_id);
+        $sale->qr = 'NO';
+        $sale->qrId = null;
+        $sale->save();
+
+        return response()->json($sale);
     }
 }
