@@ -11,8 +11,11 @@
           @click="leftDrawerOpen=!leftDrawerOpen"
         />
         <q-toolbar-title>
-          <q-badge class="text-white ">{{title}}</q-badge>
+          <q-badge class="text-white ">
+            {{title}}
+          </q-badge>
           {{ store.user.name }}
+
         </q-toolbar-title>
         <div>
           <q-chip  color="red" v-if="store.eventNumber!=0" text-color="white" icon="warning_amber" :label="store.eventNumber+' Facturas no enviadas'" />
