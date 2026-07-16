@@ -305,6 +305,8 @@ export default {
       banecoQrId: '',
       banecoQrEstadoMsg: 'Generando código QR...',
       banecoQrInterval: null,
+      banecoQrChecking: false,
+      banecoQrProcesado: false,
       nombresaldo: {},
       loading: false,
       btn: false,
@@ -504,6 +506,8 @@ export default {
     generarPagoQr () {
       this.banecoQrImage = ''
       this.banecoQrId = ''
+      this.banecoQrChecking = false
+      this.banecoQrProcesado = false
       this.banecoQrEstadoMsg = 'Generando código QR...'
       this.dialogPagoQr = true
       this.$api.post('baneco/qr/generar', {
@@ -526,9 +530,15 @@ export default {
       })
     },
     verificarPagoQr () {
-      if (!this.banecoQrId) return
-      this.$api.get('baneco/qr/estado/' + this.banecoQrId).then(res => {
+      // No consultar si no hay QR, si ya hay una consulta en vuelo o si el pago ya se procesó
+      if (!this.banecoQrId || this.banecoQrChecking || this.banecoQrProcesado) return
+      this.banecoQrChecking = true
+      const qrId = this.banecoQrId
+      this.$api.get('baneco/qr/estado/' + qrId).then(res => {
+        // Descartar respuestas tardías: el QR cambió o el pago ya fue procesado
+        if (this.banecoQrProcesado || qrId !== this.banecoQrId) return
         if (res.data.pagado) {
+          this.banecoQrProcesado = true
           clearInterval(this.banecoQrInterval)
           this.banecoQrInterval = null
           this.dialogPagoQr = false
@@ -539,6 +549,8 @@ export default {
           this.banecoQrInterval = null
           this.banecoQrEstadoMsg = 'El código QR fue anulado'
         }
+      }).finally(() => {
+        this.banecoQrChecking = false
       })
     },
     cerrarPagoQr () {
@@ -546,12 +558,14 @@ export default {
         clearInterval(this.banecoQrInterval)
         this.banecoQrInterval = null
       }
-      if (this.banecoQrId) {
+      if (this.banecoQrId && !this.banecoQrProcesado) {
         this.$api.delete('baneco/qr/cancelar/' + this.banecoQrId).catch(() => { /* best-effort */ })
       }
       this.dialogPagoQr = false
       this.banecoQrImage = ''
       this.banecoQrId = ''
+      this.banecoQrChecking = false
+      this.banecoQrProcesado = false
       this.boolQr = false
     },
     verificar () {
@@ -690,6 +704,8 @@ export default {
       this.boolQr = false
       this.banecoQrImage = ''
       this.banecoQrId = ''
+      this.banecoQrChecking = false
+      this.banecoQrProcesado = false
       this.productsGet()
     },
     async printFactura (factura) {

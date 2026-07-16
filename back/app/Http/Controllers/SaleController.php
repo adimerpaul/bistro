@@ -131,6 +131,10 @@ class SaleController extends Controller{
 
    public function store(StoreSaleRequest $request)
     {
+        // Un QR de pago solo puede pertenecer a una venta: evita duplicados por doble confirmación
+        if ($request->qr == "SI" && $request->qrId != null && Sale::where('qrId', $request->qrId)->exists()) {
+            return response()->json(['message' => 'Este QR ya está registrado en otra venta.'], 422);
+        }
         if ($request->client['complemento']==null){
             $complemento="";
         }else{
